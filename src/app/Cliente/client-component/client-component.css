@@ -1,0 +1,173 @@
+
+/* Container Principal Centralizado */
+#cadastro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 2.5rem 1rem;
+  box-sizing: border-box;
+}
+
+/* Cartão do Formulário */
+#cad {
+  background: #FFFFFF;
+  border: 2px solid #E85D04; /* Borda Laranja Hibisco */
+  border-radius: 24px;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 580px;
+  box-shadow: 0 15px 35px rgba(232, 93, 4, 0.1);
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Título */
+.form-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2D0A14;
+  text-align: center;
+  margin: 0 0 2rem 0;
+}
+
+.form-title span {
+  color: #E85D04;
+}
+
+/* Agrupamento de Campos */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem;
+  width: 100%;
+}
+
+/* Alinhamento Lado a Lado (CPF/Tel, CEP/Número) */
+.form-row {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.flex-1 { flex: 1; }
+.flex-2 { flex: 2; }
+
+/* Labels (Rótulos) */
+#cad label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2D0A14;
+  margin-bottom: 0.4rem;
+}
+
+/* Inputs de Texto, Email, Data */
+#cad input[type="text"],
+#cad input[type="email"],
+#cad input[type="date"] {
+  width: 100%;
+  height: 48px;
+  padding: 0 1rem;
+  border: 1.5px solid #E5D5C5;
+  border-radius: 12px;
+  background-color: #FFFDF9;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  color: #2D0A14;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+/* Efeito ao Clicar no Input (Focus) */
+#cad input[type="text"]:focus,
+#cad input[type="email"]:focus,
+#cad input[type="date"]:focus {
+  border-color: #E85D04;
+  box-shadow: 0 0 0 4px rgba(232, 93, 4, 0.15);
+  background-color: #FFFFFF;
+}
+
+#cad input::placeholder {
+  color: #A08C93;
+  font-size: 0.85rem;
+}
+
+/* Opções de Radio (Sexo) */
+.radio-group {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  margin-top: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  color: #5A2A38 !important;
+  cursor: pointer;
+}
+
+.bntSelecao {
+  accent-color: #E85D04; /* Cor personalisada no botão de rádio */
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* Botão de Envio */
+#button {
+  margin-top: 1.8rem;
+  text-align: center;
+}
+
+#button_add {
+  width: 100%;
+  height: 52px;
+  background: linear-gradient(135deg, #E85D04 0%, #D04D00 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 20px rgba(232, 93, 4, 0.25);
+}
+
+#button_add:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(232, 93, 4, 0.35);
+  background: linear-gradient(135deg, #FF6B0B 0%, #E85D04 100%);
+}
+
+#button_add:active {
+  transform: translateY(0);
+}
+
+/* RESPONSIVIDADE (Celular) */
+@media (max-width: 576px) {
+  #cad {
+    padding: 1.8rem 1.2rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .radio-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+}
