@@ -1,0 +1,160 @@
+/* =========================================================
+   CONTAINER PRINCIPAL - CENTRALIZAÇÃO TOTAL (H + V)
+   ========================================================= */
+   .main-container {
+    display: flex;
+    justify-content: center; /* Centraliza na Horizontal */
+    align-items: center;     /* Centraliza na Vertical */
+
+    /* Desconta exatamente os 80px do seu cabeçalho fixo */
+    min-height: calc(100vh - 80px);
+    width: 100%;
+    padding: 2rem 1.5rem;
+    box-sizing: border-box;
+  }
+
+  /* GRUPO DOS CARDS LADO A LADO */
+  .container-cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    gap: 2.5rem; /* Espaço entre os cartões */
+    width: 100%;
+    max-width: 980px; /* Largura máxima proporcional */
+  }
+
+  /* =========================================================
+     ESTILO DOS CARDS
+     ========================================================= */
+  #card_client,
+  #card_adm {
+    flex: 1;
+    min-height: 360px;
+    padding: 3rem 2.2rem;
+    border-radius: 28px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Destaque do acento 'í' */
+  #card_client h2 span,
+  #card_adm h2 span {
+    color: #E85D04;
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+
+  /* 1. CARD CLIENTE */
+  #card_client {
+    background: linear-gradient(145deg, #FFF9F2 0%, #FFEEDD 100%);
+    border: 2px solid #E85D04;
+    box-shadow: 0 15px 35px rgba(232, 93, 4, 0.12);
+  }
+
+  #card_client::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px dashed rgba(232, 93, 4, 0.35);
+    border-radius: 20px;
+    pointer-events: none;
+  }
+
+  #card_client h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #2D0A14;
+    margin: 0 0 0.8rem 0;
+  }
+
+  #card_client p {
+    font-size: 1.05rem;
+    color: #5A2A38;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  #card_client .btn-acessar {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #E85D04;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* 2. CARD ADM */
+  #card_adm {
+    background: #2D0A14;
+    border: 2px solid #D4AF37;
+    box-shadow: 0 15px 35px rgba(45, 10, 20, 0.25);
+  }
+
+  #card_adm h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.1rem;
+    font-weight: 600;
+    color: #FAEDCD;
+    margin: 0 0 0.8rem 0;
+  }
+
+  #card_adm p {
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #D4AF37;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  #card_adm .btn-acessar {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #FAEDCD;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    opacity: 0.85;
+  }
+
+  /* EFEITOS HOVER */
+  #card_client:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 45px rgba(232, 93, 4, 0.22);
+  }
+
+  #card_adm:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 45px rgba(45, 10, 20, 0.4);
+  }
+
+  /* RESPONSIVIDADE (Celulares e monitores pequenos) */
+  @media (max-width: 768px) {
+    .main-container {
+      min-height: auto;
+      padding: 3rem 1rem;
+    }
+
+    .container-cards {
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    #card_client, #card_adm {
+      width: 100%;
+      min-height: auto;
+      padding: 2.5rem 1.5rem;
+    }
+  }

@@ -1,0 +1,18 @@
+body {
+  background-color: #FFFDF9; /* Areia Quente / Creme Minimalista */
+}
+
+body {
+  margin: 0;
+  padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Escolha a cor aqui: */
+  background: linear-gradient(180deg, #FFFDF9 0%, #FDF3E7 100%);
+
+  font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
+}
