@@ -1,0 +1,35 @@
+<div id="div-lista-itens" class="container">
+
+
+  <!-- Grid de Cards -->
+  <div class="cards-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
+    @for (elem of listaItens(); track elem.idItem) {
+      <div class="card-item">
+
+        <!-- Conteúdo Principal do Card -->
+        <div class="card-body">
+          <h2 class="card-titulo" >{{ elem.item }}</h2>
+          <p class="card-descricao" >{{ elem.descricao }}</p>
+        </div>
+
+        <!-- Preço e Botão de Ação -->
+        <div class="card-footer" >
+          <span class="card-preco" >
+            R$ {{ elem.precoVenda.toFixed(2) }}
+          </span>
+
+          <!-- Botão para adicionar ao carrinho / selecionar -->
+          <button type="button"  class="btn-card-add">
+            Adicionar
+          </button>
+        </div>
+
+      </div>
+    } @empty {
+      <!-- Mensagem quando a lista estiver vazia -->
+      <div class="card-vazio" style="grid-column: 1 / -1; text-align: center; padding: 40px; border: 1px dashed #ccc; border-radius: 8px;">
+        <p style="margin: 0; color: #888;">NENHUM ITEM CADASTRADO</p>
+      </div>
+    }
+  </div>
+</div>
