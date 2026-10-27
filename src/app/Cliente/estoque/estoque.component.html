@@ -1,0 +1,60 @@
+<section class="crud-shell">
+  <div class="panel">
+    <h2>Entrada de estoque</h2>
+
+    <form (ngSubmit)="salvar()" class="form-grid">
+      <label>
+        <span>ID do item</span>
+        <input type="number" [(ngModel)]="item.idItem" name="idItem" />
+      </label>
+
+      <label>
+        <span>Quantidade</span>
+        <input type="number" [(ngModel)]="item.quantidadeEntrada" name="quantidadeEntrada" />
+      </label>
+
+      <label>
+        <span>Preço unitário</span>
+        <input type="number" step="0.01" [(ngModel)]="item.precoUnitario" name="precoUnitario" />
+      </label>
+
+      <label>
+        <span>Data da entrada</span>
+        <input type="date" [(ngModel)]="item.dataEntrada" name="dataEntrada" />
+      </label>
+
+      <label>
+        <span>Unidade</span>
+        <input type="text" [(ngModel)]="item.unidade" name="unidade" />
+      </label>
+
+      <div class="actions">
+        <button type="submit">Registrar entrada</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="panel">
+    <h3>Histórico de entradas</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>ID Item</th>
+          <th>Qtd</th>
+          <th>Preço</th>
+          <th>Data</th>
+          <th>Unidade</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let registro of registros">
+          <td>{{ registro.idItem }}</td>
+          <td>{{ registro.quantidadeEntrada }}</td>
+          <td>{{ registro.precoUnitario }}</td>
+          <td>{{ registro.dataEntrada }}</td>
+          <td>{{ registro.unidade }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

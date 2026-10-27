@@ -1,0 +1,79 @@
+.crud-shell {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.panel {
+  background: #fff;
+  border-radius: 18px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(38, 21, 17, 0.08);
+}
+
+h2, h3 {
+  color: #2d0a14;
+  margin-top: 0;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+label {
+  display: grid;
+  gap: 0.45rem;
+  color: #5a2a38;
+  font-weight: 600;
+}
+
+input, button {
+  border-radius: 10px;
+  border: 1px solid #e7d7d3;
+  padding: 0.75rem 0.9rem;
+  font-size: 0.95rem;
+}
+
+input:focus {
+  outline: 2px solid rgba(232, 93, 4, 0.18);
+  border-color: #e85d04;
+}
+
+.actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+button {
+  background: #2d0a14;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid #f0e7e3;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .crud-shell {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

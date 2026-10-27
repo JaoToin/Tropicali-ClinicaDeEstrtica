@@ -1,0 +1,86 @@
+<section class="crud-shell">
+  <div class="panel">
+    <h2>Produtos e itens</h2>
+
+    <form (ngSubmit)="salvar()" class="form-grid">
+      <label>
+        <span>ID Categoria</span>
+        <input type="number" [(ngModel)]="produto.idCategoria" name="idCategoria" />
+      </label>
+
+      <label>
+        <span>Item</span>
+        <input type="text" [(ngModel)]="produto.item" name="item" />
+      </label>
+
+      <label>
+        <span>Descrição</span>
+        <input type="text" [(ngModel)]="produto.descricaoItem" name="descricaoItem" />
+      </label>
+
+      <label>
+        <span>Preço</span>
+        <input type="number" step="0.01" [(ngModel)]="produto.preco" name="preco" />
+      </label>
+
+      <label>
+        <span>Tipo</span>
+        <select [(ngModel)]="produto.tipoItem" name="tipoItem">
+          <option value="Produto">Produto</option>
+          <option value="Servico">Serviço</option>
+        </select>
+      </label>
+
+      <label>
+        <span>Ativo</span>
+        <select [(ngModel)]="produto.ativoProdutoServico" name="ativoProdutoServico">
+          <option value="Ativo">Ativo</option>
+          <option value="Inativo">Inativo</option>
+        </select>
+      </label>
+
+      <label>
+        <span>Código do preço</span>
+        <input type="number" [(ngModel)]="produto.codigoPreco" name="codigoPreco" />
+      </label>
+
+      <label>
+        <span>Preço de venda</span>
+        <input type="number" step="0.01" [(ngModel)]="produto.precoVenda" name="precoVenda" />
+      </label>
+
+      <label>
+        <span>Unidade</span>
+        <input type="text" [(ngModel)]="produto.unidade" name="unidade" />
+      </label>
+
+      <div class="actions">
+        <button type="submit">Salvar produto</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="panel">
+    <h3>Produtos cadastrados</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Tipo</th>
+          <th>Preço</th>
+          <th>Venda</th>
+          <th>Categoria</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let produto of produtos">
+          <td>{{ produto.item }}</td>
+          <td>{{ produto.tipoItem }}</td>
+          <td>{{ produto.preco }}</td>
+          <td>{{ produto.precoVenda }}</td>
+          <td>{{ produto.idCategoria }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

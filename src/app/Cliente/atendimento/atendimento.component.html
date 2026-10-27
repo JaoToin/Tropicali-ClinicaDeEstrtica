@@ -1,0 +1,74 @@
+<section class="crud-shell">
+  <div class="panel">
+    <h2>Atendimentos</h2>
+
+    <form (ngSubmit)="salvar()" class="form-grid">
+      <label>
+        <span>ID Pessoa</span>
+        <input type="number" [(ngModel)]="atendimento.idPessoa" name="idPessoa" />
+      </label>
+
+      <label>
+        <span>Data do atendimento</span>
+        <input type="date" [(ngModel)]="atendimento.dataAtendimento" name="dataAtendimento" />
+      </label>
+
+      <label>
+        <span>Status</span>
+        <select [(ngModel)]="atendimento.statusAtendimento" name="statusAtendimento">
+          <option value="Aberto">Aberto</option>
+          <option value="Em processamento">Em processamento</option>
+          <option value="Concluído">Concluído</option>
+          <option value="Cancelado">Cancelado</option>
+        </select>
+      </label>
+
+      <div class="itens-box" *ngFor="let item of atendimento.itens; let i = index">
+        <h3>Item {{ i + 1 }}</h3>
+        <label>
+          <span>ID Item</span>
+          <input type="number" [(ngModel)]="item.idItem" [name]="'idItem' + i" />
+        </label>
+        <label>
+          <span>ID Funcionário</span>
+          <input type="number" [(ngModel)]="item.idFuncionario" [name]="'idFuncionario' + i" />
+        </label>
+        <label>
+          <span>Quantidade</span>
+          <input type="number" [(ngModel)]="item.quantidade" [name]="'quantidade' + i" />
+        </label>
+        <label>
+          <span>Valor Unitário</span>
+          <input type="number" step="0.01" [(ngModel)]="item.valorUnitario" [name]="'valorUnitario' + i" />
+        </label>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="secondary" (click)="adicionarItem()">Adicionar item</button>
+        <button type="submit">Salvar atendimento</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="panel">
+    <h3>Lista de atendimentos</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>ID Pessoa</th>
+          <th>Data</th>
+          <th>Status</th>
+          <th>Itens</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of atendimentos">
+          <td>{{ item.idPessoa }}</td>
+          <td>{{ item.dataAtendimento }}</td>
+          <td>{{ item.statusAtendimento }}</td>
+          <td>{{ item.itens.length }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

@@ -1,0 +1,68 @@
+<section class="crud-shell">
+  <div class="panel">
+    <h2>Funcionários</h2>
+
+    <form (ngSubmit)="salvar()" class="form-grid">
+      <label>
+        <span>ID Pessoa</span>
+        <input type="number" [(ngModel)]="funcionario.idPessoa" name="idPessoa" />
+      </label>
+
+      <label>
+        <span>Cargo</span>
+        <input type="text" [(ngModel)]="funcionario.cargo" name="cargo" />
+      </label>
+
+      <label>
+        <span>Data de admissão</span>
+        <input type="date" [(ngModel)]="funcionario.dataAdmissao" name="dataAdmissao" />
+      </label>
+
+      <label>
+        <span>Nome</span>
+        <input type="text" [(ngModel)]="funcionario.pessoas[0].nome" name="nome" />
+      </label>
+
+      <label>
+        <span>CPF</span>
+        <input type="text" [(ngModel)]="funcionario.pessoas[0].cpf" name="cpf" />
+      </label>
+
+      <label>
+        <span>E-mail</span>
+        <input type="email" [(ngModel)]="funcionario.pessoas[0].email" name="email" />
+      </label>
+
+      <label>
+        <span>Telefone</span>
+        <input type="text" [(ngModel)]="funcionario.pessoas[0].telefone" name="telefone" />
+      </label>
+
+      <div class="actions">
+        <button type="submit">Salvar funcionário</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="panel">
+    <h3>Lista de funcionários</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cargo</th>
+          <th>Nome</th>
+          <th>Data admissão</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of funcionarios">
+          <td>{{ item.idPessoa }}</td>
+          <td>{{ item.cargo }}</td>
+          <td>{{ item.pessoas[0]?.nome }}</td>
+          <td>{{ item.dataAdmissao }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
