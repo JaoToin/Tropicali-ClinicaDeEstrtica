@@ -1,0 +1,173 @@
+/* =========================================================
+   CATÁLOGO DE PRODUTOS E SERVIÇOS - TROPICALÍ
+   ========================================================= */
+
+/* Container Principal do Catálogo */
+#div-lista-itens.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Grid de Cards */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.8rem;
+  width: 100%;
+}
+
+/* ---------------------------------------------------------
+   CARD INDIVIDUAL DE ITEM
+   --------------------------------------------------------- */
+.card-item {
+  background: #FFFFFF;
+  border: 1.5px solid #FFEEDD;
+  border-radius: 20px;
+  padding: 1.8rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 10px 25px rgba(45, 10, 20, 0.04);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Borda sutil no topo do card ao passar o mouse */
+.card-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #E85D04, #D4AF37);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Efeito Hover no Card */
+.card-item:hover {
+  transform: translateY(-6px);
+  border-color: #E85D04;
+  box-shadow: 0 18px 35px rgba(232, 93, 4, 0.12);
+}
+
+.card-item:hover::before {
+  opacity: 1;
+}
+
+/* Corpo do Card (Título e Descrição) */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-titulo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #2D0A14; /* Púrpura Açaí */
+  margin: 0;
+  line-height: 1.3;
+}
+
+.card-descricao {
+  font-size: 0.92rem;
+  color: #5A2A38;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Rodapé do Card (Preço e Botão) */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.2rem;
+  border-top: 1px dashed #FFEEDD;
+  gap: 0.8rem;
+}
+
+/* Preço */
+.card-preco {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2D0A14;
+}
+
+/* Botão de Adicionar */
+.btn-card-add {
+  background-color: #FFF9F2;
+  color: #E85D04;
+  border: 1.5px solid #E85D04;
+  border-radius: 10px;
+  padding: 0.6rem 1.1rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-card-add:hover {
+  background-color: #E85D04;
+  color: #FFFFFF;
+  box-shadow: 0 6px 15px rgba(232, 93, 4, 0.25);
+  transform: translateY(-2px);
+}
+
+.btn-card-add:active {
+  transform: translateY(0);
+}
+
+/* ---------------------------------------------------------
+   ESTADO VAZIO (Nenhum item cadastrado)
+   --------------------------------------------------------- */
+.card-vazio {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3.5rem 2rem !important;
+  background: #FFFDF9;
+  border: 2px dashed #E5D5C5 !important;
+  border-radius: 20px !important;
+  box-sizing: border-box;
+}
+
+.card-vazio p {
+  margin: 0 !important;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem !important;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: #A08C93 !important;
+}
+
+/* ---------------------------------------------------------
+   RESPONSIVIDADE (Celular)
+   --------------------------------------------------------- */
+@media (max-width: 576px) {
+  #div-lista-itens.container {
+    padding: 1.8rem 1rem;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .card-footer {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

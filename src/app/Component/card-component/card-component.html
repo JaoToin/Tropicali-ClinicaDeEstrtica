@@ -2,7 +2,7 @@
 
 
   <!-- Grid de Cards -->
-  <div class="cards-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
+  <div class="cards-grid" >
     @for (elem of listaItens(); track elem.idItem) {
       <div class="card-item">
 
@@ -27,8 +27,8 @@
       </div>
     } @empty {
       <!-- Mensagem quando a lista estiver vazia -->
-      <div class="card-vazio" style="grid-column: 1 / -1; text-align: center; padding: 40px; border: 1px dashed #ccc; border-radius: 8px;">
-        <p style="margin: 0; color: #888;">NENHUM ITEM CADASTRADO</p>
+      <div class="card-vazio" >
+        <p >NENHUM ITEM CADASTRADO</p>
       </div>
     }
   </div>

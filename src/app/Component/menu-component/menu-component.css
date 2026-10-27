@@ -2,66 +2,96 @@
    CABEÇALHO / NAVBAR (TROPICALÍ)
    ========================================================= */
 
-   #cabecalho {
-    width: 100%;
-    height: 80px; /* Altura fixa ideal para menus */
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: var(--cor-principal);
-    box-sizing: border-box;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Sombra suave profissional */
-  }
+#cabecalho {
+  width: 100%;
+  height: 100px; /* Aumentado de 80px para 100px para acomodar a logo maior */
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--cor-principal);
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
 
-  /* LOGO */
-  #logo {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    color: var(--of);
-    text-decoration: none;
-  }
+/* CONTAINER DA LOGO */
+#logo {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
 
-  #titulo {
-    text-transform: uppercase;
-    color: var(--hover-link);
-    border: 1px solid var(--hover-link);
-    padding: 4px 8px;
-    margin-right: 8px;
-    font-weight: 700;
-    letter-spacing: 1px;
-  }
+#titulo {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
 
-  /* LISTA DE NAVEGAÇÃO */
-  #menu-ul {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 1.5rem; /* Espaçamento uniforme entre os links */
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
+#logo .lnk-menu {
+  padding: 0;
+  background: transparent !important;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
 
-  /* LINKS DO MENU */
-  .lnk-menu {
-    text-decoration: none;
-    padding: 8px 12px;
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--of);
-    transition: all 0.3s ease;
-    border-radius: 6px;
-    display: inline-block;
-  }
+#logo .lnk-menu:hover {
+  opacity: 0.9;
+  background: transparent !important;
+}
 
-  .lnk-menu:hover {
-    opacity: 0.8;
-    color: var(--hover-link);
-    background-color: rgba(255, 255, 255, 0.05);
-  }
+/* IMAGEM DA LOGO MAIOR */
+#titulo img {
+  max-height: 80px; /* Aumentado de 55px para 80px */
+  width: auto;
+  object-fit: contain;
+  display: block;
+  border-radius: 8px; /* Arredonda suavemente as cantos do cartão da logo */
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
+}
+
+#logo:hover img {
+  transform: scale(1.03);
+}
+
+/* MENU DE NAVEGAÇÃO */
+#menu {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+#menu-ul {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#menu-ul .lnk-menu {
+  text-decoration: none;
+  padding: 8px 14px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--of);
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+#menu-ul .lnk-menu:hover {
+  opacity: 1;
+  color: var(--hover-link);
+  background-color: rgba(255, 255, 255, 0.08);
+}

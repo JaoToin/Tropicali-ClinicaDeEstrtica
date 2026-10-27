@@ -1,3 +1,4 @@
+import { Historia } from './Component/historia/historia';
 import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
 import { HomeCliAdm } from './Component/home-cli-adm/home-cli-adm';
@@ -24,5 +25,9 @@ export const routes: Routes = [
   {
     path: 'itens',
     component: CardComponent
+  },
+  {
+    path: 'historia',
+    component: Historia
   }
 ];
