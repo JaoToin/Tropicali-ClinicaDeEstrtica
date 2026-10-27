@@ -1,14 +1,19 @@
-export class PessoaEndereco {
-    pessoaId: number = 0
-    nome: string = ''
-    sexo: string = ''
-    dataNascimento: Date = new Date()
-    email: string = ''
-    telefone: string = ''
-    cpf: string = ''
+export class Endereco {
+  idEndereco: number = 0
+  idPessoa: number = 0
+  cep: string = ''
+  numero: string = ''
+  complemento: string = ''
+}
 
-    enderecoId: number = 0
-    numero: string = ''
-    cep: string = ''
-    complemento: string = ''
-  }
+export class PessoaEndereco {
+  idPessoa: number = 0
+  nome: string = ''
+  cpf: string = ''
+  telefone: string = ''
+  email: string = ''
+  sexo: string = ''
+  dataNascimento: Date = new Date
+  ativoPessoa: string = 'S'
+  enderecos: Endereco[] = []
+}

@@ -35,14 +35,14 @@ export class PessoaEndereço {
 
   //EXCLUIR NA API
   exluirpessoa(pessoa: PessoaEndereco): Observable<PessoaEndereco> {
-    const urlApi = `https://localhost:7077/api/PessoaEndereco/${pessoa.pessoaId}`
+    const urlApi = `https://localhost:7077/api/PessoaEndereco/${pessoa.idPessoa}`
 
     return this.http.delete<PessoaEndereco>(urlApi)
   }
 
   //ALTERAR NA API
   alterarpessoa(pessoa: PessoaEndereco):Observable<PessoaEndereco>{
-    const urlApi = `https://localhost:7077/api/PessoaEndereco/${pessoa.pessoaId}`
+    const urlApi = `https://localhost:7077/api/PessoaEndereco/${pessoa.idPessoa}`
 
     return this.http.put<PessoaEndereco>(urlApi, pessoa)
   }

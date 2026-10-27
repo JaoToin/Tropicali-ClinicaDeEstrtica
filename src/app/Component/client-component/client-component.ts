@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { PessoaEndereco } from '../../models/pessoa-endereco';
+import { PessoaEndereco, Endereco } from '../../models/pessoa-endereco';
 import { PessoaEndereço } from '../../Service/Clienet/pessoa-endereço';
 
 
@@ -50,72 +50,68 @@ export class ClientComponent {
     carregaCampo(idAtleta: number) {
       this.Pessoa.listarpessoa(idAtleta)
         .subscribe({
-          next: (objAtleta) => {
-            this.pessoaId = objAtleta.pessoaId
+          next: (obj) => {
+            this.pessoaId = obj.idPessoa
+            this.nome = obj.nome
+            this.cpf = obj.cpf
+            this.sexo = obj.sexo
+            this.data = obj.dataNascimento
+            this.email = obj.email
+            this.telefone = obj.telefone
 
-            this.nome = objAtleta.nome
-            this.cpf = objAtleta.cpf
-            this.sexo = objAtleta.sexo
-            this.data = objAtleta.dataNascimento
-            this.email = objAtleta.email
-            this.telefone = objAtleta.telefone
-            this.cep = objAtleta.cep
-            this.complemento = objAtleta.complemento
-            this.numero = objAtleta.numero
+            const end = obj.enderecos?.[0]
+            if (end) {
+              this.enderecoId = end.idEndereco
+              this.cep = end.cep
+              this.numero = end.numero
+              this.complemento = end.complemento
+            }
 
             this.cdr.detectChanges()
-          }, error: (msgErro) => {
-            console.log("Erro ao Listar  o atleta ", msgErro)
+          },
+          error: (msgErro) => {
+            console.log("Erro ao Listar o client ", msgErro)
           }
         })
     }
-
-    enviaDadosAtleta() {
+    enviaDadosClient() {
       const pessoa = new PessoaEndereco()
       pessoa.nome = this.nome
-      pessoa.cpf = this.cpf
-      pessoa.sexo = this.sexo
-      pessoa.cep = this.cep
-      pessoa.numero = this.numero
-      pessoa.complemento = this.complemento
-      pessoa.dataNascimento = this.data
+      pessoa.cpf = this.cpf.replace(/\D/g, '')           // só números
+      pessoa.telefone = this.telefone.replace(/\D/g, '') // só números
       pessoa.email = this.email
-      pessoa.telefone = this.telefone
+      pessoa.sexo = this.sexo
+      pessoa.dataNascimento = this.data                  // "yyyy-MM-dd"
+      pessoa.ativoPessoa = 'S'
 
-
-
+      const endereco = new Endereco()
+      endereco.cep = this.cep.replace(/\D/g, '')
+      endereco.numero = this.numero
+      endereco.complemento = this.complemento
+      pessoa.enderecos = [endereco]
 
       if (!this.editar) {
-        this.Pessoa.adicionarpessoa(pessoa)
-          .subscribe({
-            next: (resposta) => {
-              console.log(resposta)
-            },
-            error: (msgErro) => {
-              console.log("Erro ao cadastrar  o atleta ", msgErro)
-            }
-          })
+        this.Pessoa.adicionarpessoa(pessoa).subscribe({
+          next: (resposta) => {
+            console.log(resposta)
+            this.limpar()
+          },
+          error: (msgErro) => console.log("Erro ao cadastrar", msgErro)
+        })
       } else {
-        pessoa.pessoaId = this.pessoaId
+        pessoa.idPessoa = this.pessoaId
+        endereco.idPessoa = this.pessoaId
+        endereco.idEndereco = this.enderecoId
 
-        this.Pessoa.alterarpessoa(pessoa)
-          .subscribe({
-            next: (resposta) => {
-              console.log(pessoa)
-
-              console.log(resposta)
-            },
-            error: (msgErro) => {
-              console.log("Erro ao alterar  o atleta ", msgErro)
-            }
-          })
-
+        this.Pessoa.alterarpessoa(pessoa).subscribe({
+          next: (resposta) => {
+            console.log(resposta)
+            this.limpar()
+          },
+          error: (msgErro) => console.log("Erro ao alterar", msgErro)
+        })
       }
-
-      this.limpar()
-
     }
-
     listaAtleta(idAtleta: number) {
       this.Pessoa.listarpessoa(idAtleta)
         .subscribe({
