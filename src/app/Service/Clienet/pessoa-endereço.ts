@@ -14,35 +14,35 @@ export class PessoaEndereço {
 
   //ADICIONAR NA API
   adicionarpessoa(pessoa: PessoaEndereco): Observable<PessoaEndereco> {
-    const urlApi = `https://6a7f6d923183f5fd884b1a61.mockapi.io/esportearlivre/pessoa`
+    const urlApi = `https://localhost:7077/api/PessoaEndereco`
 
     return this.http.post<PessoaEndereco>(urlApi, pessoa)
   }
 
   //LISTAR pessoaS NA API
   listarpessoas(): Observable<PessoaEndereco[]> {
-    const urlApi = `https://6a7f6d923183f5fd884b1a61.mockapi.io/esportearlivre/pessoa`
+    const urlApi = `https://localhost:7077/api/PessoaEndereco`
 
     return this.http.get<PessoaEndereco []>(urlApi)
   }
 
   //LISTAR pessoa
   listarpessoa(idpessoa: number):Observable<PessoaEndereco>{
-    const urlApi = `https://6a7f6d923183f5fd884b1a61.mockapi.io/esportearlivre/pessoa/${idpessoa}`
+    const urlApi = `https://localhost:7077/api/PessoaEndereco/${idpessoa}`
 
     return this.http.get<PessoaEndereco>(urlApi)
   }
 
   //EXCLUIR NA API
   exluirpessoa(pessoa: PessoaEndereco): Observable<PessoaEndereco> {
-    const urlApi = `https://6a7f6d923183f5fd884b1a61.mockapi.io/esportearlivre/pessoa/${pessoa.pessoaId}`
+    const urlApi = `https://localhost:7077/api/PessoaEndereco/${pessoa.pessoaId}`
 
     return this.http.delete<PessoaEndereco>(urlApi)
   }
 
   //ALTERAR NA API
   alterarpessoa(pessoa: PessoaEndereco):Observable<PessoaEndereco>{
-    const urlApi = `https://6a7f6d923183f5fd884b1a61.mockapi.io/esportearlivre/pessoa/${pessoa.pessoaId}`
+    const urlApi = `https://localhost:7077/api/PessoaEndereco/${pessoa.pessoaId}`
 
     return this.http.put<PessoaEndereco>(urlApi, pessoa)
   }

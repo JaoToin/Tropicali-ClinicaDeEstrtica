@@ -3,13 +3,13 @@
 
   <!-- Grid de Cards -->
   <div class="cards-grid" >
-    @for (elem of listaItens(); track elem.idItem) {
+    @for (elem of listaItens(); track elem.iditem) {
       <div class="card-item">
 
         <!-- Conteúdo Principal do Card -->
         <div class="card-body">
-          <h2 class="card-titulo" >{{ elem.item }}</h2>
-          <p class="card-descricao" >{{ elem.descricao }}</p>
+          <h2 class="card-titulo" >{{  elem.iditemNavigation?.item1 }}</h2>
+          <p class="card-descricao" >{{ elem.iditemNavigation?.descricaoItem }}</p>
         </div>
 
         <!-- Preço e Botão de Ação -->
