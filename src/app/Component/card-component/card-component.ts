@@ -1,7 +1,9 @@
 import { Item } from './../../Service/item/item';
 import { Itens, ItemNavigation } from './../../models/item';
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { CarrinhoProduto } from '../../Service/Carrinho/carrinho';
+
 
 
 
@@ -14,6 +16,10 @@ import { Router } from '@angular/router';
 export class CardComponent {
 
   listaItens = signal<Itens[]>([])
+
+  private cartService = inject(CarrinhoProduto);
+
+
 
   //DECLARAÇÃO CONSTRUTOR
   constructor(private router: Router, private http: Item) { }
@@ -39,5 +45,10 @@ export class CardComponent {
 
       })
 
+  }
+
+
+  adicionarAoCarrinho(produto: Itens): void {
+    this.cartService.adicionar(produto);
   }
 }

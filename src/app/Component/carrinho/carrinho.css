@@ -1,0 +1,230 @@
+/* =========================================================
+   PÁGINA E CARD DO CARRINHO - TROPICALÍ
+   ========================================================= */
+
+   .carrinho-container {
+    width: 100%;
+    max-width: 650px;
+    margin: 3rem auto;
+    padding: 2.5rem 2rem;
+    background: #FFFFFF;
+    border: 1.5px solid #FFEEDD;
+    border-radius: 24px;
+    box-shadow: 0 15px 35px rgba(45, 10, 20, 0.06);
+    font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
+  }
+
+  /* Cabeçalho */
+  .carrinho-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1.2rem;
+    border-bottom: 2px solid #FFEEDD;
+    margin-bottom: 1.8rem;
+  }
+
+  .carrinho-header h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2D0A14;
+    margin: 0;
+  }
+
+  .badge-qtd {
+    background: #FFF9F2;
+    color: #E85D04;
+    border: 1px solid #E85D04;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  /* Lista de Itens */
+  .lista-carrinho {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Card de Item Individual */
+  .card-item-carrinho {
+    background: #FFFDF9;
+    border: 1px solid #FFEEDD;
+    border-radius: 16px;
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card-item-carrinho:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(232, 93, 4, 0.08);
+    border-color: #E85D04;
+  }
+
+  .item-info .item-nome {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #2D0A14;
+    margin: 0 0 0.3rem 0;
+  }
+
+  .item-info .item-qtd {
+    font-size: 0.88rem;
+    color: #5A2A38;
+  }
+
+  .item-preco-acao {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
+
+  .item-preco {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2D0A14;
+  }
+
+  .btn-remover {
+    background: transparent;
+    border: none;
+    color: #A08C93;
+    font-size: 0.82rem;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+  }
+
+  .btn-remover:hover {
+    color: #E85D04;
+  }
+
+  /* Estado Vazio */
+  .carrinho-vazio {
+    text-align: center;
+    padding: 3rem 1rem;
+  }
+
+  .vazio-icon {
+    font-size: 3rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .carrinho-vazio p {
+    color: #5A2A38;
+    font-size: 1rem;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .btn-explorar {
+    display: inline-block;
+    background: #E85D04;
+    color: #FFFFFF;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    transition: background 0.3s ease;
+  }
+
+  .btn-explorar:hover {
+    background: #D04D00;
+  }
+
+  /* Resumo da Compra */
+  .resumo-carrinho {
+    border-top: 2px dashed #FFEEDD;
+    padding-top: 1.5rem;
+  }
+
+  .resumo-linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .resumo-linha span {
+    font-size: 1.1rem;
+    color: #5A2A38;
+    font-weight: 600;
+  }
+
+  .valor-total {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.8rem;
+    color: #2D0A14;
+  }
+
+  /* Botões do Rodapé */
+  .acoes-carrinho {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .btn-limpar {
+    flex: 1;
+    background: transparent;
+    border: 1.5px solid #A08C93;
+    color: #5A2A38;
+    padding: 0.8rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-limpar:hover {
+    border-color: #2D0A14;
+    color: #2D0A14;
+    background: #FFF9F2;
+  }
+
+  .btn-finalizar {
+    flex: 2;
+    background: linear-gradient(135deg, #E85D04 0%, #D04D00 100%);
+    color: #FFFFFF;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(232, 93, 4, 0.25);
+    transition: all 0.3s ease;
+  }
+
+  .btn-finalizar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(232, 93, 4, 0.35);
+  }
+
+  /* Responsivo para Celular */
+  @media (max-width: 576px) {
+    .carrinho-container {
+      padding: 1.8rem 1.2rem;
+    }
+
+    .acoes-carrinho {
+      flex-direction: column-reverse;
+    }
+  }

@@ -1,0 +1,65 @@
+<div class="carrinho-container">
+
+  <!-- Cabeçalho do Carrinho -->
+  <header class="carrinho-header">
+    <h2>Seu Carrinho</h2>
+    <span class="badge-qtd">{{ cartService.quantidadeTotal() }} {{ cartService.quantidadeTotal() === 1 ? 'item' : 'itens' }}</span>
+  </header>
+
+  <!-- Lista de Itens no Carrinho -->
+  <ul class="lista-carrinho">
+    @for (item of cartService.cart(); track item.iditem) {
+      <li class="card-item-carrinho">
+
+        <div class="item-info">
+          <h3 class="item-nome">{{ item.iditemNavigation.item1 }}</h3>
+           <span class="item-qtd">Quantidade: <strong>{{ item.quantidade }}</strong></span>
+        </div>
+
+        <div class="item-preco-acao">
+          <span class="item-preco">
+            R$ {{ (item.precoVenda * item.quantidade).toFixed(2) }}
+          </span>
+
+          <button type="button"
+                  class="btn-remover"
+                  (click)="cartService.remover(item.iditem)"
+                  title="Remover item">
+            <span class="icon-lixeira">&times;</span> Remover
+          </button>
+        </div>
+
+      </li>
+    } @empty {
+      <!-- Estado de Carrinho Vazio -->
+      <li class="carrinho-vazio">
+        <div class="vazio-icon">🛍️</div>
+        <p>O seu carrinho está vazio no momento.</p>
+        <a routerLink="/itens" class="btn-explorar">Explorar Catálogo</a>
+      </li>
+    }
+  </ul>
+
+  <!-- Resumo da Compra e Finalização -->
+  @if (cartService.cart().length > 0) {
+    <footer class="resumo-carrinho">
+
+      <div class="resumo-linha total">
+        <span>Total:</span>
+        <strong class="valor-total">R$ {{ cartService.valorTotal().toFixed(2) }}</strong>
+      </div>
+
+      <div class="acoes-carrinho">
+        <button type="button" class="btn-limpar" (click)="cartService.limpar()">
+          Esvaziar Carrinho
+        </button>
+
+        <button type="button" class="btn-finalizar">
+          Finalizar Agendamento / Compra
+        </button>
+      </div>
+
+    </footer>
+  }
+
+</div>
