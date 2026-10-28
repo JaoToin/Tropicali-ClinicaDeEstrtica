@@ -12,118 +12,139 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-/* Grid de Cards */
+/* Grid de Cards (Aumentado o tamanho mínimo dos cards) */
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.8rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2.2rem;
   width: 100%;
 }
 
 /* ---------------------------------------------------------
-   CARD INDIVIDUAL DE ITEM
+   CARD INDIVIDUAL DE ITEM (MAIOR E CENTRALIZADO)
    --------------------------------------------------------- */
 .card-item {
   background: #FFFFFF;
   border: 1.5px solid #FFEEDD;
-  border-radius: 20px;
-  padding: 1.8rem 1.5rem;
+  border-radius: 28px; /* Cantos mais arredondados e elegantes */
+  padding: 2.5rem 1.8rem 2rem 1.8rem; /* Padding interno ampliado */
+  min-height: 420px; /* Garante um card mais alto e imponente */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 10px 25px rgba(45, 10, 20, 0.04);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  align-items: center; /* Centraliza o conteúdo horizontalmente */
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(45, 10, 20, 0.05);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
 }
 
-/* Borda sutil no topo do card ao passar o mouse */
-.card-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #E85D04, #D4AF37);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
 /* Efeito Hover no Card */
 .card-item:hover {
-  transform: translateY(-6px);
+  transform: translateY(-8px);
   border-color: #E85D04;
-  box-shadow: 0 18px 35px rgba(232, 93, 4, 0.12);
+  box-shadow: 0 20px 40px rgba(232, 93, 4, 0.15);
 }
 
-.card-item:hover::before {
-  opacity: 1;
-}
-
-/* Corpo do Card (Título e Descrição) */
+/* ---------------------------------------------------------
+   CORPO DO CARD (FLOR, TÍTULO E DESCRIÇÃO)
+   --------------------------------------------------------- */
 .card-body {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
-  margin-bottom: 1.5rem;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
 }
 
+/* ÍCONE DE FLOR TROPICAL NO TOPO SUPERIOR */
+.card-body::before {
+  content: '🌺'; /* Ícone de Flor Tropical */
+  font-size: 2.8rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  background: #FFF9F2;
+  border: 1.5px solid #E85D04;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 6px 15px rgba(232, 93, 4, 0.12);
+  transition: transform 0.3s ease;
+}
+
+.card-item:hover .card-body::before {
+  transform: scale(1.1) rotate(10deg);
+  background-color: #FFEEDD;
+}
+
+/* Título do Produto / Serviço */
 .card-titulo {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.35rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #2D0A14; /* Púrpura Açaí */
   margin: 0;
   line-height: 1.3;
 }
 
+/* Descrição */
 .card-descricao {
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   color: #5A2A38;
-  line-height: 1.5;
+  line-height: 1.6;
   margin: 0;
+  max-width: 90%;
 }
 
-/* Rodapé do Card (Preço e Botão) */
+/* ---------------------------------------------------------
+   RODAPÉ DO CARD (PREÇO EM CIMA DO BOTÃO OU LADO A LADO)
+   --------------------------------------------------------- */
 .card-footer {
   display: flex;
+  flex-direction: column; /* Coloca Preço e Botão empilhados para melhor fluxo */
   align-items: center;
-  justify-content: space-between;
-  padding-top: 1.2rem;
+  justify-content: center;
+  width: 100%;
+  padding-top: 1.5rem;
   border-top: 1px dashed #FFEEDD;
-  gap: 0.8rem;
+  gap: 1rem;
 }
 
 /* Preço */
 .card-preco {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-size: 1.35rem;
+  font-weight: 800;
   color: #2D0A14;
 }
 
 /* Botão de Adicionar */
 .btn-card-add {
-  background-color: #FFF9F2;
+  width: 100%;
+  background: linear-gradient(135deg, #FFF9F2 0%, #FFEEDD 100%);
   color: #E85D04;
   border: 1.5px solid #E85D04;
-  border-radius: 10px;
-  padding: 0.6rem 1.1rem;
+  border-radius: 14px;
+  padding: 0.8rem 1.2rem;
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(232, 93, 4, 0.08);
 }
 
 .btn-card-add:hover {
-  background-color: #E85D04;
+  background: linear-gradient(135deg, #E85D04 0%, #D04D00 100%);
   color: #FFFFFF;
-  box-shadow: 0 6px 15px rgba(232, 93, 4, 0.25);
+  box-shadow: 0 8px 20px rgba(232, 93, 4, 0.28);
   transform: translateY(-2px);
 }
 
@@ -132,22 +153,22 @@
 }
 
 /* ---------------------------------------------------------
-   ESTADO VAZIO (Nenhum item cadastrado)
+   ESTADO VAZIO
    --------------------------------------------------------- */
 .card-vazio {
   grid-column: 1 / -1;
   text-align: center;
-  padding: 3.5rem 2rem !important;
+  padding: 4rem 2rem !important;
   background: #FFFDF9;
   border: 2px dashed #E5D5C5 !important;
-  border-radius: 20px !important;
+  border-radius: 24px !important;
   box-sizing: border-box;
 }
 
 .card-vazio p {
   margin: 0 !important;
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.95rem !important;
+  font-size: 1rem !important;
   font-weight: 600;
   letter-spacing: 1.5px;
   color: #A08C93 !important;
@@ -158,16 +179,16 @@
    --------------------------------------------------------- */
 @media (max-width: 576px) {
   #div-lista-itens.container {
-    padding: 1.8rem 1rem;
+    padding: 2rem 1rem;
   }
 
   .cards-grid {
     grid-template-columns: 1fr;
-    gap: 1.2rem;
+    gap: 1.5rem;
   }
 
-  .card-footer {
-    flex-direction: row;
-    justify-content: space-between;
+  .card-item {
+    min-height: auto;
+    padding: 2rem 1.3rem;
   }
 }
