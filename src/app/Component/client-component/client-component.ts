@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PessoaEndereco, Endereco } from '../../models/pessoa-endereco';
-import { PessoaEndereço } from '../../Service/Clienet/pessoa-endereço';
+import { PessoaEnderecoService } from '../../Service/Clienet/pessoa-endereço';
 
 
 @Component({
@@ -29,7 +29,7 @@ export class ClientComponent {
 
 
   //DECLARAÇÃO DO CONSTRUTOR
-  constructor(private Pessoa: PessoaEndereço, private route: ActivatedRoute, private cdr: ChangeDetectorRef) { }
+  constructor(private Pessoa: PessoaEnderecoService, private route: ActivatedRoute, private cdr: ChangeDetectorRef) { }
 
   exibeDados() {
     console.log(this.nome, this.data, this.cpf, this.sexo, this.email, this.telefone,this.numero, this.cep, this.complemento) //

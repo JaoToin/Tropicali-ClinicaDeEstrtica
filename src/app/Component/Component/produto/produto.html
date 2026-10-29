@@ -1,1 +1,139 @@
-<p>produto works!</p>
+<div id="cadastro">
+  <form id="cad" (ngSubmit)="enviaDadosClient()">
+
+    <h2 class="form-title">
+      Cadastro de Produtos <span>Tropicalí</span>
+      @if (editar) {
+        <small>(editando item #{{ iditem }})</small>
+      }
+    </h2>
+
+    <div class="form-group">
+      <label for="item1">Item</label>
+      <input type="text" id="item1" name="item1" [(ngModel)]="item1" placeholder="Nome do item">
+    </div>
+
+    <div class="form-group">
+      <label for="descricaoItem">Descrição</label>
+      <input type="text" id="descricaoItem" name="descricaoItem" [(ngModel)]="descricaoItem" placeholder="Descrição do item">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="idcategoria">ID Categoria</label>
+        <input type="number" id="idcategoria" name="idcategoria" [(ngModel)]="idcategoria" min="0">
+      </div>
+
+      <div class="form-group">
+        <label for="unidade">Unidade</label>
+        <input type="text" id="unidade" name="unidade" [(ngModel)]="unidade" placeholder="UN, KG, CX...">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="preco">Preço</label>
+        <input type="number" id="preco" name="preco" [(ngModel)]="preco" step="0.01" min="0">
+      </div>
+
+      <div class="form-group">
+        <label for="precoVenda">Preço de venda</label>
+        <input type="number" id="precoVenda" name="precoVenda" [(ngModel)]="precoVenda" step="0.01" min="0">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="codigoPreco">Código do preço</label>
+        <input type="number" id="codigoPreco" name="codigoPreco" [(ngModel)]="codigoPreco" min="0">
+      </div>
+
+      <div class="form-group">
+        <label for="estoque">Estoque</label>
+        <input type="number" id="estoque" name="estoque" [(ngModel)]="estoque" min="0">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Tipo</label>
+      <div class="radio-group">
+        <label class="radio-label">
+          <input type="radio" name="tipoItem" class="bntSelecao" [(ngModel)]="tipoItem" value="Produto"> Produto
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="tipoItem" class="bntSelecao" [(ngModel)]="tipoItem" value="Servico"> Serviço
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Situação</label>
+      <div class="radio-group">
+        <label class="radio-label">
+          <input type="radio" name="ativoProdutoServico" class="bntSelecao" [(ngModel)]="ativoProdutoServico" value="Ativo"> Ativo
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="ativoProdutoServico" class="bntSelecao" [(ngModel)]="ativoProdutoServico" value="Inativo"> Inativo
+        </label>
+      </div>
+    </div>
+
+    <div id="button">
+      <button type="submit" id="button_add">
+        {{ editar ? 'Salvar alterações' : 'Cadastrar no Tropicalí' }}
+      </button>
+
+      @if (editar) {
+        <button type="button" (click)="limpar()">Cancelar edição</button>
+      }
+    </div>
+
+  </form>
+
+  <!-- LISTAGEM -->
+  <div class="lista-produtos">
+    <h3>Produtos cadastrados</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Item</th>
+          <th>Descrição</th>
+          <th>Categoria</th>
+          <th>Tipo</th>
+          <th>Situação</th>
+          <th>Preço</th>
+          <th>Venda</th>
+          <th>Unidade</th>
+          <th>Estoque</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (p of listaItens(); track p.iditem) {
+          <tr>
+            <td>{{ p.iditem }}</td>
+            <td>{{ p.iditemNavigation.item1 }}</td>
+            <td>{{ p.iditemNavigation.descricaoItem }}</td>
+            <td>{{ p.iditemNavigation.idcategoria }}</td>
+            <td>{{ p.iditemNavigation.tipoItem }}</td>
+            <td>{{ p.iditemNavigation.ativoProdutoServico }}</td>
+            <td>{{ p.iditemNavigation.preco  }}</td>
+            <td>{{ p.precoVenda  }}</td>
+            <td>{{ p.unidade }}</td>
+            <td>{{ p.estoque ?? '-' }}</td>
+            <td>
+              <button type="button" (click)="carregaCampo(p.iditem)">Editar</button>
+              <button type="button" (click)="excluir(p)">Excluir</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="11">Nenhum produto cadastrado.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -14,9 +14,11 @@
           <li><a routerLink="/itens" class="lnk-menu"><img src="/IMG/catalogo.png" alt="CATALOGO DE ITENS"></a></li>
           <li><a routerLink="/carrinho" class="lnk-menu"><img src="/IMG/carrinho.png" alt="CARRINHO DE COMPRAS"></a></li>
           <li><a routerLink="/historia" class="lnk-menu"><img src="/IMG/livro.png" alt="NOSSA HISTORIA"></a></li>
+          <li><a routerLink="/cadastro" class="lnk-menu"><img src="/IMG/login.png" alt="CADASTRO"></a></li>
 
         }
         @if (sessao.perfil() === 'adm') {
+
           <li><a routerLink="/adm/atendimento" class="lnk-menu">Atendimento</a></li>
           <li><a routerLink="/adm/categoria" class="lnk-menu">Categoria</a></li>
           <li><a routerLink="/adm/estoque" class="lnk-menu">Estoque</a></li>
