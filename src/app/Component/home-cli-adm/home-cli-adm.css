@@ -158,3 +158,132 @@
       padding: 2.5rem 1.5rem;
     }
   }
+
+  /* =========================================================
+   MODAL / NEBLINA DE ACESSO ADM (CORRIGIDO)
+   ========================================================= */
+
+/* Fundo em Neblina que cobre a tela toda */
+.box-senha {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(45, 10, 20, 0.6); /* Fundo escuro semitransparente */
+  backdrop-filter: blur(10px); /* Efeito de desfoque/neblina */
+  -webkit-backdrop-filter: blur(10px);
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  z-index: 2000;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* Cartão centralizado que segura o formulário */
+.box-senha-card {
+  background: #FFFFFF;
+  border: 2px solid #D4AF37; /* Detalhe dourado */
+  border-radius: 24px;
+  padding: 2.2rem 2rem;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.box-senha-card h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  color: #2D0A14;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem 0;
+}
+
+/* Campo de Input de Senha */
+.box-senha input[type="password"] {
+  width: 100% !important;
+  height: 48px !important;
+  max-height: 48px !important;
+  padding: 0 1rem;
+  border: 1.5px solid #E5D5C5;
+  border-radius: 12px;
+  background-color: #FFFDF9;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  color: #2D0A14;
+  text-align: center;
+  outline: none;
+  box-sizing: border-box;
+  margin-bottom: 1.2rem;
+}
+
+.box-senha input[type="password"]:focus {
+  border-color: #E85D04;
+  box-shadow: 0 0 0 4px rgba(232, 93, 4, 0.15);
+}
+
+/* Contentor dos Botões lado a lado */
+.box-senha-acoes {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 0.8rem;
+  width: 100%;
+  height: auto !important;
+}
+
+/* Estilo estrito para impedir que os botões estiquem */
+.box-senha button {
+  flex: 1 !important;
+  height: 46px !important;
+  max-height: 46px !important;
+  min-height: 46px !important;
+  border-radius: 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* Botão Entrar */
+.box-senha .btn-entrar {
+  background: linear-gradient(135deg, #2D0A14 0%, #3D1220 100%);
+  color: #FAEDCD;
+  border: 1px solid #D4AF37;
+}
+
+.box-senha .btn-entrar:hover {
+  background: #E85D04;
+  color: #FFFFFF;
+  border-color: #E85D04;
+}
+
+/* Botão Cancelar */
+.box-senha .btn-cancelar {
+  background: transparent;
+  color: #5A2A38;
+  border: 1.5px solid #A08C93;
+}
+
+.box-senha .btn-cancelar:hover {
+  background: #FFF9F2;
+  color: #2D0A14;
+  border-color: #2D0A14;
+}
+
+/* Mensagem de Erro */
+.box-senha .erro {
+  color: #E85D04;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 1rem 0 0 0;
+}

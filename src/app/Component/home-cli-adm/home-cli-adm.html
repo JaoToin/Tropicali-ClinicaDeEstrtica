@@ -16,17 +16,23 @@
     </a>
 
   </div>
-
   @if (pedindoSenha()) {
     <div class="box-senha">
-      <input #campo type="password" placeholder="Senha do administrador"
-             (keyup.enter)="entrarNoAdm(campo.value)">
-      <button (click)="entrarNoAdm(campo.value)">Entrar</button>
-      <button (click)="pedindoSenha.set(false)">Cancelar</button>
+      <div class="box-senha-card">
+        <h3>Acesso Restrito</h3>
 
-      @if (erro()) {
-        <p class="erro">Senha incorreta.</p>
-      }
+        <input #campo type="password" placeholder="Senha do administrador"
+               (keyup.enter)="entrarNoAdm(campo.value)">
+
+        <div class="box-senha-acoes">
+          <button type="button" class="btn-entrar" (click)="entrarNoAdm(campo.value)">Entrar</button>
+          <button type="button" class="btn-cancelar" (click)="pedindoSenha.set(false)">Cancelar</button>
+        </div>
+
+        @if (erro()) {
+          <p class="erro">Senha incorreta.</p>
+        }
+      </div>
     </div>
   }
 </main>
