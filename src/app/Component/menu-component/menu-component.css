@@ -2,101 +2,124 @@
    CABEÇALHO / NAVBAR (TROPICALÍ)
    ========================================================= */
 
-#cabecalho {
-  width: 100%;
-  height: 100px; /* Aumentado de 80px para 100px para acomodar a logo maior */
-  padding: 0 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: var(--cor-principal);
-  box-sizing: border-box;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
+   #cabecalho {
+    width: 100%;
+    height: 100px;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--cor-principal);
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
 
-/* CONTAINER DA LOGO */
-#logo {
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
+  /* CONTAINER DA LOGO */
+  #logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
 
-#titulo {
-  border: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
+  #titulo {
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
 
-#logo .lnk-menu {
-  padding: 0;
-  background: transparent !important;
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
+  #logo .lnk-menu {
+    padding: 0;
+    background: transparent !important;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
 
-#logo .lnk-menu:hover {
-  opacity: 0.9;
-  background: transparent !important;
-}
+  #logo .lnk-menu:hover {
+    opacity: 0.9;
+    background: transparent !important;
+  }
 
-/* IMAGEM DA LOGO MAIOR */
-#titulo img {
-  max-height: 80px; /* Aumentado de 55px para 80px */
-  width: auto;
-  object-fit: contain;
-  display: block;
-  border-radius: 8px; /* Arredonda suavemente as cantos do cartão da logo */
-  transition: transform 0.3s ease;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
-}
+  /* IMAGEM DA LOGO */
+  #titulo img {
+    max-height: 80px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
+  }
 
-#logo:hover img {
-  transform: scale(1.03);
-}
+  #logo:hover img {
+    transform: scale(1.03);
+  }
 
-/* MENU DE NAVEGAÇÃO */
-#menu {
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
+  /* MENU DE NAVEGAÇÃO */
+  #menu {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
 
-#menu-ul {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 1.5rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
+  #menu-ul {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
 
-#menu-ul .lnk-menu {
-  text-decoration: none;
-  padding: 8px 14px;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--of);
-  transition: all 0.3s ease;
-  border-radius: 8px;
-  display: inline-block;
-}
+  #menu-ul .lnk-menu {
+    text-decoration: none;
+    padding: 8px 12px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--of);
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-#menu-ul .lnk-menu:hover {
-  opacity: 1;
-  color: var(--hover-link);
-  background-color: rgba(255, 255, 255, 0.08);
-}
+  #menu-ul .lnk-menu:hover {
+    opacity: 1;
+    color: var(--hover-link);
+    background-color: rgba(255, 255, 255, 0.08);
+  }
 
-#menu-ul img {
-  height: 32px;
-  width: auto;
-}
+  /* IMAGENS GERAIS DOS ÍCONES NO MENU */
+  #menu-ul img {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+  }
+
+  /* AUMENTAR ESPECIFICAMENTE O ÍCONE DO "X" (ÚLTIMO ITEM DO MENU OU PELA CLASSE) */
+  #menu-ul li:last-child img,
+  #menu-ul img.btn-fechar,
+  #menu-ul img[alt*="X"],
+  #menu-ul img[alt*="Sair"],
+  #menu-ul img[alt*="Fechar"] {
+    height: 42px; /* Aumentado de 32px para 42px */
+    width: auto;
+  }
+
+  /* SE O "X" FOR UM TEXTO/CARACTERE DENTRO DO LINK */
+  #menu-ul li:last-child .lnk-menu-x,
+  #menu-ul .btn-x {
+    font-size: 2rem; /* Tamanho para texto "X" */
+    font-weight: bold;
+    line-height: 1;
+  }

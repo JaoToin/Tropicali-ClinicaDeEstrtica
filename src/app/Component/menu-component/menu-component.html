@@ -14,7 +14,7 @@
           <li><a routerLink="/itens" class="lnk-menu"><img src="/IMG/catalogo.png" alt="CATALOGO DE ITENS"></a></li>
           <li><a routerLink="/carrinho" class="lnk-menu"><img src="/IMG/carrinho.png" alt="CARRINHO DE COMPRAS"></a></li>
           <li><a routerLink="/historia" class="lnk-menu"><img src="/IMG/livro.png" alt="NOSSA HISTORIA"></a></li>
-          
+
         }
         @if (sessao.perfil() === 'adm') {
           <li><a routerLink="/adm/atendimento" class="lnk-menu">Atendimento</a></li>
@@ -25,7 +25,7 @@
           <li><a routerLink="/adm/produto" class="lnk-menu">Produto</a></li>
         }
 
-        <li><a class="lnk-menu" (click)="sair()">Sair</a></li>
+        <li><a class="lnk-menu" (click)="sair()" >❌</a></li>
       </ul>
     </nav>
   </header>
