@@ -1,14 +1,14 @@
 import { Item } from './../../Service/item/item';
 import { Itens, ItemNavigation } from './../../models/item';
-import { Component, signal, inject, Input } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CarrinhoProduto } from '../../Service/Carrinho/carrinho';
-
+import { FormsModule } from '@angular/forms';
 
 
 
 @Component({
-  imports: [],
+  imports: [FormsModule],
   selector: 'app-card-component',
   styleUrl: './card-component.css',
   templateUrl: './card-component.html',

@@ -23,7 +23,7 @@ export class HomeCliAdm {
   entrarNoAdm(senha: string) {
     if (this.sessao.entrarComoAdm(senha)) {
       this.erro.set(false);
-      this.router.navigate(['/adm/itens']); // ajuste para sua rota de ADM
+      this.router.navigate(['/adm/homeadm']); // ajuste para sua rota de ADM
     } else {
       this.erro.set(true);
     }

@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 
 
-export class FuncionarioModule {
+export class FuncionarioService {
 
          //DECLARAÇÃO CONSTRUTOR
         constructor(private http: HttpClient) { }

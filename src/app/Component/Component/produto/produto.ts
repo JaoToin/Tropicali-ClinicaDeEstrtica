@@ -1,6 +1,6 @@
 import { Itens } from './../../../models/item';
 import { Item } from './../../../Service/item/item';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -45,6 +45,7 @@ export class Produto {
 
 
       ngOnInit() {
+        this.listarItens
         this.iditem = Number(this.route.snapshot.paramMap.get('id'))
         this.Item.listaritems().subscribe({
           next: (dados) => {

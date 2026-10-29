@@ -1,0 +1,199 @@
+/* =========================================================
+   PAINEL DE GERENCIAMENTO ADM (HOME ADM) - TROPICALÍ
+   ========================================================= */
+
+   .adm-dashboard-container {
+    width: 100%;
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    color: #2D0A14;
+  }
+
+  /* Header */
+  .adm-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .adm-header .tagline {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #D4AF37;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .adm-header h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #2D0A14;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .adm-header h1 span {
+    color: #E85D04;
+  }
+
+  .adm-header p {
+    font-size: 1rem;
+    color: #5A2A38;
+    margin: 0;
+  }
+
+  /* KPI Cards */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .kpi-card {
+    background: #FFFFFF;
+    border: 1.5px solid #FFEEDD;
+    border-radius: 20px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    box-shadow: 0 8px 20px rgba(45, 10, 20, 0.03);
+  }
+
+  .kpi-icon {
+    font-size: 2rem;
+    width: 55px;
+    height: 55px;
+    background: #FFF9F2;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #FFEEDD;
+  }
+
+  .kpi-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .kpi-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #5A2A38;
+    text-transform: uppercase;
+  }
+
+  .kpi-value {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.5rem;
+    color: #2D0A14;
+  }
+
+  /* Grade de Módulos */
+  .section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.6rem;
+    color: #2D0A14;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .modulos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 1.8rem;
+  }
+
+  .modulo-card {
+    background: #FFFFFF;
+    border: 1.5px solid #FFEEDD;
+    border-radius: 24px;
+    padding: 2rem 1.8rem;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 10px 25px rgba(45, 10, 20, 0.04);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .modulo-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #2D0A14, #D4AF37);
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .modulo-card:hover {
+    transform: translateY(-6px);
+    border-color: #D4AF37;
+    box-shadow: 0 18px 35px rgba(45, 10, 20, 0.12);
+  }
+
+  .modulo-card:hover::before {
+    opacity: 1;
+  }
+
+  .modulo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+  }
+
+  .modulo-icon {
+    font-size: 2rem;
+    background: #FFF9F2;
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #FFEEDD;
+  }
+
+  .arrow {
+    font-size: 1.3rem;
+    color: #E85D04;
+    transition: transform 0.3s ease;
+  }
+
+  .modulo-card:hover .arrow {
+    transform: translateX(5px);
+    color: #2D0A14;
+  }
+
+  .modulo-card h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #2D0A14;
+    margin: 0 0 0.6rem 0;
+  }
+
+  .modulo-card p {
+    font-size: 0.9rem;
+    color: #5A2A38;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Responsivo */
+  @media (max-width: 576px) {
+    .adm-dashboard-container { padding: 2rem 1rem; }
+    .modulos-grid { grid-template-columns: 1fr; }
+  }

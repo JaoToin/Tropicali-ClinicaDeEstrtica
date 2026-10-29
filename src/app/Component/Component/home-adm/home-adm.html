@@ -1,0 +1,108 @@
+<div class="adm-dashboard-container">
+
+  <!-- Cabeçalho do Painel -->
+  <header class="adm-header">
+    <div class="header-info">
+      <span class="tagline">Painel de Controlo</span>
+      <h1>Bem-vindo ao Gerenciamento <span>Tropicalí</span></h1>
+      <p>Selecione um módulo abaixo para gerir os registos da clínica.</p>
+    </div>
+  </header>
+
+  <!-- Resumo de Métricas (KPIs) -->
+  <section class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-icon">👥</div>
+      <div class="kpi-details">
+        <span class="kpi-label">Pessoas / Clientes</span>
+        <strong class="kpi-value">Ativos</strong>
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-icon">✨</div>
+      <div class="kpi-details">
+        <span class="kpi-label">Produtos & Serviços</span>
+        <strong class="kpi-value">Catálogo</strong>
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-icon">🩺</div>
+      <div class="kpi-details">
+        <span class="kpi-label">Equipa de Trabalho</span>
+        <strong class="kpi-value">Funcionários</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- Grade de Módulos de Gerenciamento -->
+  <section class="modulos-section">
+    <h2 class="section-title">Módulos Administrativos</h2>
+
+    <div class="modulos-grid">
+
+      <!-- Card: Pessoas -->
+      <a routerLink="/adm/pessoa" class="modulo-card">
+        <div class="modulo-header">
+          <span class="modulo-icon">👥</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <h3>Pessoas & Clientes</h3>
+        <p>Cadastrar pessoas com os seus endereços, alterar dados, eliminar e visualizar a lista completa.</p>
+      </a>
+
+      <!-- Card: Produto -->
+      <a routerLink="/adm/produto" class="modulo-card">
+        <div class="modulo-header">
+          <span class="modulo-icon">✨</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <h3>Produtos & Serviços</h3>
+        <p>Gestão de preços de venda, dados de inventário, categorias e descrições dos itens do catálogo.</p>
+      </a>
+
+      <!-- Card: Funcionários -->
+      <a routerLink="/adm/funcionarios" class="modulo-card">
+        <div class="modulo-header">
+          <span class="modulo-icon">🩺</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <h3>Funcionários</h3>
+        <p>Gestão de cargos, datas de admissão, equipa técnica e informações do pessoal da clínica.</p>
+      </a>
+
+      <!-- Card: Atendimento -->
+      <a routerLink="/adm/atendimento" class="modulo-card">
+        <div class="modulo-header">
+          <span class="modulo-icon">📋</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <h3>Atendimento</h3>
+        <p>Acompanhamento da fila de procedimentos, agendamentos e histórico de clientes.</p>
+      </a>
+
+      <!-- Card: Categoria -->
+      <a routerLink="/adm/categoria" class="modulo-card">
+        <div class="modulo-header">
+          <span class="modulo-icon">🏷️</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <h3>Categorias</h3>
+        <p>Organização dos procedimentos estéticos e classificação dos produtos da loja.</p>
+      </a>
+
+      <!-- Card: Estoque -->
+      <a routerLink="/adm/estoque" class="modulo-card">
+        <div class="modulo-header">
+          <span class="modulo-icon">📦</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <h3>Estoque</h3>
+        <p>Controlo de entradas, saídas e balanço do saldo de insumos da clínica.</p>
+      </a>
+
+    </div>
+  </section>
+
+</div>

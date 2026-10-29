@@ -1,0 +1,334 @@
+/* =========================================================
+   CADASTRO E GERENCIAMENTO DE FUNCIONÁRIOS - TROPICALÍ
+   ========================================================= */
+
+   #cadastro {
+    width: 100%;
+    max-width: 1100px;
+    margin: 2.5rem auto;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    color: #2D0A14;
+  }
+
+  /* ---------------------------------------------------------
+     FORMULÁRIO DE CADASTRO
+     --------------------------------------------------------- */
+  #cad {
+    background: #FFFFFF;
+    border: 1.5px solid #FFEEDD;
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 12px 35px rgba(45, 10, 20, 0.05);
+    margin-bottom: 3.5rem;
+    box-sizing: border-box;
+  }
+
+  .form-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2D0A14;
+    margin: 0 0 1.5rem 0;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #FFEEDD;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .form-title span {
+    color: #E85D04;
+  }
+
+  .form-title small {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #D4AF37;
+    margin-left: auto;
+  }
+
+  /* Títulos de Divisão do Formulário */
+  .form-section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #2D0A14;
+    margin: 1.5rem 0 1rem 0;
+    padding-left: 0.6rem;
+    border-left: 3.5px solid #E85D04;
+  }
+
+  /* Estrutura de Grupos e Linhas */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.2rem;
+    width: 100%;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 1.2rem;
+    width: 100%;
+  }
+
+  .form-row .form-group {
+    flex: 1;
+  }
+
+  .flex-1 { flex: 1; }
+  .flex-2 { flex: 2; }
+
+  .form-group label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #5A2A38;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Inputs de Texto, Email e Data */
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="date"] {
+    width: 100%;
+    height: 46px;
+    padding: 0 1rem;
+    border: 1.5px solid #E5D5C5;
+    border-radius: 12px;
+    background-color: #FFFDF9;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.92rem;
+    color: #2D0A14;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+  }
+
+  .form-group input:focus {
+    border-color: #E85D04;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(232, 93, 4, 0.12);
+  }
+
+  /* Radio Buttons (Sexo) */
+  .radio-group {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    height: 46px;
+  }
+
+  .radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #2D0A14;
+    cursor: pointer;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+  }
+
+  .radio-label:hover {
+    background-color: #FFF9F2;
+  }
+
+  .bntSelecao {
+    accent-color: #E85D04;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+  }
+
+  /* Botões do Formulário */
+  #button {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px dashed #FFEEDD;
+  }
+
+  #button_add {
+    flex: 2;
+    height: 48px;
+    background: linear-gradient(135deg, #2D0A14 0%, #3D1220 100%);
+    color: #FAEDCD;
+    border: 1px solid #D4AF37;
+    border-radius: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(45, 10, 20, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  #button_add:hover {
+    background: #E85D04;
+    color: #FFFFFF;
+    border-color: #E85D04;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(232, 93, 4, 0.3);
+  }
+
+  #button button[type="button"] {
+    flex: 1;
+    height: 48px;
+    background: transparent;
+    color: #5A2A38;
+    border: 1.5px solid #A08C93;
+    border-radius: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  #button button[type="button"]:hover {
+    background: #FFF9F2;
+    color: #2D0A14;
+    border-color: #2D0A14;
+  }
+
+  /* ---------------------------------------------------------
+     LISTAGEM / TABELA DE FUNCIONÁRIOS
+     --------------------------------------------------------- */
+  .lista-funcionarios {
+    background: #FFFFFF;
+    border: 1.5px solid #FFEEDD;
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(45, 10, 20, 0.04);
+    overflow-x: auto;
+  }
+
+  .lista-funcionarios h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.6rem;
+    color: #2D0A14;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .lista-funcionarios table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.88rem;
+  }
+
+  .lista-funcionarios thead tr {
+    background-color: #FFFDF9;
+    border-bottom: 2px solid #FFEEDD;
+  }
+
+  .lista-funcionarios th {
+    padding: 1rem 0.8rem;
+    font-weight: 700;
+    color: #2D0A14;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .lista-funcionarios tbody tr {
+    border-bottom: 1px solid #FFEEDD;
+    transition: background-color 0.2s ease;
+  }
+
+  .lista-funcionarios tbody tr:hover {
+    background-color: #FFF9F2;
+  }
+
+  .lista-funcionarios td {
+    padding: 0.9rem 0.8rem;
+    color: #5A2A38;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .text-center { text-align: center; }
+  .font-bold { font-weight: 700; color: #2D0A14; }
+
+  /* Badge do Cargo */
+  .badge-cargo {
+    background: #FFF9F2;
+    color: #E85D04;
+    border: 1px solid #FFEEDD;
+    padding: 0.25rem 0.6rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  /* Botões da Tabela */
+  .acoes-cell {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .btn-editar {
+    background-color: #FFF9F2;
+    color: #E85D04;
+    border: 1px solid #E85D04;
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-editar:hover {
+    background-color: #E85D04;
+    color: #FFFFFF;
+  }
+
+  .btn-excluir {
+    background-color: transparent;
+    color: #A08C93;
+    border: 1px solid #A08C93;
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-excluir:hover {
+    background-color: #2D0A14;
+    color: #FAEDCD;
+    border-color: #2D0A14;
+  }
+
+  /* Estado Tabela Vazia */
+  .tabela-vazia {
+    text-align: center !important;
+    padding: 3rem 1rem !important;
+    color: #A08C93;
+    font-weight: 600;
+  }
+
+  /* ---------------------------------------------------------
+     RESPONSIVIDADE
+     --------------------------------------------------------- */
+  @media (max-width: 768px) {
+    #cad { padding: 1.5rem; }
+    .form-row { flex-direction: column; gap: 0; }
+    #button { flex-direction: column; }
+  }

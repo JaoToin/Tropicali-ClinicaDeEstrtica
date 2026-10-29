@@ -11,6 +11,7 @@ import { Estoque } from './Component/Component/estoque/estoque';
 import { Funcionarios } from './Component/Component/funcionarios/funcionarios';
 import { Pessoa } from './Component/Component/pessoa/pessoa';
 import { Produto } from './Component/Component/produto/produto';
+import { HomeAdm } from './Component/Component/home-adm/home-adm';
 
 export const routes: Routes = [
 
@@ -51,6 +52,7 @@ export const routes: Routes = [
       { path: 'funcionarios', component: Funcionarios },
       { path: 'pessoa', component: Pessoa },
       { path: 'produto', component: Produto },
+      {path: 'homeadm', component:HomeAdm},
     ],
   },
 ];
