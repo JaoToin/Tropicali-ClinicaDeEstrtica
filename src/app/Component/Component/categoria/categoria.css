@@ -1,0 +1,211 @@
+/* =========================================================
+   LISTAGEM DE CATEGORIAS E ITENS RELACIONADOS - TROPICALÍ
+   ========================================================= */
+
+   .lista-categorias {
+    width: 100%;
+    max-width: 1100px;
+    margin: 2.5rem auto;
+    font-family: 'Montserrat', sans-serif;
+    color: #2D0A14;
+  }
+
+  .lista-categorias > h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2D0A14;
+    margin-bottom: 1.8rem;
+  }
+
+  /* ---------------------------------------------------------
+     CARD INDIVIDUAL DE CATEGORIA
+     --------------------------------------------------------- */
+  .card-categoria {
+    background: #FFFFFF;
+    border: 1.5px solid #FFEEDD;
+    border-radius: 20px;
+    padding: 1.8rem;
+    margin-bottom: 1.8rem;
+    box-shadow: 0 10px 25px rgba(45, 10, 20, 0.04);
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+
+  .card-categoria:hover {
+    border-color: #D4AF37;
+    box-shadow: 0 15px 35px rgba(45, 10, 20, 0.08);
+  }
+
+  /* Cabeçalho do Card da Categoria */
+  .categoria-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid #FFFDF9;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .categoria-topo h4 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #2D0A14;
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .categoria-topo h4 small {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #D4AF37; /* Detalhe em Ouro */
+  }
+
+  /* Agrupamento dos Botões no Topo do Card */
+  .categoria-topo > div {
+    display: flex;
+    gap: 0.6rem;
+  }
+
+  .categoria-topo button {
+    padding: 0.45rem 0.9rem;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  /* Botão Editar */
+  .categoria-topo button:first-of-type {
+    background-color: #FFF9F2;
+    color: #E85D04;
+    border: 1px solid #E85D04;
+  }
+
+  .categoria-topo button:first-of-type:hover {
+    background-color: #E85D04;
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(232, 93, 4, 0.2);
+  }
+
+  /* Botão Excluir */
+  .categoria-topo button:last-of-type {
+    background-color: transparent;
+    color: #A08C93;
+    border: 1px solid #A08C93;
+  }
+
+  .categoria-topo button:last-of-type:hover {
+    background-color: #2D0A14;
+    color: #FAEDCD;
+    border-color: #2D0A14;
+  }
+
+  /* ---------------------------------------------------------
+     TABELA INTERNA DE ITENS DA CATEGORIA
+     --------------------------------------------------------- */
+  .card-categoria table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.88rem;
+    background-color: #FFFDF9;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .card-categoria thead tr {
+    background-color: #FFF9F2;
+    border-bottom: 1.5px solid #FFEEDD;
+  }
+
+  .card-categoria th {
+    padding: 0.8rem 1rem;
+    font-weight: 700;
+    color: #2D0A14;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+  }
+
+  .card-categoria tbody tr {
+    border-bottom: 1px solid #FFEEDD;
+    transition: background-color 0.2s ease;
+  }
+
+  .card-categoria tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .card-categoria tbody tr:hover {
+    background-color: #FFFFFF;
+  }
+
+  .card-categoria td {
+    padding: 0.8rem 1rem;
+    color: #5A2A38;
+    vertical-align: middle;
+  }
+
+  /* ID do Item na Tabela */
+  .card-categoria td:first-child {
+    font-weight: 700;
+    color: #2D0A14;
+    width: 50px;
+  }
+
+  /* Preço do Item */
+  .card-categoria td:last-child {
+    font-weight: 700;
+    color: #2D0A14;
+  }
+
+  /* Célula de Tabela Vazia */
+  .card-categoria td[colspan="5"] {
+    text-align: center;
+    padding: 1.5rem;
+    color: #A08C93;
+    font-weight: 500;
+    font-style: italic;
+  }
+
+  /* Mensagem de nenhuma categoria cadastrada */
+  .lista-categorias > p {
+    background: #FFFFFF;
+    border: 1.5px dashed #A08C93;
+    border-radius: 16px;
+    padding: 2.5rem;
+    text-align: center;
+    color: #A08C93;
+    font-weight: 600;
+  }
+
+  /* ---------------------------------------------------------
+     RESPONSIVIDADE (Celular)
+     --------------------------------------------------------- */
+  @media (max-width: 600px) {
+    .card-categoria {
+      padding: 1.2rem;
+    }
+
+    .categoria-topo {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .categoria-topo > div {
+      width: 100%;
+    }
+
+    .categoria-topo button {
+      flex: 1;
+    }
+  }
