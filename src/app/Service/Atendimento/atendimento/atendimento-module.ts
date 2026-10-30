@@ -1,4 +1,4 @@
-import { Atendimento } from './../../../models/atendimento';
+import { AtendimentoModelo } from './../../../models/atendimento';
 import {Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -9,44 +9,44 @@ import { HttpClient } from '@angular/common/http';
 })
 
 
-export class AtendimentoModule {
+export class AtendimentoServico {
 
          //DECLARAÇÃO CONSTRUTOR
         constructor(private http: HttpClient) { }
 
         //ADICIONAR NA API
-        adicionarAtendimento(Atendimento: Atendimento): Observable<Atendimento> {
+        adicionarAtendimento(Atendimento: AtendimentoModelo): Observable<AtendimentoModelo> {
           const urlApi = `https://localhost:7077/api/Atendimento`
 
-          return this.http.post<Atendimento>(urlApi, Atendimento)
+          return this.http.post<AtendimentoModelo>(urlApi, Atendimento)
         }
 
         //LISTAR AtendimentoS NA API
-        listarAtendimentos(): Observable<Atendimento[]> {
+        listarAtendimentos(): Observable<AtendimentoModelo[]> {
           const urlApi = `https://localhost:7077/api/Atendimento`
 
-          return this.http.get<Atendimento []>(urlApi)
+          return this.http.get<AtendimentoModelo []>(urlApi)
         }
 
         //LISTAR Atendimento
-        listarAtendimento(idAtendimento: number):Observable<Atendimento>{
+        listarAtendimento(idAtendimento: number):Observable<AtendimentoModelo>{
           const urlApi = `https://localhost:7077/api/Atendimento/${idAtendimento}`
 
-          return this.http.get<Atendimento>(urlApi)
+          return this.http.get<AtendimentoModelo>(urlApi)
         }
 
         //EXCLUIR NA API
-        exluirAtendimento(Atendimento: Atendimento): Observable<Atendimento> {
-          const urlApi = `https://localhost:7077/api/Atendimento/${Atendimento.idPessoa}`
+        exluirAtendimento(Atendimento: AtendimentoModelo): Observable<AtendimentoModelo> {
+          const urlApi = `https://localhost:7077/api/Atendimento/${Atendimento.idAtendimento}`
 
-          return this.http.delete<Atendimento>(urlApi)
+          return this.http.delete<AtendimentoModelo>(urlApi)
         }
 
         //ALTERAR NA API
-        alterarAtendimento(Atendimento: Atendimento):Observable<Atendimento>{
-          const urlApi = `https://localhost:7077/api/Atendimento/${Atendimento.idPessoa}`
+        alterarAtendimento(Atendimento: AtendimentoModelo):Observable<AtendimentoModelo>{
+          const urlApi = `https://localhost:7077/api/Atendimento/${Atendimento.idAtendimento}`
 
-          return this.http.put<Atendimento  >(urlApi, Atendimento)
+          return this.http.put<AtendimentoModelo  >(urlApi, Atendimento)
         }
 
 

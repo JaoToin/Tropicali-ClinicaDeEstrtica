@@ -1,5 +1,7 @@
-export class Atendimento {
+export class AtendimentoModelo {
+  idAtendimento = 0
   idPessoa: number = 0;
+  nomePessoa: string = ''
   dataAtendimento: string = '';
   statusAtendimento: string = 'Aberto';
   itens: ItemAtendimento[] = [new ItemAtendimento()];
