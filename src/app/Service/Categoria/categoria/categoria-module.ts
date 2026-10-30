@@ -1,4 +1,4 @@
-import { Categoria } from './../../../models/categoria';
+import { CategoriaModelo } from './../../../models/categoria';
 import {Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -9,44 +9,44 @@ import { HttpClient } from '@angular/common/http';
 })
 
 
-export class CategoriaModule {
+export class CategoriaService {
 
          //DECLARAÇÃO CONSTRUTOR
         constructor(private http: HttpClient) { }
 
         //ADICIONAR NA API
-        adicionarCategoria(Categoria: Categoria): Observable<Categoria> {
+        adicionarCategoria(Categoria: CategoriaModelo): Observable<CategoriaModelo> {
           const urlApi = `https://localhost:7077/api/Categorias`
 
-          return this.http.post<Categoria>(urlApi, Categoria)
+          return this.http.post<CategoriaModelo>(urlApi, Categoria)
         }
 
         //LISTAR CategoriaS NA API
-        listarCategorias(): Observable<Categoria[]> {
+        listarCategorias(): Observable<CategoriaModelo[]> {
           const urlApi = `https://localhost:7077/api/Categorias`
 
-          return this.http.get<Categoria []>(urlApi)
+          return this.http.get<CategoriaModelo []>(urlApi)
         }
 
         //LISTAR Categoria
-        listarCategoria(idCategoria: number):Observable<Categoria>{
+        listarCategoria(idCategoria: number):Observable<CategoriaModelo>{
           const urlApi = `https://localhost:7077/api/Categorias/${idCategoria}`
 
-          return this.http.get<Categoria>(urlApi)
+          return this.http.get<CategoriaModelo>(urlApi)
         }
 
         //EXCLUIR NA API
-        exluirCategoria(Categoria: Categoria): Observable<Categoria> {
+        exluirCategoria(Categoria: CategoriaModelo): Observable<CategoriaModelo> {
           const urlApi = `https://localhost:7077/api/Categorias/${Categoria.idcategoria}`
 
-          return this.http.delete<Categoria>(urlApi)
+          return this.http.delete<CategoriaModelo>(urlApi)
         }
 
         //ALTERAR NA API
-        alterarCategoria(Categoria: Categoria):Observable<Categoria>{
+        alterarCategoria(Categoria: CategoriaModelo):Observable<CategoriaModelo>{
           const urlApi = `https://localhost:7077/api/Categorias/${Categoria.idcategoria}`
 
-          return this.http.put<Categoria  >(urlApi, Categoria)
+          return this.http.put<CategoriaModelo  >(urlApi, Categoria)
         }
 
 

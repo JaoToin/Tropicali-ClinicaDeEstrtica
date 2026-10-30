@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 
-export class EstoqueModule {
+export class EstoqueService {
 
            //DECLARAÇÃO CONSTRUTOR
           constructor(private http: HttpClient) { }

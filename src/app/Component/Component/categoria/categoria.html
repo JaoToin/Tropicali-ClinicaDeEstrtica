@@ -1,1 +1,47 @@
 <p>categoria works!</p>
+<div class="lista-categorias">
+  <h3>Categorias cadastradas</h3>
+
+  @for (c of listaCategoria(); track c.idcategoria) {
+    <div class="card-categoria">
+
+      <div class="categoria-topo">
+        <h4>{{ c.categoria }} <small>(#{{ c.idcategoria }})</small></h4>
+        <div>
+          <button type="button" (click)="carregaCampo(c.idcategoria)">Editar</button>
+          <button type="button" (click)="excluir(c)">Excluir</button>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Item</th>
+            <th>Descrição</th>
+            <th>Tipo</th>
+            <th>Preço</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (i of c.items; track i.iditem) {
+            <tr>
+              <td>{{ i.iditem }}</td>
+              <td>{{ i.item1 }}</td>
+              <td>{{ i.descricaoItem }}</td>
+              <td>{{ i.tipoItem }}</td>
+              <td>R$ {{ i.preco.toFixed(2) }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5">Nenhum item nesta categoria.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+    </div>
+  } @empty {
+    <p>Nenhuma categoria cadastrada.</p>
+  }
+</div>

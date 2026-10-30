@@ -39,6 +39,7 @@ export class Pessoa {
 
 
     ngOnInit() {
+      this.listarPessoas()
       this.pessoaId = Number(this.route.snapshot.paramMap.get('id'))
 
       if (this.pessoaId > 0) {
@@ -49,7 +50,7 @@ export class Pessoa {
     }
 
 
-        listarItens() {
+        listarPessoas() {
     this.Pessoa.listarpessoas()
       .subscribe({
         next: (dados) => {
@@ -143,38 +144,37 @@ export class Pessoa {
           }
         })
     }
-
-    excluir(Pessoa: PessoaEndereco) {
-        if(confirm(`Deseja excluir ${Pessoa.idPessoa} do Banco de Dados? `)){
-          this.Pessoa.exluirpessoa(Pessoa)
-          .subscribe({
-            next:(dados)=>{
-               this.listaPessoa.update(elem =>
-                elem.filter(a => a.idPessoa  !== a.idPessoa)
-              );
-
-              console.log('item excluído com Sucesso ', dados)
-            },
-            error: (msgErro) => {
-              console.log("Erro ao Excluir  o item ", msgErro)
-            }
-          })
-
+excluir(pessoa: PessoaEndereco) {
+  if (confirm(`Deseja excluir ${pessoa.nome} do Banco de Dados?`)) {
+    this.Pessoa.exluirpessoa(pessoa)
+      .subscribe({
+        next: (dados) => {
+          this.listaPessoa.update(lista =>
+            lista.filter(p => p.idPessoa !== pessoa.idPessoa)
+          )
+          console.log('Pessoa excluída com sucesso', dados)
+        },
+        error: (msgErro) => {
+          console.log("Erro ao excluir pessoa", msgErro)
         }
-        this.ngOnInit()
-      }
+      })
+  }
+}
 
-    limpar() {
-      this.nome = ''
-      this.cpf = ''
-      this.sexo = ''
-      this.cep = ''
-      this.numero = ''
-      this.complemento = ''
-      this.data = new Date()
-      this.email = ''
-      this.telefone = ''
-    }
+limpar() {
+  this.pessoaId = 0
+  this.enderecoId = 0
+  this.editar = false
+  this.nome = ''
+  this.cpf = ''
+  this.sexo = ''
+  this.cep = ''
+  this.numero = ''
+  this.complemento = ''
+  this.data = new Date
+  this.email = ''
+  this.telefone = ''
+}
 
 }
 

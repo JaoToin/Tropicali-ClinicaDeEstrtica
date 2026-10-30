@@ -45,7 +45,7 @@ export class Produto {
 
 
       ngOnInit() {
-        this.listarItens
+        this.listarItens()
         this.iditem = Number(this.route.snapshot.paramMap.get('id'))
         this.Item.listaritems().subscribe({
           next: (dados) => {
@@ -97,7 +97,7 @@ export class Produto {
               this.cdr.detectChanges()
             },
             error: (msgErro) => {
-              console.log("Erro ao Listar o client ", msgErro)
+              console.log("Erro ao Listar o Produto ", msgErro)
             }
           })
       }
@@ -120,6 +120,7 @@ export class Produto {
           this.Item.adicionaritem(Iten).subscribe({
             next: (resposta) => {
               console.log(resposta)
+              this.listarItens()
               this.limpar()
             },
             error: (msgErro) => console.log("Erro ao cadastrar", msgErro)
@@ -167,28 +168,22 @@ export class Produto {
       }
 
 
-  //EXCLUIR ATLETA
-  excluir(item: Itens) {
-    if(confirm(`Deseja excluir ${item.iditemNavigation.item1} do Banco de Dados? `)){
-      this.Item.exluiritem(item)
-      .subscribe({
-        next:(dados)=>{
-           this.listaItens.update(elem =>
-            elem.filter(a => a.iditemNavigation.iditem !== a.iditemNavigation.iditem)
-          );
-
-          console.log('item excluído com Sucesso ', dados)
-        },
-        error: (msgErro) => {
-          console.log("Erro ao Excluir  o item ", msgErro)
+      excluir(item: Itens) {
+        if (confirm(`Deseja excluir ${item.iditemNavigation.item1} do Banco de Dados?`)) {
+          this.Item.exluiritem(item)
+            .subscribe({
+              next: (dados) => {
+                this.listaItens.update(lista =>
+                  lista.filter(a => a.iditem !== item.iditem)
+                )
+                console.log('Item excluído com sucesso', dados)
+              },
+              error: (msgErro) => {
+                console.log("Erro ao excluir item", msgErro)
+              }
+            })
         }
-      })
-
-    }
-    this.ngOnInit()
-  }
-
-
+      }
 
 
 }
