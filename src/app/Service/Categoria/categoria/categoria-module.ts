@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class CategoriaService {
-  private readonly urlApi = 'https://localhost:7077/api/Categoria'   // ajuste aqui
+  private readonly urlApi = 'https://localhost:7077/api/Categoriums1'   // ajuste aqui
 
   constructor(private http: HttpClient) { }
 
