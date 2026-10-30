@@ -1,0 +1,93 @@
+<div id="cadastro">
+
+  <!-- FORMULÁRIO -->
+  <form id="cad" (ngSubmit)="enviaDadosClient()">
+
+    <h2 class="form-title">
+      Entrada de Estoque <span>Tropicalí</span>
+      @if (editar) {
+        <small>(editando entrada #{{ IdEntrada }})</small>
+      }
+    </h2>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="idItem">ID do Produto</label>
+        <input type="number" id="idItem" name="idItem" [(ngModel)]="idItem" min="1" placeholder="Ex.: 7">
+      </div>
+
+      <div class="form-group">
+        <label for="dataEntrada">Data da Entrada</label>
+        <input type="date" id="dataEntrada" name="dataEntrada" [(ngModel)]="dataEntrada">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="quantidadeEntrada">Quantidade</label>
+        <input type="number" id="quantidadeEntrada" name="quantidadeEntrada" [(ngModel)]="quantidadeEntrada" min="0">
+      </div>
+
+      <div class="form-group">
+        <label for="precoUnitario">Valor Unitário</label>
+        <input type="number" id="precoUnitario" name="precoUnitario" [(ngModel)]="precoUnitario" step="0.01" min="0">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="unidade">Unidade</label>
+      <input type="text" id="unidade" name="unidade" [(ngModel)]="unidade" placeholder="UN, KG, CX...">
+    </div>
+
+    <div id="button">
+      <button type="submit" id="button_add">
+        {{ editar ? 'Salvar alterações' : 'Registrar entrada' }}
+      </button>
+
+      @if (editar) {
+        <button type="button" (click)="limpar()">Cancelar edição</button>
+      }
+    </div>
+
+  </form>
+
+  <!-- LISTAGEM -->
+  <div class="lista-estoque">
+    <h3>Entradas registradas</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID Entrada</th>
+          <th>ID Produto</th>
+          <th>Data</th>
+          <th>Quantidade</th>
+          <th>Valor Unitário</th>
+          <th>Unidade</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (e of ListaEntradas(); track e.identradaProduto) {
+          <tr>
+            <td>{{ e.identradaProduto }}</td>
+            <td>{{ e.iditem }}</td>
+            <td>{{ e.dataEntradaProduto }}</td>
+            <td>{{ e.quantidadeEntrada }}</td>
+            <td>R$ {{ e.valorUnitarioEntrada }}</td>
+            <td>{{ e.unidade }}</td>
+            <td>
+              <button type="button" (click)="CarregarCampo(e.identradaProduto)">Editar</button>
+              <button type="button" (click)="excluir(e)">Excluir</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="7">Nenhuma entrada registrada.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+</div>

@@ -1,4 +1,4 @@
-import { EstoqueEntrada } from './../../../models/estoque-entrada';
+import { Entrada } from './../../../models/estoque-entrada';
 import {Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -14,38 +14,38 @@ export class EstoqueService {
           constructor(private http: HttpClient) { }
 
           //ADICIONAR NA API
-          adicionarEstoqueEntrada(estoqueEntrada: EstoqueEntrada): Observable<EstoqueEntrada> {
+          adicionarEstoqueEntrada(estoqueEntrada: Entrada): Observable<Entrada> {
             const urlApi = `https://localhost:7077/api/EstoqueEntrada`
 
-            return this.http.post<EstoqueEntrada>(urlApi, estoqueEntrada)
+            return this.http.post<Entrada>(urlApi, estoqueEntrada)
           }
 
           //LISTAR EstoqueEntradaS NA API
-          listarEstoqueEntradas(): Observable<EstoqueEntrada[]> {
+          listarEstoqueEntradas(): Observable<Entrada[]> {
             const urlApi = `https://localhost:7077/api/EstoqueEntrada`
 
-            return this.http.get<EstoqueEntrada []>(urlApi)
+            return this.http.get<Entrada []>(urlApi)
           }
 
           //LISTAR EstoqueEntrada
-          listarEstoqueEntrada(idEstoqueEntrada: number):Observable<EstoqueEntrada>{
+          listarEstoqueEntrada(idEstoqueEntrada: number):Observable<Entrada>{
             const urlApi = `https://localhost:7077/api/EstoqueEntrada/${idEstoqueEntrada}`
 
-            return this.http.get<EstoqueEntrada>(urlApi)
+            return this.http.get<Entrada>(urlApi)
           }
 
           //EXCLUIR NA API
-          exluirEstoqueEntrada(estoqueEntrada: EstoqueEntrada): Observable<EstoqueEntrada> {
-            const urlApi = `https://localhost:7077/api/EstoqueEntrada/${estoqueEntrada.idItem}`
+          exluirEstoqueEntrada(estoqueEntrada: Entrada): Observable<Entrada> {
+            const urlApi = `https://localhost:7077/api/EstoqueEntrada/${estoqueEntrada.identradaProduto}`
 
-            return this.http.delete<EstoqueEntrada>(urlApi)
+            return this.http.delete<Entrada>(urlApi)
           }
 
           //ALTERAR NA API
-          alterarEstoqueEntrada(estoqueEntrada: EstoqueEntrada):Observable<EstoqueEntrada>{
-            const urlApi = `https://localhost:7077/api/EstoqueEntrada/${estoqueEntrada.idItem}`
+          alterarEstoqueEntrada(estoqueEntrada: Entrada):Observable<Entrada>{
+            const urlApi = `https://localhost:7077/api/EstoqueEntrada/${estoqueEntrada.identradaProduto}`
 
-            return this.http.put<EstoqueEntrada  >(urlApi, estoqueEntrada)
+            return this.http.put<Entrada  >(urlApi, estoqueEntrada)
           }
 
 
