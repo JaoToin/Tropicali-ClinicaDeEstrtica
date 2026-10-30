@@ -88,6 +88,7 @@ export class Categoria {
         error: (msgErro) => console.log("Erro ao alterar", msgErro)
       })
     }
+    this.limpar()
   }
 
   excluir(cat: CategoriaModelo) {
