@@ -1,5 +1,5 @@
 import { FuncionarioService } from './../../../Service/Funcionario/funcionario/funcionario-module';
-import { Component, OnInit, signal, ChangeDetectorRef } from '@angular/core';
+import { Component, signal, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Funcionario, PessoaEndereco, Endereco } from '../../../models/funcionario';
@@ -10,7 +10,7 @@ import { Funcionario, PessoaEndereco, Endereco } from '../../../models/funcionar
   styleUrl: './funcionarios.css',
   templateUrl: './funcionarios.html',
 })
-export class Funcionarios implements OnInit {
+export class Funcionarios  {
 
   // Dados do funcionário
   idPessoa = 0
@@ -79,11 +79,11 @@ export class Funcionarios implements OnInit {
           const p = obj.pessoas?.[0]
           if (p) {
             this.nome = p.nome
-            this.cpf = p.cpf
             this.sexo = p.sexo
             this.data = p.dataNascimento
             this.email = p.email
-            this.telefone = p.telefone
+            this.cpf = String(p.cpf ?? '')
+            this.telefone = String(p.telefone ?? '')
 
             const end = p.enderecos?.[0]
             if (end) {
@@ -111,8 +111,9 @@ export class Funcionarios implements OnInit {
 
     const pessoa = new PessoaEndereco()
     pessoa.nome = this.nome
-    pessoa.cpf = this.cpf.replace(/\D/g, '')
-    pessoa.telefone = this.telefone.replace(/\D/g, '')
+    pessoa.cpf = String(this.cpf).replace(/\D/g, '')
+    pessoa.telefone = String(this.telefone).replace(/\D/g, '')
+    endereco.cep = String(this.cep).replace(/\D/g, '')
     pessoa.email = this.email
     pessoa.sexo = this.sexo
     pessoa.dataNascimento = this.data

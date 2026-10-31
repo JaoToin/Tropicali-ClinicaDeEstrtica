@@ -1,7 +1,7 @@
 import { FormsModule } from '@angular/forms';
 import { AtendimentoServico } from './../../../Service/Atendimento/atendimento/atendimento-module';
 import { Component, signal, ChangeDetectorRef } from '@angular/core';
-import { AtendimentoModelo} from '../../../models/atendimento';
+import { AtendimentoModelo, ItemAtendimento} from '../../../models/atendimento';
 import { ActivatedRoute } from '@angular/router';
 
 
@@ -18,6 +18,7 @@ export class Atendimento {
   dataatendimento = ''
   status = 'Aberto'
   editar = false
+  itensCarregados: ItemAtendimento[] = []
 
   ListaAtendimento = signal<AtendimentoModelo[]>([])
 
@@ -57,7 +58,8 @@ export class Atendimento {
         this.idpessoa = obj.idPessoa
         this.idatendimento = obj.idAtendimento
         this.dataatendimento = obj.dataAtendimento.substring(0, 10)
-        this.status = obj.statusAtendimento
+        this.status = obj.status
+        this.itensCarregados = obj.itens ?? []
         this.cdr.detectChanges()
       },
       error: (msgErro) => {
@@ -73,7 +75,7 @@ export class Atendimento {
     Atendimento.idPessoa = this.idpessoa
     Atendimento.dataAtendimento = this.dataatendimento
     Atendimento.statusAtendimento = this.status
-    Atendimento.itens = []
+    Atendimento.itens = this.editar ? this.itensCarregados : []
 
     if (!this.editar) {
       this.servico.adicionarAtendimento(Atendimento).subscribe({
@@ -129,6 +131,7 @@ export class Atendimento {
     this.dataatendimento = ''
     this.status = 'Aberto'
     this.editar = false
+    this.itensCarregados = []
   }
 
 
