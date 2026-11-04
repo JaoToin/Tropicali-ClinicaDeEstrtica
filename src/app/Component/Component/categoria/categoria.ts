@@ -61,6 +61,7 @@ export class Categoria {
         }
       })
   }
+  
 
   enviaDadosClient() {
     const Categoria = new CategoriaModelo()

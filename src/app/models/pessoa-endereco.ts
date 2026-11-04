@@ -1,5 +1,5 @@
 export class Endereco {
-  idEndereco: number = 0
+  idEndereco: number | null = null   // null = endereço novo
   idPessoa: number = 0
   cep: string = ''
   numero: string = ''
@@ -13,7 +13,7 @@ export class PessoaEndereco {
   telefone: string = ''
   email: string = ''
   sexo: string = ''
-  dataNascimento: Date = new Date
+  dataNascimento: string = ''        // "yyyy-MM-dd"
   ativoPessoa: string = 'S'
   enderecos: Endereco[] = []
 }

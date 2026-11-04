@@ -10,171 +10,154 @@ import { PessoaEndereco, Endereco } from '../../../models/pessoa-endereco';
   styleUrl: './pessoa.css',
   templateUrl: './pessoa.html',
 })
-export class Pessoa {
+export class Pessoa implements OnInit {
 
-
-  //DELCARAÇÃO DOS ATRIBUTOS DO COMPONENTE
   pessoaId = 0
   nome = ''
   cpf = ''
-  sexo = ''
+  sexo = ''              // M, F ou N (não declarar)
+  data = ''              // data de nascimento "yyyy-MM-dd"
+  email = ''
+  telefone = ''
+  enderecoId = 0
   cep = ''
   numero = ''
-  enderecoId = 0
-  complemento= ''
-  data = new Date()
-  telefone = ''
+  complemento = ''
   editar = false
-  email = ''
+
   listaPessoa = signal<PessoaEndereco[]>([])
 
+  constructor(
+    private servico: PessoaEnderecoService,
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
+  ) { }
 
-  //DECLARAÇÃO DO CONSTRUTOR
-  constructor(private Pessoa: PessoaEnderecoService, private route: ActivatedRoute, private cdr: ChangeDetectorRef) { }
+  ngOnInit() {
+    this.listarPessoas()
 
-  exibeDados() {
-    console.log(this.nome, this.data, this.cpf, this.sexo, this.email, this.telefone,this.numero, this.cep, this.complemento) //
+    const id = Number(this.route.snapshot.paramMap.get('id'))
+    if (id > 0) {
+      this.carregaCampo(id)
+    }
   }
 
+  // CPF, telefone e CEP chegam como número da API: converte para texto antes de limpar
+  private apenasDigitos(valor: unknown): string {
+    return String(valor ?? '').replace(/\D/g, '')
+  }
 
-
-    ngOnInit() {
-      this.listarPessoas()
-      this.pessoaId = Number(this.route.snapshot.paramMap.get('id'))
-
-      if (this.pessoaId > 0) {
-        this.editar = true
-        this.carregaCampo(this.pessoaId)
-      }
-
-    }
-
-
-        listarPessoas() {
-    this.Pessoa.listarpessoas()
+  listarPessoas() {
+    this.servico.listarpessoas()
       .subscribe({
         next: (dados) => {
-          //this.listaItens = [...dados].sort((a, b) => a.nome.localeCompare(b.nome))
           this.listaPessoa.set(
-            [...dados].sort((a, b) =>
-              a.nome.localeCompare(b.nome))
-          )},
-        error: (msgErro) => {
-          console.log("Erro", msgErro)
-        }
-
-      })
-
-  }
-
-    carregaCampo(idAtleta: number) {
-      this.editar = true
-      this.Pessoa.listarpessoa(idAtleta)
-        .subscribe({
-          next: (obj) => {
-            this.pessoaId = obj.idPessoa
-            this.nome = obj.nome
-            this.cpf = obj.cpf
-            this.sexo = obj.sexo
-            this.data = obj.dataNascimento
-            this.email = obj.email
-            this.telefone = obj.telefone
-
-            const end = obj.enderecos?.[0]
-            if (end) {
-              this.enderecoId = end.idEndereco
-              this.cep = end.cep
-              this.numero = end.numero
-              this.complemento = end.complemento
-            }
-
-            this.cdr.detectChanges()
-          },
-          error: (msgErro) => {
-            console.log("Erro ao Listar o client ", msgErro)
-          }
-        })
-    }
-    enviaDadosClient() {
-      const pessoa = new PessoaEndereco()
-      pessoa.nome = this.nome
-      pessoa.cpf = this.cpf.replace(/\D/g, '')           // só números
-      pessoa.telefone = this.telefone.replace(/\D/g, '') // só números
-      pessoa.email = this.email
-      pessoa.sexo = this.sexo
-      pessoa.dataNascimento = this.data                  // "yyyy-MM-dd"
-      pessoa.ativoPessoa = 'S'
-
-      const endereco = new Endereco()
-      endereco.cep = this.cep.replace(/\D/g, '')
-      endereco.numero = this.numero
-      endereco.complemento = this.complemento
-      pessoa.enderecos = [endereco]
-
-      if (!this.editar) {
-        this.Pessoa.adicionarpessoa(pessoa).subscribe({
-          next: (resposta) => {
-            console.log(resposta)
-            this.limpar()
-          },
-          error: (msgErro) => console.log("Erro ao cadastrar", msgErro)
-        })
-      } else {
-        pessoa.idPessoa = this.pessoaId
-        endereco.idPessoa = this.pessoaId
-        endereco.idEndereco = this.enderecoId
-
-        this.Pessoa.alterarpessoa(pessoa).subscribe({
-          next: (resposta) => {
-            console.log(resposta)
-            this.limpar()
-          },
-          error: (msgErro) => console.log("Erro ao alterar", msgErro)
-        })
-      }
-    }
-    listaAtleta(idAtleta: number) {
-      this.Pessoa.listarpessoa(idAtleta)
-        .subscribe({
-          next: (dados) => {
-            console.table(dados)
-          },
-          error: (msgErro) => {
-            console.log("Erro ao listar atletas ", msgErro)
-          }
-        })
-    }
-excluir(pessoa: PessoaEndereco) {
-  if (confirm(`Deseja excluir ${pessoa.nome} do Banco de Dados?`)) {
-    this.Pessoa.exluirpessoa(pessoa)
-      .subscribe({
-        next: (dados) => {
-          this.listaPessoa.update(lista =>
-            lista.filter(p => p.idPessoa !== pessoa.idPessoa)
+            [...dados].sort((a, b) => (a.nome ?? '').localeCompare(b.nome ?? ''))
           )
-          console.log('Pessoa excluída com sucesso', dados)
         },
-        error: (msgErro) => {
-          console.log("Erro ao excluir pessoa", msgErro)
-        }
+        error: (msgErro) => console.log('Erro ao listar pessoas', msgErro)
       })
   }
-}
 
-limpar() {
-  this.pessoaId = 0
-  this.enderecoId = 0
-  this.editar = false
-  this.nome = ''
-  this.cpf = ''
-  this.sexo = ''
-  this.cep = ''
-  this.numero = ''
-  this.complemento = ''
-  this.data = new Date
-  this.email = ''
-  this.telefone = ''
-}
+  carregaCampo(id: number) {
+    this.editar = true
+    this.servico.listarpessoa(id)
+      .subscribe({
+        next: (obj) => {
+          this.pessoaId = obj.idPessoa
+          this.nome = obj.nome ?? ''
+          this.cpf = String(obj.cpf ?? '')
+          this.sexo = obj.sexo ?? ''
+          this.data = String(obj.dataNascimento ?? '').substring(0, 10)
+          this.email = obj.email ?? ''
+          this.telefone = String(obj.telefone ?? '')
 
-}
+          const end = obj.enderecos?.[0]
+          if (end) {
+            this.enderecoId = end.idEndereco ?? 0
+            this.cep = String(end.cep ?? '')
+            this.numero = end.numero ?? ''
+            this.complemento = end.complemento ?? ''
+          } else {
+            this.enderecoId = 0
+            this.cep = ''
+            this.numero = ''
+            this.complemento = ''
+          }
 
+          this.cdr.detectChanges()
+        },
+        error: (msgErro) => console.log('Erro ao carregar pessoa', msgErro)
+      })
+  }
+
+  enviaDadosClient() {
+    const endereco = new Endereco()
+    endereco.cep = this.apenasDigitos(this.cep)
+    endereco.numero = this.numero
+    endereco.complemento = this.complemento
+
+    const pessoa = new PessoaEndereco()
+    pessoa.nome = this.nome
+    pessoa.cpf = this.apenasDigitos(this.cpf)
+    pessoa.telefone = this.apenasDigitos(this.telefone)
+    pessoa.email = this.email
+    pessoa.sexo = this.sexo
+    pessoa.dataNascimento = this.data
+    pessoa.ativoPessoa = 'S'
+    pessoa.enderecos = [endereco]
+
+    if (!this.editar) {
+      this.servico.adicionarpessoa(pessoa).subscribe({
+        next: (resposta) => {
+          console.log(resposta)
+          this.limpar()
+          this.listarPessoas()
+        },
+        error: (msgErro) => console.log('Erro ao cadastrar', msgErro)
+      })
+    } else {
+      pessoa.idPessoa = this.pessoaId
+      endereco.idPessoa = this.pessoaId
+      endereco.idEndereco = this.enderecoId > 0 ? this.enderecoId : null   // null = endereço novo
+
+      this.servico.alterarpessoa(pessoa).subscribe({
+        next: (resposta) => {
+          console.log(resposta)
+          this.limpar()
+          this.listarPessoas()
+        },
+        error: (msgErro) => console.log('Erro ao alterar', msgErro)
+      })
+    }
+  }
+
+  excluir(pessoa: PessoaEndereco) {
+    if (confirm(`Deseja excluir ${pessoa.nome} do Banco de Dados?`)) {
+      this.servico.exluirpessoa(pessoa)
+        .subscribe({
+          next: () => {
+            this.listaPessoa.update(lista =>
+              lista.filter(p => p.idPessoa !== pessoa.idPessoa)
+            )
+          },
+          error: (msgErro) => console.log('Erro ao excluir pessoa', msgErro)
+        })
+    }
+  }
+
+  limpar() {
+    this.pessoaId = 0
+    this.enderecoId = 0
+    this.nome = ''
+    this.cpf = ''
+    this.sexo = ''
+    this.cep = ''
+    this.numero = ''
+    this.complemento = ''
+    this.data = ''
+    this.email = ''
+    this.telefone = ''
+    this.editar = false
+  }
+}

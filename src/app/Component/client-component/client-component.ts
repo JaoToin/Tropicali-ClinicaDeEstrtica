@@ -22,7 +22,7 @@ export class ClientComponent {
   numero = ''
   enderecoId = 0
   complemento= ''
-  data = new Date()
+  data = ''
   telefone = ''
   editar = false
   email = ''
@@ -52,19 +52,24 @@ export class ClientComponent {
         .subscribe({
           next: (obj) => {
             this.pessoaId = obj.idPessoa
-            this.nome = obj.nome
-            this.cpf = obj.cpf
-            this.sexo = obj.sexo
-            this.data = obj.dataNascimento
-            this.email = obj.email
-            this.telefone = obj.telefone
+            this.nome = obj.nome ?? ''
+            this.cpf = String(obj.cpf ?? '')
+            this.sexo = obj.sexo ?? ''
+            this.data = String(obj.dataNascimento ?? '').substring(0, 10)
+            this.email = obj.email ?? ''
+            this.telefone = String(obj.telefone ?? '')
 
             const end = obj.enderecos?.[0]
             if (end) {
-              this.enderecoId = end.idEndereco
-              this.cep = end.cep
-              this.numero = end.numero
-              this.complemento = end.complemento
+              this.enderecoId = end.idEndereco ?? 0
+              this.cep = String(end.cep ?? '')
+              this.numero = end.numero ?? ''
+              this.complemento = end.complemento ?? ''
+            } else {
+              this.enderecoId = 0
+              this.cep = ''
+              this.numero = ''
+              this.complemento = ''
             }
 
             this.cdr.detectChanges()
@@ -131,7 +136,7 @@ export class ClientComponent {
       this.cep = ''
       this.numero = ''
       this.complemento = ''
-      this.data = new Date()
+      this.data = ''
       this.email = ''
       this.telefone = ''
     }

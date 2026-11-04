@@ -5,7 +5,7 @@ export class ProdutoItem {
   preco: number = 0;
   tipoItem: string = 'Produto';
   ativoProdutoServico: string = 'Ativo';
-  codigoPreco: number = 0;
+  codigoPreco: string = '';
   precoVenda: number = 0;
   unidade: string = 'UN';
 }

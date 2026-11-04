@@ -27,7 +27,7 @@ export class Produto {
   ativoProdutoServico = ''
 
   // Atributos de Itens
-  codigoPreco = 0
+  codigoPreco = ''
   precoVenda = 0
   unidade = ''
   estoque: number | null = null
@@ -152,7 +152,7 @@ export class Produto {
 
       limpar() {
         this.iditem = 0
-        this.codigoPreco = 0
+        this.codigoPreco = ''
         this.precoVenda = 0
         this.unidade = ''
         this.estoque = 0

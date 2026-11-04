@@ -1,10 +1,7 @@
-import { Component, signal, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Entrada } from '../../../models/estoque-entrada';
 import { EstoqueService } from '../../../Service/Estoque/estoque/estoque-module';
-import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-
-
 
 @Component({
   imports: [FormsModule],
@@ -12,108 +9,100 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './estoque.css',
   templateUrl: './estoque.html',
 })
-export class Estoque {
+export class Estoque implements OnInit {
 
-  IdEntrada = 0
-  idItem = 0;
-  quantidadeEntrada = 0;
-  precoUnitario = 0;
-  dataEntrada = '';
+  idEntrada = 0
+  idItem = 0
+  quantidadeEntrada = 0
+  precoUnitario = 0
+  dataEntrada = ''
   unidade = ''
   editar = false
 
   ListaEntradas = signal<Entrada[]>([])
 
-  constructor(
-    private servico: EstoqueService,
-    private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef
-  ){}
+  constructor(private servico: EstoqueService) { }
+
   ngOnInit() {
     this.listarEstoque()
-
-    this.IdEntrada = Number(this.route.snapshot.paramMap.get('id'))
-    if (this.IdEntrada > 0) {
-      this.CarregarCampo(this.IdEntrada)
-    }
   }
 
+  exibirDados(){
+    console.log(this.idEntrada, this.idItem, this.quantidadeEntrada, this.precoUnitario, this.dataEntrada, this.unidade)
+  }
+
+  // a API devolve um estoque por produto, com as entradas dentro: junta tudo numa lista só
   listarEstoque() {
-    this.servico.listarEstoqueEntradas()
+    this.servico.listarEstoques()
       .subscribe({
-        next: (dados) => {
+        next: (estoques) => {
+          const entradas = estoques.flatMap(e => e.entradas ?? [])
           this.ListaEntradas.set(
-            [...dados].sort((a, b) => b.dataEntradaProduto.localeCompare(a.dataEntradaProduto))
+            entradas.sort((a, b) =>
+              String(b.dataEntrada ?? '').localeCompare(String(a.dataEntrada ?? '')))
           )
         },
-        error: (msgErro) => console.log("Erro ao listar entradas", msgErro)
+        error: (msgErro) => console.log('Erro ao listar entradas', msgErro)
       })
   }
 
-  CarregarCampo(id: number) {
+  // editar: preenche o formulário com a linha da tabela
+  carregarCampo(e: Entrada) {
     this.editar = true
-    this.servico.listarEstoqueEntrada(id)
-      .subscribe({
-        next: (obj) => {
-          this.IdEntrada = obj.identradaProduto
-          this.idItem = obj.iditem
-          this.quantidadeEntrada = obj.quantidadeEntrada
-          this.precoUnitario = obj.valorUnitarioEntrada
-          this.dataEntrada = obj.dataEntradaProduto
-          this.unidade = obj.unidade
-          this.cdr.detectChanges()
-        },
-        error: (msgErro) => console.log("Erro ao carregar entrada", msgErro)
-      })
+    this.idEntrada = e.idEntrada
+    this.idItem = e.idItem
+    this.quantidadeEntrada = e.quantidadeEntrada
+    this.precoUnitario = e.precoUnitario
+    this.dataEntrada = String(e.dataEntrada ?? '').substring(0, 10)
+    this.unidade = e.unidade
   }
 
   enviaDadosClient() {
-    const estoque = new Entrada()
-    estoque.iditem = this.idItem
-    estoque.quantidadeEntrada = this.quantidadeEntrada
-    estoque.dataEntradaProduto = this.dataEntrada
-    estoque.valorUnitarioEntrada = this.precoUnitario
-    estoque.unidade = this.unidade
+    const entrada = new Entrada()
+    entrada.idItem = this.idItem
+    entrada.dataEntrada = this.dataEntrada
+    entrada.quantidadeEntrada = this.quantidadeEntrada
+    entrada.precoUnitario = this.precoUnitario
+    entrada.unidade = this.unidade
 
     if (!this.editar) {
-      this.servico.adicionarEstoqueEntrada(estoque).subscribe({
+      this.servico.adicionarEstoqueEntrada(entrada).subscribe({
         next: (resposta) => {
           console.log(resposta)
           this.limpar()
           this.listarEstoque()
         },
-        error: (msgErro) => console.log("Erro ao cadastrar", msgErro)
+        error: (msgErro) => console.log('Erro ao cadastrar', msgErro)
       })
     } else {
-      estoque.identradaProduto = this.IdEntrada
+      entrada.idEntrada = this.idEntrada
 
-      this.servico.alterarEstoqueEntrada(estoque).subscribe({
-        next: (resposta) => {
-          console.log(resposta)
+      this.servico.alterarEstoqueEntrada(entrada).subscribe({
+        next: () => {
           this.limpar()
           this.listarEstoque()
         },
-        error: (msgErro) => console.log("Erro ao alterar", msgErro)
+        error: (msgErro) => console.log('Erro ao alterar', msgErro)
       })
     }
   }
 
-  excluir(esto: Entrada) {
-    if (confirm(`Deseja excluir a entrada #${esto.identradaProduto}?`)) {
-      this.servico.exluirEstoqueEntrada(esto)
+  excluir(e: Entrada) {
+    if (confirm(`Deseja excluir a entrada #${e.idEntrada}?`)) {
+      this.servico.exluirEstoqueEntrada(e)
         .subscribe({
           next: () => {
             this.ListaEntradas.update(lista =>
-              lista.filter(a => a.identradaProduto !== esto.identradaProduto)
+              lista.filter(a => a.idEntrada !== e.idEntrada)
             )
           },
-          error: (msgErro) => console.log("Erro ao excluir entrada", msgErro)
+          error: (msgErro) => console.log('Erro ao excluir entrada', msgErro)
         })
     }
   }
 
   limpar() {
-    this.IdEntrada = 0
+    this.idEntrada = 0
     this.idItem = 0
     this.quantidadeEntrada = 0
     this.dataEntrada = ''
@@ -121,7 +110,4 @@ export class Estoque {
     this.unidade = ''
     this.editar = false
   }
-
-
-
 }

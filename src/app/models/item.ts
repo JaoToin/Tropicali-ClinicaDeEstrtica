@@ -10,7 +10,7 @@ export class ItemNavigation {
 
 export class Itens {
   iditem: number = 0
-  codigoPreco: number = 0
+  codigoPreco: string = ''
   precoVenda: number = 0
   unidade: string = ''
   estoque: number | null = null
