@@ -1,7 +1,10 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Entrada } from '../../../models/estoque-entrada';
+import { Itens } from '../../../models/item';
 import { EstoqueService } from '../../../Service/Estoque/estoque/estoque-module';
+import { Item } from '../../../Service/item/item';
+import { normalizar, mensagemErro } from '../../../../../Util/util';
 
 @Component({
   imports: [FormsModule],
@@ -20,15 +23,54 @@ export class Estoque implements OnInit {
   editar = false
 
   ListaEntradas = signal<Entrada[]>([])
+  produtos = signal<Itens[]>([])
+  busca = signal('')
 
-  constructor(private servico: EstoqueService) { }
+  // id do produto -> nome do produto
+  nomes = computed(() => {
+    const mapa = new Map<number, string>()
+    for (const p of this.produtos()) {
+      mapa.set(p.iditem, p.iditemNavigation?.item1 ?? '')
+    }
+    return mapa
+  })
+
+  // lista depois da pesquisa (nome do produto ou id)
+  entradasFiltradas = computed(() => {
+    const termo = normalizar(this.busca())
+    if (!termo) {
+      return this.ListaEntradas()
+    }
+    return this.ListaEntradas().filter(e =>
+      normalizar(this.nomeProduto(e.idItem)).includes(termo)
+      || String(e.idItem) === termo)
+  })
+
+  constructor(
+    private servico: EstoqueService,
+    private itemService: Item
+  ) { }
 
   ngOnInit() {
+    this.listarProdutos()
     this.listarEstoque()
   }
 
-  exibirDados(){
-    console.log(this.idEntrada, this.idItem, this.quantidadeEntrada, this.precoUnitario, this.dataEntrada, this.unidade)
+  nomeProduto(id: number): string {
+    return this.nomes().get(id) ?? `Produto #${id}`
+  }
+
+  listarProdutos() {
+    this.itemService.listaritems()
+      .subscribe({
+        next: (dados) => {
+          this.produtos.set(
+            [...dados].sort((a, b) =>
+              (a.iditemNavigation?.item1 ?? '').localeCompare(b.iditemNavigation?.item1 ?? ''))
+          )
+        },
+        error: (msgErro) => console.log('Erro ao listar produtos', msgErro)
+      })
   }
 
   // a API devolve um estoque por produto, com as entradas dentro: junta tudo numa lista só
@@ -58,6 +100,11 @@ export class Estoque implements OnInit {
   }
 
   enviaDadosClient() {
+    if (this.idItem <= 0 || !this.dataEntrada) {
+      alert('Escolha o produto e a data da entrada.')
+      return
+    }
+
     const entrada = new Entrada()
     entrada.idItem = this.idItem
     entrada.dataEntrada = this.dataEntrada
@@ -67,12 +114,14 @@ export class Estoque implements OnInit {
 
     if (!this.editar) {
       this.servico.adicionarEstoqueEntrada(entrada).subscribe({
-        next: (resposta) => {
-          console.log(resposta)
+        next: () => {
           this.limpar()
           this.listarEstoque()
         },
-        error: (msgErro) => console.log('Erro ao cadastrar', msgErro)
+        error: (msgErro) => {
+          console.log('Erro ao cadastrar', msgErro)
+          alert(mensagemErro(msgErro))
+        }
       })
     } else {
       entrada.idEntrada = this.idEntrada
@@ -82,7 +131,10 @@ export class Estoque implements OnInit {
           this.limpar()
           this.listarEstoque()
         },
-        error: (msgErro) => console.log('Erro ao alterar', msgErro)
+        error: (msgErro) => {
+          console.log('Erro ao alterar', msgErro)
+          alert(mensagemErro(msgErro))
+        }
       })
     }
   }
@@ -96,7 +148,10 @@ export class Estoque implements OnInit {
               lista.filter(a => a.idEntrada !== e.idEntrada)
             )
           },
-          error: (msgErro) => console.log('Erro ao excluir entrada', msgErro)
+          error: (msgErro) => {
+            console.log('Erro ao excluir entrada', msgErro)
+            alert(mensagemErro(msgErro))
+          }
         })
     }
   }
