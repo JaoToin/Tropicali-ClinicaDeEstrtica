@@ -11,8 +11,13 @@
     </h2>
 
     <div class="form-group">
-      <label for="idpessoa">ID da Pessoa</label>
-      <input type="number" id="idpessoa" name="idpessoa" [(ngModel)]="idpessoa" min="1" placeholder="Ex.: 9">
+      <label for="idpessoa">Pessoa</label>
+      <select id="idpessoa" name="idpessoa" [(ngModel)]="idpessoa">
+        <option [ngValue]="0">Selecione a pessoa</option>
+        @for (p of pessoas(); track p.idPessoa) {
+          <option [ngValue]="p.idPessoa">{{ p.nome }} (#{{ p.idPessoa }})</option>
+        }
+      </select>
     </div>
 
     <div class="form-row">
@@ -24,9 +29,9 @@
       <div class="form-group">
         <label for="status">Status</label>
         <select id="status" name="status" [(ngModel)]="status">
-          <option value="Aberto">Aberto</option>
-          <option value="Concluido">Concluído</option>
-          <option value="Cancelado">Cancelado</option>
+          <option value="A">Aberto</option>
+          <option value="C">Concluído</option>
+          <option value="X">Cancelado</option>
         </select>
       </div>
     </div>
@@ -47,23 +52,29 @@
   <div class="lista-atendimentos">
     <h3>Atendimentos registrados</h3>
 
+    <input type="search" class="busca-input"
+           placeholder="Pesquisar pelo nome da pessoa, status ou número..."
+           [ngModel]="busca()" (ngModelChange)="busca.set($event)">
+
     <table>
       <thead>
         <tr>
           <th>ID</th>
-          <th>ID Pessoa</th>
+          <th>Pessoa</th>
           <th>Data</th>
           <th>Status</th>
+          <th>Itens</th>
           <th>Ações</th>
         </tr>
       </thead>
       <tbody>
-        @for (a of ListaAtendimento(); track a.idAtendimento) {
+        @for (a of atendimentosFiltrados(); track a.idAtendimento) {
           <tr>
             <td>{{ a.idAtendimento }}</td>
-            <td>{{ a.idPessoa }}</td>
+            <td>{{ a.nomePessoa }} (#{{ a.idPessoa }})</td>
             <td>{{ a.dataAtendimento }}</td>
-            <td>{{ a.statusAtendimento }}</td>
+            <td>{{ rotuloStatus(a.status) }}</td>
+            <td>{{ a.itens.length }}</td>
             <td>
               <button type="button" (click)="carregarCampo(a.idAtendimento)">Editar</button>
               <button type="button" (click)="excluir(a)">Excluir</button>
@@ -71,7 +82,7 @@
           </tr>
         } @empty {
           <tr>
-            <td colspan="5">Nenhum atendimento registrado.</td>
+            <td colspan="6">Nenhum atendimento encontrado.</td>
           </tr>
         }
       </tbody>

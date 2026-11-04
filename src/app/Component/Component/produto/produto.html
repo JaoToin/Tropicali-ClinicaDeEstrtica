@@ -1,4 +1,6 @@
 <div id="cadastro">
+
+  <!-- FORMULÁRIO -->
   <form id="cad" (ngSubmit)="enviaDadosClient()">
 
     <h2 class="form-title">
@@ -20,8 +22,13 @@
 
     <div class="form-row">
       <div class="form-group">
-        <label for="idcategoria">ID Categoria</label>
-        <input type="number" id="idcategoria" name="idcategoria" [(ngModel)]="idcategoria" min="0">
+        <label for="idcategoria">Categoria</label>
+        <select id="idcategoria" name="idcategoria" [(ngModel)]="idcategoria">
+          <option [ngValue]="0">Selecione a categoria</option>
+          @for (c of categorias(); track c.idcategoria) {
+            <option [ngValue]="c.idcategoria">{{ c.categoria }}</option>
+          }
+        </select>
       </div>
 
       <div class="form-group">
@@ -42,26 +49,19 @@
       </div>
     </div>
 
-    <div class="form-row">
-      <div class="form-group">
-        <label for="codigoPreco">Código do preço</label>
-        <input type="text" id="codigoPreco" name="codigoPreco" [(ngModel)]="codigoPreco" min="0">
-      </div>
-
-      <div class="form-group">
-        <label for="estoque">Estoque</label>
-        <input type="number" id="estoque" name="estoque" [(ngModel)]="estoque" min="0">
-      </div>
+    <div class="form-group">
+      <label for="codigoPreco">Código do preço</label>
+      <input type="text" id="codigoPreco" name="codigoPreco" [(ngModel)]="codigoPreco" placeholder="Ex.: SRV-001">
     </div>
 
     <div class="form-group">
       <label>Tipo</label>
       <div class="radio-group">
         <label class="radio-label">
-          <input type="radio" name="tipoItem" class="bntSelecao" [(ngModel)]="tipoItem" value="Produto"> Produto
+          <input type="radio" name="tipoItem" class="bntSelecao" [(ngModel)]="tipoItem" value="P"> Produto
         </label>
         <label class="radio-label">
-          <input type="radio" name="tipoItem" class="bntSelecao" [(ngModel)]="tipoItem" value="Servico"> Serviço
+          <input type="radio" name="tipoItem" class="bntSelecao" [(ngModel)]="tipoItem" value="S"> Serviço
         </label>
       </div>
     </div>
@@ -70,10 +70,10 @@
       <label>Situação</label>
       <div class="radio-group">
         <label class="radio-label">
-          <input type="radio" name="ativoProdutoServico" class="bntSelecao" [(ngModel)]="ativoProdutoServico" value="Ativo"> Ativo
+          <input type="radio" name="ativoProdutoServico" class="bntSelecao" [(ngModel)]="ativoProdutoServico" value="A"> Ativo
         </label>
         <label class="radio-label">
-          <input type="radio" name="ativoProdutoServico" class="bntSelecao" [(ngModel)]="ativoProdutoServico" value="Inativo"> Inativo
+          <input type="radio" name="ativoProdutoServico" class="bntSelecao" [(ngModel)]="ativoProdutoServico" value="I"> Inativo
         </label>
       </div>
     </div>
@@ -94,6 +94,10 @@
   <div class="lista-produtos">
     <h3>Produtos cadastrados</h3>
 
+    <input type="search" class="busca-input"
+           placeholder="Pesquisar produto pelo nome ou descrição..."
+           [ngModel]="busca()" (ngModelChange)="busca.set($event)">
+
     <table>
       <thead>
         <tr>
@@ -106,23 +110,21 @@
           <th>Preço</th>
           <th>Venda</th>
           <th>Unidade</th>
-          <th>Estoque</th>
           <th>Ações</th>
         </tr>
       </thead>
       <tbody>
-        @for (p of listaItens(); track p.iditem) {
+        @for (p of itensFiltrados(); track p.iditem) {
           <tr>
             <td>{{ p.iditem }}</td>
-            <td>{{ p.iditemNavigation.item1 }}</td>
-            <td>{{ p.iditemNavigation.descricaoItem }}</td>
-            <td>{{ p.iditemNavigation.idcategoria }}</td>
-            <td>{{ p.iditemNavigation.tipoItem }}</td>
-            <td>{{ p.iditemNavigation.ativoProdutoServico }}</td>
-            <td>{{ p.iditemNavigation.preco  }}</td>
-            <td>{{ p.precoVenda  }}</td>
+            <td>{{ p.iditemNavigation?.item1 }}</td>
+            <td>{{ p.iditemNavigation?.descricaoItem }}</td>
+            <td>{{ nomeCategoria(p.iditemNavigation?.idcategoria) }}</td>
+            <td>{{ rotuloTipo(p.iditemNavigation?.tipoItem) }}</td>
+            <td>{{ rotuloSituacao(p.iditemNavigation?.ativoProdutoServico) }}</td>
+            <td>{{ p.iditemNavigation?.preco }}</td>
+            <td>{{ p.precoVenda }}</td>
             <td>{{ p.unidade }}</td>
-            <td>{{ p.estoque ?? '-' }}</td>
             <td>
               <button type="button" (click)="carregaCampo(p.iditem)">Editar</button>
               <button type="button" (click)="excluir(p)">Excluir</button>
@@ -130,10 +132,11 @@
           </tr>
         } @empty {
           <tr>
-            <td colspan="11">Nenhum produto cadastrado.</td>
+            <td colspan="10">Nenhum produto encontrado.</td>
           </tr>
         }
       </tbody>
     </table>
   </div>
+
 </div>

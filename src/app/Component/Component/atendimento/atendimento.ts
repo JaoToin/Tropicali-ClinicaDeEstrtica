@@ -1,9 +1,11 @@
 import { FormsModule } from '@angular/forms';
 import { AtendimentoServico } from './../../../Service/Atendimento/atendimento/atendimento-module';
-import { Component, signal, ChangeDetectorRef } from '@angular/core';
-import { AtendimentoModelo, ItemAtendimento} from '../../../models/atendimento';
+import { PessoaEnderecoService } from './../../../Service/Clienet/pessoa-endereço';
+import { Component, OnInit, signal, computed, ChangeDetectorRef } from '@angular/core';
+import { AtendimentoModelo, ItemAtendimento } from '../../../models/atendimento';
+import { PessoaEndereco } from '../../../models/pessoa-endereco';
 import { ActivatedRoute } from '@angular/router';
-
+import { normalizar, mensagemErro } from '../../../../../Util/util';
 
 @Component({
   imports: [FormsModule],
@@ -11,30 +13,70 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './atendimento.css',
   templateUrl: './atendimento.html',
 })
-export class Atendimento {
+export class Atendimento implements OnInit {
 
   idatendimento = 0
   idpessoa = 0
   dataatendimento = ''
-  status = 'Aberto'
+  status = 'A'                          // A = aberto, C = concluído, X = cancelado
   editar = false
+
+  // itens do atendimento carregado: são reenviados na edição para não serem apagados
   itensCarregados: ItemAtendimento[] = []
 
   ListaAtendimento = signal<AtendimentoModelo[]>([])
+  pessoas = signal<PessoaEndereco[]>([])
+  busca = signal('')
+
+  // lista depois da pesquisa (nome da pessoa, id ou status)
+  atendimentosFiltrados = computed(() => {
+    const termo = normalizar(this.busca())
+    if (!termo) {
+      return this.ListaAtendimento()
+    }
+    return this.ListaAtendimento().filter(a =>
+      normalizar(a.nomePessoa).includes(termo)
+      || normalizar(this.rotuloStatus(a.status)).includes(termo)
+      || String(a.idAtendimento) === termo)
+  })
 
   constructor(
     private servico: AtendimentoServico,
+    private pessoaService: PessoaEnderecoService,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef
-  ){}
+  ) { }
 
   ngOnInit() {
     this.listarAtendimentos()
+    this.listarPessoas()
 
-    this.idatendimento = Number(this.route.snapshot.paramMap.get('id'))
-    if (this.idatendimento > 0) {
-      this.carregarCampo(this.idatendimento)
+    const id = Number(this.route.snapshot.paramMap.get('id'))
+    if (id > 0) {
+      this.carregarCampo(id)
     }
+  }
+
+  // a coluna do banco é curta: o sistema grava só a letra e mostra o texto
+  rotuloStatus(s: string | undefined): string {
+    switch (s) {
+      case 'A': return 'Aberto'
+      case 'C': return 'Concluído'
+      case 'X': return 'Cancelado'
+      default: return s ?? ''
+    }
+  }
+
+  listarPessoas() {
+    this.pessoaService.listarpessoas()
+      .subscribe({
+        next: (dados) => {
+          this.pessoas.set(
+            [...dados].sort((a, b) => (a.nome ?? '').localeCompare(b.nome ?? ''))
+          )
+        },
+        error: (msgErro) => console.log('Erro ao listar pessoas', msgErro)
+      })
   }
 
   listarAtendimentos() {
@@ -43,96 +85,94 @@ export class Atendimento {
         next: (dados) => {
           this.ListaAtendimento.set(
             [...dados].sort((a, b) =>
-              (b.dataAtendimento ?? '').localeCompare(a.dataAtendimento ?? ''))
+              String(b.dataAtendimento ?? '').localeCompare(String(a.dataAtendimento ?? '')))
           )
         },
-        error: (msgErro) => console.log("Erro ao listar atendimentos", msgErro)
+        error: (msgErro) => console.log('Erro ao listar atendimentos', msgErro)
       })
   }
 
-  carregarCampo(id: number){
+  carregarCampo(id: number) {
     this.editar = true
     this.servico.listarAtendimento(id)
-    .subscribe({
-      next: (obj) => {
-        this.idpessoa = obj.idPessoa
-        this.idatendimento = obj.idAtendimento
-        this.dataatendimento = obj.dataAtendimento.substring(0, 10)
-        this.status = obj.status
-        this.itensCarregados = obj.itens ?? []
-        this.cdr.detectChanges()
-      },
-      error: (msgErro) => {
-        console.log("Erro ao carregar Atendimento", msgErro)
-      }
-    })
-
+      .subscribe({
+        next: (obj) => {
+          this.idatendimento = obj.idAtendimento
+          this.idpessoa = obj.idPessoa
+          this.dataatendimento = String(obj.dataAtendimento ?? '').substring(0, 10)
+          this.status = obj.status
+          this.itensCarregados = obj.itens ?? []
+          this.cdr.detectChanges()
+        },
+        error: (msgErro) => {
+          console.log('Erro ao carregar atendimento', msgErro)
+          alert(mensagemErro(msgErro))
+        }
+      })
   }
 
-  enviarDados(){
-    const Atendimento = new AtendimentoModelo()
-
-    Atendimento.idPessoa = this.idpessoa
-    Atendimento.dataAtendimento = this.dataatendimento
-    Atendimento.statusAtendimento = this.status
-    Atendimento.itens = this.editar ? this.itensCarregados : []
-
-    if (!this.editar) {
-      this.servico.adicionarAtendimento(Atendimento).subscribe({
-        next: (resposta) => {
-          console.log(resposta)
-          this.limpar()
-          this.listarAtendimentos()
-        },
-        error: (msgErro) => console.log("Erro ao cadastrar", msgErro)
-      })
-    } else {
-      Atendimento.idAtendimento = this.idatendimento
-
-      this.servico.alterarAtendimento(Atendimento).subscribe({
-        next: (resposta) => {
-          console.log(resposta)
-          this.limpar()
-          this.listarAtendimentos()
-        },
-        error: (msgErro) => console.log("Erro ao alterar", msgErro)
-      })
+  enviarDados() {
+    if (this.idpessoa <= 0 || !this.dataatendimento) {
+      alert('Escolha a pessoa e a data do atendimento.')
+      return
     }
 
+    const atendimento = new AtendimentoModelo()
+    atendimento.idPessoa = this.idpessoa
+    atendimento.dataAtendimento = this.dataatendimento
+    atendimento.statusAtendimento = this.status
+    atendimento.itens = this.editar ? this.itensCarregados : []   // sem isto a API apagaria os itens
+
+    if (!this.editar) {
+      this.servico.adicionarAtendimento(atendimento).subscribe({
+        next: () => {
+          this.limpar()
+          this.listarAtendimentos()
+        },
+        error: (msgErro) => {
+          console.log('Erro ao cadastrar', msgErro)
+          alert(mensagemErro(msgErro))
+        }
+      })
+    } else {
+      atendimento.idAtendimento = this.idatendimento
+
+      this.servico.alterarAtendimento(atendimento).subscribe({
+        next: () => {
+          this.limpar()
+          this.listarAtendimentos()
+        },
+        error: (msgErro) => {
+          console.log('Erro ao alterar', msgErro)
+          alert(mensagemErro(msgErro))
+        }
+      })
+    }
   }
 
-
   excluir(aten: AtendimentoModelo) {
-    if (confirm(`Deseja excluir o Atendimento ${aten.idAtendimento} do Banco de Dados?`)) {
+    if (confirm(`Deseja excluir o atendimento #${aten.idAtendimento}?`)) {
       this.servico.exluirAtendimento(aten)
         .subscribe({
-          next: (dados) => {
+          next: () => {
             this.ListaAtendimento.update(lista =>
               lista.filter(a => a.idAtendimento !== aten.idAtendimento)
             )
-            console.log('Atendimento excluído com sucesso', dados)
           },
           error: (msgErro) => {
-            console.log("Erro ao excluir Atendimento", msgErro)
+            console.log('Erro ao excluir atendimento', msgErro)
+            alert(mensagemErro(msgErro))
           }
         })
     }
   }
 
-
-
-
-
-
-
   limpar() {
     this.idatendimento = 0
     this.idpessoa = 0
     this.dataatendimento = ''
-    this.status = 'Aberto'
-    this.editar = false
+    this.status = 'A'
     this.itensCarregados = []
+    this.editar = false
   }
-
-
 }

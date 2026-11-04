@@ -85,6 +85,10 @@
   <div class="lista-pessoas">
     <h3>Pessoas cadastradas</h3>
 
+    <input type="search" class="busca-input"
+           placeholder="Pesquisar por nome, CPF ou e-mail..."
+           [ngModel]="busca()" (ngModelChange)="busca.set($event)">
+
     <table>
       <thead>
         <tr>
@@ -102,7 +106,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (p of listaPessoa(); track p.idPessoa) {
+        @for (p of pessoasFiltradas(); track p.idPessoa) {
           <tr>
             <td>{{ p.idPessoa }}</td>
             <td>{{ p.nome }}</td>
@@ -121,7 +125,7 @@
           </tr>
         } @empty {
           <tr>
-            <td colspan="11">Nenhuma pessoa cadastrada.</td>
+            <td colspan="11">Nenhuma pessoa encontrada.</td>
           </tr>
         }
       </tbody>

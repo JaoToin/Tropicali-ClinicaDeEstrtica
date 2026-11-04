@@ -27,11 +27,15 @@
 
   </form>
 
-  <!-- LISTAGEM -->
+  <!-- LISTAGEM: cada categoria com os seus itens -->
   <div class="lista-categorias">
     <h3>Categorias cadastradas</h3>
 
-    @for (c of listaCategoria(); track c.idcategoria) {
+    <input type="search" class="busca-input"
+           placeholder="Pesquisar categoria ou item pelo nome..."
+           [ngModel]="busca()" (ngModelChange)="busca.set($event)">
+
+    @for (c of categoriasFiltradas(); track c.idcategoria) {
       <div class="card-categoria">
 
         <div class="categoria-topo">
@@ -58,8 +62,8 @@
                 <td>{{ i.iditem }}</td>
                 <td>{{ i.item1 }}</td>
                 <td>{{ i.descricaoItem }}</td>
-                <td>{{ i.tipoItem }}</td>
-                <td>R$ {{ i.preco.toFixed(2) }}</td>
+                <td>{{ i.tipoItem === 'P' ? 'Produto' : i.tipoItem === 'S' ? 'Serviço' : i.tipoItem }}</td>
+                <td>R$ {{ (i.preco ?? 0).toFixed(2) }}</td>
               </tr>
             } @empty {
               <tr>
@@ -71,7 +75,7 @@
 
       </div>
     } @empty {
-      <p>Nenhuma categoria cadastrada.</p>
+      <p>Nenhuma categoria encontrada.</p>
     }
   </div>
 

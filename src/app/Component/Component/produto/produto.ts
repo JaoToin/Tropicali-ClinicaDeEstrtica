@@ -1,9 +1,12 @@
-import { Itens } from './../../../models/item';
-import { Item } from './../../../Service/item/item';
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal, computed, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Itens } from './../../../models/item';
+import { ProdutoItem } from './../../../models/produto-item';
+import { CategoriaModelo } from './../../../models/categoria';
+import { Item } from './../../../Service/item/item';
+import { CategoriaService } from './../../../Service/Categoria/categoria/categoria-module';
+import { normalizar, mensagemErro } from '../../../../../Util/util';
 
 @Component({
   imports: [FormsModule],
@@ -11,179 +14,191 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './produto.css',
   templateUrl: './produto.html',
 })
-export class Produto {
+export class Produto implements OnInit {
 
-  produtos: Itens[] = [];
-  produto: Itens = new Itens();
-  editar = false
-
-  // Atributos de ItemNavigation
   iditem = 0
   idcategoria = 0
   item1 = ''
   descricaoItem = ''
   preco = 0
-  tipoItem = ''
-  ativoProdutoServico = ''
-
-  // Atributos de Itens
-  codigoPreco = ''
+  tipoItem = 'P'                 // P = produto, S = serviço
+  ativoProdutoServico = 'A'      // A = ativo, I = inativo
+  codigoPreco = ''               // texto (ex.: SRV-001)
   precoVenda = 0
-  unidade = ''
-  estoque: number | null = null
+  unidade = 'UN'
+  editar = false
 
-  constructor(private Item: Item, private route: ActivatedRoute, private cdr: ChangeDetectorRef) { }
+  listaItens = signal<Itens[]>([])
+  categorias = signal<CategoriaModelo[]>([])
+  busca = signal('')
 
-    listaItens = signal<Itens[]>([])
-
-    //DECLARAÇÃO DO CONSTRUTOR
-
-    exibeDados() {
-      console.log(this.produto, this.iditem, this.idcategoria, this.item1, this.descricaoItem, this.preco, this.tipoItem, this.ativoProdutoServico, this.codigoPreco, this.precoVenda, this.unidade, this.estoque) //
+  // lista depois da pesquisa (nome ou descrição)
+  itensFiltrados = computed(() => {
+    const termo = normalizar(this.busca())
+    if (!termo) {
+      return this.listaItens()
     }
+    return this.listaItens().filter(p =>
+      normalizar(p.iditemNavigation?.item1).includes(termo)
+      || normalizar(p.iditemNavigation?.descricaoItem).includes(termo))
+  })
 
+  constructor(
+    private servico: Item,
+    private categoriaService: CategoriaService,
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
+  ) { }
 
+  ngOnInit() {
+    this.listarItens()
+    this.listarCategorias()
 
-      ngOnInit() {
-        this.listarItens()
-        this.iditem = Number(this.route.snapshot.paramMap.get('id'))
-        this.Item.listaritems().subscribe({
-          next: (dados) => {
-            this.produtos = dados;
-          }
-        });
-
-        if (this.iditem > 0) {
-          this.editar = true
-          this.carregaCampo(this.iditem)
-        }
-
-      }
-
-        listarItens() {
-    this.Item.listaritems()
-      .subscribe({
-        next: (dados) => {
-          //this.listaItens = [...dados].sort((a, b) => a.nome.localeCompare(b.nome))
-          this.listaItens.set(
-            [...dados].sort((a, b) =>
-              a.iditemNavigation.item1.localeCompare(b.iditemNavigation.item1))
-          )},
-        error: (msgErro) => {
-          console.log("Erro", msgErro)
-        }
-
-      })
-
+    const id = Number(this.route.snapshot.paramMap.get('id'))
+    if (id > 0) {
+      this.carregaCampo(id)
+    }
   }
 
-      carregaCampo(idItem: number) {
-        this.editar = true
-          this.Item.listaritem(idItem)
-            .subscribe({
-              next: (obj) => {
-              this.iditem = obj.iditem
-              this.item1 = obj.iditemNavigation.item1
-              this.idcategoria = obj.iditemNavigation.idcategoria
-              this.descricaoItem = obj.iditemNavigation.descricaoItem
-              this.preco = obj.iditemNavigation.preco
-              this.tipoItem = obj.iditemNavigation.tipoItem
-              this.ativoProdutoServico = obj.iditemNavigation.ativoProdutoServico
-              this.codigoPreco = obj.codigoPreco
-              this.precoVenda = obj.precoVenda
-              this.unidade = obj.unidade
-              this.estoque = obj.estoque
+  rotuloTipo(t: string | undefined): string {
+    return t === 'P' ? 'Produto' : t === 'S' ? 'Serviço' : (t ?? '')
+  }
 
-              this.cdr.detectChanges()
-            },
-            error: (msgErro) => {
-              console.log("Erro ao Listar o Produto ", msgErro)
-            }
-          })
-      }
-      enviaDadosClient() {
-        const Iten = new Itens()
-        Iten.iditem = this.iditem
-        Iten.codigoPreco = this.codigoPreco
-        Iten.precoVenda = this.precoVenda
-        Iten.unidade = this.unidade
-        Iten.estoque = this.estoque
-        Iten.iditemNavigation.iditem = this.iditem
-        Iten.iditemNavigation.idcategoria = this.idcategoria
-        Iten.iditemNavigation.item1 = this.item1
-        Iten.iditemNavigation.descricaoItem = this.descricaoItem
-        Iten.iditemNavigation.preco = this.preco
-        Iten.iditemNavigation.tipoItem = this.tipoItem
-        Iten.iditemNavigation.ativoProdutoServico = this.ativoProdutoServico
+  rotuloSituacao(s: string | undefined): string {
+    return s === 'A' ? 'Ativo' : s === 'I' ? 'Inativo' : (s ?? '')
+  }
 
-        if (!this.editar) {
-          this.Item.adicionaritem(Iten).subscribe({
-            next: (resposta) => {
-              console.log(resposta)
-              this.listarItens()
-              this.limpar()
-            },
-            error: (msgErro) => console.log("Erro ao cadastrar", msgErro)
-          })
-        } else {
-          Iten.iditem = this.iditem
-          Iten.iditemNavigation.iditem = this.iditem
+  nomeCategoria(id: number | undefined): string {
+    return this.categorias().find(c => c.idcategoria === id)?.categoria ?? String(id ?? '')
+  }
 
-          this.Item.alteraritem(Iten).subscribe({
-            next: (resposta) => {
-              console.log(resposta)
-              this.limpar()
-            },
-            error: (msgErro) => console.log("Erro ao alterar", msgErro)
-          })
+  listarCategorias() {
+    this.categoriaService.listarCategorias()
+      .subscribe({
+        next: (dados) => {
+          this.categorias.set(
+            [...dados].sort((a, b) => (a.categoria ?? '').localeCompare(b.categoria ?? ''))
+          )
+        },
+        error: (msgErro) => console.log('Erro ao listar categorias', msgErro)
+      })
+  }
+
+  listarItens() {
+    this.servico.listaritems()
+      .subscribe({
+        next: (dados) => {
+          this.listaItens.set(
+            [...dados].sort((a, b) =>
+              (a.iditemNavigation?.item1 ?? '').localeCompare(b.iditemNavigation?.item1 ?? ''))
+          )
+        },
+        error: (msgErro) => console.log('Erro ao listar produtos', msgErro)
+      })
+  }
+
+  carregaCampo(id: number) {
+    this.editar = true
+    this.servico.listaritem(id)
+      .subscribe({
+        next: (obj) => {
+          this.iditem = obj.iditem
+          this.codigoPreco = String(obj.codigoPreco ?? '')
+          this.precoVenda = obj.precoVenda
+          this.unidade = obj.unidade ?? ''
+
+          const nav = obj.iditemNavigation
+          this.item1 = nav?.item1 ?? ''
+          this.descricaoItem = nav?.descricaoItem ?? ''
+          this.idcategoria = nav?.idcategoria ?? 0
+          this.preco = nav?.preco ?? 0
+          this.tipoItem = nav?.tipoItem ?? 'P'
+          this.ativoProdutoServico = nav?.ativoProdutoServico ?? 'A'
+
+          this.cdr.detectChanges()
+        },
+        error: (msgErro) => {
+          console.log('Erro ao carregar produto', msgErro)
+          alert(mensagemErro(msgErro))
         }
-      }
-      listaItem(IdItem: number) {
-        this.Item.listaritem(IdItem)
-          .subscribe({
-            next: (dados) => {
-              console.table(dados)
-            },
-            error: (msgErro) => {
-              console.log("Erro ao listar itens ", msgErro)
-            }
-          })
-      }
+      })
+  }
 
-      limpar() {
-        this.iditem = 0
-        this.codigoPreco = ''
-        this.precoVenda = 0
-        this.unidade = ''
-        this.estoque = 0
-        this.idcategoria = 0
-        this.item1 = ''
-        this.descricaoItem = ''
-        this.preco = 0
-        this.tipoItem = ''
-        this.ativoProdutoServico = ''
-        this.editar = false
+  enviaDadosClient() {
+    if (!this.item1.trim()) {
+      alert('Informe o nome do item.')
+      return
+    }
+    if (this.idcategoria <= 0) {
+      alert('Escolha a categoria.')
+      return
+    }
 
+    // o back-end (ProdutoDTO) espera o formato "achatado"
+    const dto = new ProdutoItem()
+    dto.idCategoria = this.idcategoria
+    dto.item = this.item1
+    dto.descricaoItem = this.descricaoItem
+    dto.preco = this.preco
+    dto.tipoItem = this.tipoItem
+    dto.ativoProdutoServico = this.ativoProdutoServico
+    dto.codigoPreco = this.codigoPreco
+    dto.precoVenda = this.precoVenda
+    dto.unidade = this.unidade
 
-      }
-
-
-      excluir(item: Itens) {
-        if (confirm(`Deseja excluir ${item.iditemNavigation.item1} do Banco de Dados?`)) {
-          this.Item.exluiritem(item)
-            .subscribe({
-              next: (dados) => {
-                this.listaItens.update(lista =>
-                  lista.filter(a => a.iditem !== item.iditem)
-                )
-                console.log('Item excluído com sucesso', dados)
-              },
-              error: (msgErro) => {
-                console.log("Erro ao excluir item", msgErro)
-              }
-            })
+    if (!this.editar) {
+      this.servico.adicionaritem(dto).subscribe({
+        next: () => {
+          this.limpar()
+          this.listarItens()
+        },
+        error: (msgErro) => {
+          console.log('Erro ao cadastrar', msgErro)
+          alert(mensagemErro(msgErro))
         }
-      }
+      })
+    } else {
+      this.servico.alteraritem(this.iditem, dto).subscribe({
+        next: () => {
+          this.limpar()
+          this.listarItens()
+        },
+        error: (msgErro) => {
+          console.log('Erro ao alterar', msgErro)
+          alert(mensagemErro(msgErro))
+        }
+      })
+    }
+  }
 
+  excluir(item: Itens) {
+    if (confirm(`Deseja excluir ${item.iditemNavigation?.item1} do Banco de Dados?`)) {
+      this.servico.exluiritem(item)
+        .subscribe({
+          next: () => {
+            this.listaItens.update(lista =>
+              lista.filter(a => a.iditem !== item.iditem)
+            )
+          },
+          error: (msgErro) => {
+            console.log('Erro ao excluir produto', msgErro)
+            alert(mensagemErro(msgErro))
+          }
+        })
+    }
+  }
 
+  limpar() {
+    this.iditem = 0
+    this.idcategoria = 0
+    this.item1 = ''
+    this.descricaoItem = ''
+    this.preco = 0
+    this.tipoItem = 'P'
+    this.ativoProdutoServico = 'A'
+    this.codigoPreco = ''
+    this.precoVenda = 0
+    this.unidade = 'UN'
+    this.editar = false
+  }
 }

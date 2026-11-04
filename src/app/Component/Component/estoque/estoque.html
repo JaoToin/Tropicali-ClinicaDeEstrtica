@@ -12,8 +12,13 @@
 
     <div class="form-row">
       <div class="form-group">
-        <label for="idItem">ID do Produto</label>
-        <input type="number" id="idItem" name="idItem" [(ngModel)]="idItem" [disabled]="editar" min="1" placeholder="Ex.: 7">
+        <label for="idItem">Produto</label>
+        <select id="idItem" name="idItem" [(ngModel)]="idItem" [disabled]="editar">
+          <option [ngValue]="0">Selecione o produto</option>
+          @for (p of produtos(); track p.iditem) {
+            <option [ngValue]="p.iditem">{{ p.iditemNavigation?.item1 }} (#{{ p.iditem }})</option>
+          }
+        </select>
       </div>
 
       <div class="form-group">
@@ -55,11 +60,15 @@
   <div class="lista-estoque">
     <h3>Entradas registradas</h3>
 
+    <input type="search" class="busca-input"
+           placeholder="Pesquisar pelo nome do produto..."
+           [ngModel]="busca()" (ngModelChange)="busca.set($event)">
+
     <table>
       <thead>
         <tr>
           <th>ID Entrada</th>
-          <th>ID Produto</th>
+          <th>Produto</th>
           <th>Data</th>
           <th>Quantidade</th>
           <th>Valor Unitário</th>
@@ -68,10 +77,10 @@
         </tr>
       </thead>
       <tbody>
-        @for (e of ListaEntradas(); track e.idEntrada) {
+        @for (e of entradasFiltradas(); track e.idEntrada) {
           <tr>
             <td>{{ e.idEntrada }}</td>
-            <td>{{ e.idItem }}</td>
+            <td>{{ nomeProduto(e.idItem) }}</td>
             <td>{{ e.dataEntrada }}</td>
             <td>{{ e.quantidadeEntrada }}</td>
             <td>R$ {{ (e.precoUnitario ?? 0).toFixed(2) }}</td>
@@ -83,7 +92,7 @@
           </tr>
         } @empty {
           <tr>
-            <td colspan="7">Nenhuma entrada registrada.</td>
+            <td colspan="7">Nenhuma entrada encontrada.</td>
           </tr>
         }
       </tbody>

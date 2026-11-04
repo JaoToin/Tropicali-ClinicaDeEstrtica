@@ -1,24 +1,48 @@
 <div id="div-lista-itens" class="container">
 
+  <!-- Pesquisa e menu de categorias -->
+  <div class="catalogo-topo">
+    <input type="search" class="busca-input"
+           placeholder="Pesquisar produtos pelo nome..."
+           [ngModel]="busca()" (ngModelChange)="busca.set($event)">
+
+    <nav class="chips-categorias" aria-label="Categorias">
+      <button type="button" class="chip"
+              [class.ativo]="categoriaSelecionada() === 0"
+              (click)="selecionarCategoria(0)">
+        Todas ({{ listaItens().length }})
+      </button>
+
+      @for (c of categorias(); track c.idcategoria) {
+        <button type="button" class="chip"
+                [class.ativo]="categoriaSelecionada() === c.idcategoria"
+                (click)="selecionarCategoria(c.idcategoria)">
+          {{ c.categoria }} ({{ contagens().get(c.idcategoria) ?? 0 }})
+        </button>
+      }
+    </nav>
+  </div>
 
   <!-- Grid de Cards -->
-  <div class="cards-grid" >
-    @for (elem of listaItens(); track elem.iditem) {
+  <div class="cards-grid">
+    @for (elem of itensFiltrados(); track elem.iditem) {
       <div class="card-item">
 
         <!-- Conteúdo Principal do Card -->
         <div class="card-body">
-          <h2 class="card-titulo" >{{  elem.iditemNavigation?.item1 }}</h2>
-          <p class="card-descricao" >{{ elem.iditemNavigation?.descricaoItem }}</p>
+          @if (nomeCategoria(elem.iditemNavigation?.idcategoria)) {
+            <span class="tag-categoria">{{ nomeCategoria(elem.iditemNavigation?.idcategoria) }}</span>
+          }
+          <h2 class="card-titulo">{{ elem.iditemNavigation?.item1 }}</h2>
+          <p class="card-descricao">{{ elem.iditemNavigation?.descricaoItem }}</p>
         </div>
 
         <!-- Preço e Botão de Ação -->
-        <div class="card-footer" >
-          <span class="card-preco" >
+        <div class="card-footer">
+          <span class="card-preco">
             R$ {{ elem.precoVenda.toFixed(2) }}
           </span>
 
-          <!-- Botão para adicionar ao carrinho / selecionar -->
           <button type="button" class="btn-card-add" (click)="adicionarAoCarrinho(elem)">
             Adicionar
           </button>
@@ -26,9 +50,8 @@
 
       </div>
     } @empty {
-      <!-- Mensagem quando a lista estiver vazia -->
-      <div class="card-vazio" >
-        <p >NENHUM ITEM CADASTRADO</p>
+      <div class="card-vazio">
+        <p>NENHUM PRODUTO ENCONTRADO</p>
       </div>
     }
   </div>

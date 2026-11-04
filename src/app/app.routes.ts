@@ -12,6 +12,7 @@ import { Funcionarios } from './Component/Component/funcionarios/funcionarios';
 import { Pessoa } from './Component/Component/pessoa/pessoa';
 import { Produto } from './Component/Component/produto/produto';
 import { HomeAdm } from './Component/Component/home-adm/home-adm';
+import { Finalizacao } from './Component/finalizacao/finalizacao';
 
 export const routes: Routes = [
 
@@ -40,6 +41,10 @@ export const routes: Routes = [
   {
     path: 'carrinho',
     component: Carrinho
+  },
+  {
+    path: 'final',
+    component: Finalizacao
   },
 
   {

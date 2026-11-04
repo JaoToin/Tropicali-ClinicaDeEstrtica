@@ -1,8 +1,9 @@
 import { PessoaEnderecoService } from './../../../Service/Clienet/pessoa-endereço';
-import { Component, OnInit, signal, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, signal, computed, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PessoaEndereco, Endereco } from '../../../models/pessoa-endereco';
+import { normalizar, mensagemErro } from '../../../../../Util/util';
 
 @Component({
   imports: [FormsModule],
@@ -26,6 +27,19 @@ export class Pessoa implements OnInit {
   editar = false
 
   listaPessoa = signal<PessoaEndereco[]>([])
+  busca = signal('')
+
+  // lista depois da pesquisa (nome, CPF ou e-mail)
+  pessoasFiltradas = computed(() => {
+    const termo = normalizar(this.busca())
+    if (!termo) {
+      return this.listaPessoa()
+    }
+    return this.listaPessoa().filter(p =>
+      normalizar(p.nome).includes(termo)
+      || String(p.cpf ?? '').includes(termo)
+      || normalizar(p.email).includes(termo))
+  })
 
   constructor(
     private servico: PessoaEnderecoService,
@@ -87,11 +101,19 @@ export class Pessoa implements OnInit {
 
           this.cdr.detectChanges()
         },
-        error: (msgErro) => console.log('Erro ao carregar pessoa', msgErro)
+        error: (msgErro) => {
+          console.log('Erro ao carregar pessoa', msgErro)
+          alert(mensagemErro(msgErro))
+        }
       })
   }
 
   enviaDadosClient() {
+    if (!this.nome.trim() || !this.apenasDigitos(this.cpf) || !this.apenasDigitos(this.telefone) || !this.data) {
+      alert('Preencha nome, CPF, telefone e data de nascimento.')
+      return
+    }
+
     const endereco = new Endereco()
     endereco.cep = this.apenasDigitos(this.cep)
     endereco.numero = this.numero
@@ -109,12 +131,14 @@ export class Pessoa implements OnInit {
 
     if (!this.editar) {
       this.servico.adicionarpessoa(pessoa).subscribe({
-        next: (resposta) => {
-          console.log(resposta)
+        next: () => {
           this.limpar()
           this.listarPessoas()
         },
-        error: (msgErro) => console.log('Erro ao cadastrar', msgErro)
+        error: (msgErro) => {
+          console.log('Erro ao cadastrar', msgErro)
+          alert(mensagemErro(msgErro))
+        }
       })
     } else {
       pessoa.idPessoa = this.pessoaId
@@ -122,12 +146,14 @@ export class Pessoa implements OnInit {
       endereco.idEndereco = this.enderecoId > 0 ? this.enderecoId : null   // null = endereço novo
 
       this.servico.alterarpessoa(pessoa).subscribe({
-        next: (resposta) => {
-          console.log(resposta)
+        next: () => {
           this.limpar()
           this.listarPessoas()
         },
-        error: (msgErro) => console.log('Erro ao alterar', msgErro)
+        error: (msgErro) => {
+          console.log('Erro ao alterar', msgErro)
+          alert(mensagemErro(msgErro))
+        }
       })
     }
   }
@@ -141,7 +167,10 @@ export class Pessoa implements OnInit {
               lista.filter(p => p.idPessoa !== pessoa.idPessoa)
             )
           },
-          error: (msgErro) => console.log('Erro ao excluir pessoa', msgErro)
+          error: (msgErro) => {
+            console.log('Erro ao excluir pessoa', msgErro)
+            alert(mensagemErro(msgErro))
+          }
         })
     }
   }

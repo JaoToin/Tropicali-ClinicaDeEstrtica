@@ -10,4 +10,8 @@ import { CarrinhoProduto } from '../../Service/Carrinho/carrinho';
 })
 export class Carrinho {
   public cartService = inject(CarrinhoProduto);
+
+  final(){
+    
+  }
 }
