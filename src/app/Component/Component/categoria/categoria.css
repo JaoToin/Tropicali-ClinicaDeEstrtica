@@ -12,9 +12,6 @@
     color: #2D0A14;
   }
 
-  /* ---------------------------------------------------------
-     FORMULÁRIO DE CADASTRO
-     --------------------------------------------------------- */
   #cad {
     background: #FFFFFF;
     border: 1.5px solid #FFEEDD;
@@ -39,19 +36,9 @@
     flex-wrap: wrap;
   }
 
-  .form-title span {
-    color: #E85D04;
-  }
+  .form-title span { color: #E85D04; }
+  .form-title small { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; font-weight: 500; color: #D4AF37; margin-left: auto; }
 
-  .form-title small {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #D4AF37;
-    margin-left: auto;
-  }
-
-  /* Campo de Input */
   .form-group {
     display: flex;
     flex-direction: column;
@@ -89,7 +76,6 @@
     box-shadow: 0 0 0 4px rgba(232, 93, 4, 0.12);
   }
 
-  /* Botões do Formulário */
   #button {
     display: flex;
     gap: 1rem;
@@ -120,7 +106,6 @@
     color: #FFFFFF;
     border-color: #E85D04;
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(232, 93, 4, 0.3);
   }
 
   #button button[type="button"] {
@@ -143,21 +128,40 @@
     border-color: #2D0A14;
   }
 
-  /* ---------------------------------------------------------
-     LISTAGEM DE CATEGORIAS
-     --------------------------------------------------------- */
-  .lista-categorias {
-    width: 100%;
-  }
-
+  /* LISTAGEM & CARDS */
   .lista-categorias h3 {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.6rem;
     color: #2D0A14;
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 1.2rem 0;
   }
 
-  /* Card Individual de Categoria */
+  .busca-input {
+    width: 100%;
+    height: 46px;
+    padding: 0 1rem 0 2.8rem;
+    border: 1.5px solid #E5D5C5;
+    border-radius: 12px;
+    background-color: #FFFDF9;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    color: #2D0A14;
+    margin-bottom: 1.8rem;
+    outline: none;
+    box-sizing: border-box;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%20A08C93' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3ccircle cx='11' cy='11' r='8'%3e%3c/circle%3e%3cline x1='21' y1='21' x2='16.65' y2='16.65'%3e%3c/line%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: left 1rem center;
+    background-size: 1.1rem;
+    transition: all 0.3s ease;
+  }
+
+  .busca-input:focus {
+    border-color: #E85D04;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(232, 93, 4, 0.12);
+  }
+
   .card-categoria {
     background: #FFFFFF;
     border: 1.5px solid #FFEEDD;
@@ -174,7 +178,6 @@
     box-shadow: 0 15px 35px rgba(45, 10, 20, 0.08);
   }
 
-  /* Cabeçalho do Card da Categoria */
   .categoria-topo {
     display: flex;
     justify-content: space-between;
@@ -204,10 +207,7 @@
     color: #D4AF37;
   }
 
-  .categoria-topo > div {
-    display: flex;
-    gap: 0.6rem;
-  }
+  .categoria-topo > div { display: flex; gap: 0.6rem; }
 
   .categoria-topo button {
     padding: 0.45rem 0.9rem;
@@ -219,33 +219,22 @@
     transition: all 0.2s ease;
   }
 
-  /* Botão Editar */
   .categoria-topo button:first-of-type {
     background-color: #FFF9F2;
     color: #E85D04;
     border: 1px solid #E85D04;
   }
 
-  .categoria-topo button:first-of-type:hover {
-    background-color: #E85D04;
-    color: #FFFFFF;
-    box-shadow: 0 4px 12px rgba(232, 93, 4, 0.2);
-  }
+  .categoria-topo button:first-of-type:hover { background-color: #E85D04; color: #FFFFFF; }
 
-  /* Botão Excluir */
   .categoria-topo button:last-of-type {
     background-color: transparent;
     color: #A08C93;
     border: 1px solid #A08C93;
   }
 
-  .categoria-topo button:last-of-type:hover {
-    background-color: #2D0A14;
-    color: #FAEDCD;
-    border-color: #2D0A14;
-  }
+  .categoria-topo button:last-of-type:hover { background-color: #2D0A14; color: #FAEDCD; border-color: #2D0A14; }
 
-  /* Tabela Interna de Itens */
   .card-categoria table {
     width: 100%;
     border-collapse: collapse;
@@ -256,57 +245,11 @@
     overflow: hidden;
   }
 
-  .card-categoria thead tr {
-    background-color: #FFF9F2;
-    border-bottom: 1.5px solid #FFEEDD;
-  }
-
-  .card-categoria th {
-    padding: 0.8rem 1rem;
-    font-weight: 700;
-    color: #2D0A14;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.5px;
-  }
-
-  .card-categoria tbody tr {
-    border-bottom: 1px solid #FFEEDD;
-    transition: background-color 0.2s ease;
-  }
-
-  .card-categoria tbody tr:last-child {
-    border-bottom: none;
-  }
-
-  .card-categoria tbody tr:hover {
-    background-color: #FFFFFF;
-  }
-
-  .card-categoria td {
-    padding: 0.8rem 1rem;
-    color: #5A2A38;
-    vertical-align: middle;
-  }
-
-  .card-categoria td:first-child {
-    font-weight: 700;
-    color: #2D0A14;
-    width: 50px;
-  }
-
-  .card-categoria td:last-child {
-    font-weight: 700;
-    color: #2D0A14;
-  }
-
-  .card-categoria td[colspan="5"] {
-    text-align: center;
-    padding: 1.5rem;
-    color: #A08C93;
-    font-weight: 500;
-    font-style: italic;
-  }
+  .card-categoria thead tr { background-color: #FFF9F2; border-bottom: 1.5px solid #FFEEDD; }
+  .card-categoria th { padding: 0.8rem 1rem; font-weight: 700; color: #2D0A14; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
+  .card-categoria tbody tr { border-bottom: 1px solid #FFEEDD; }
+  .card-categoria td { padding: 0.8rem 1rem; color: #5A2A38; vertical-align: middle; }
+  .card-categoria td[colspan="5"] { text-align: center; padding: 1.5rem; color: #A08C93; font-weight: 500; font-style: italic; }
 
   .lista-categorias > p {
     background: #FFFFFF;
@@ -318,11 +261,9 @@
     font-weight: 600;
   }
 
-  /* Responsividade */
   @media (max-width: 768px) {
     #cad { padding: 1.5rem; }
     #button { flex-direction: column; }
-
     .card-categoria { padding: 1.2rem; }
     .categoria-topo { flex-direction: column; align-items: flex-start; }
     .categoria-topo > div { width: 100%; }

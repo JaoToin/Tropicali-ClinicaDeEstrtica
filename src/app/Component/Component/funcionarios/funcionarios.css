@@ -1,5 +1,5 @@
 /* =========================================================
-   CADASTRO E GERENCIAMENTO DE FUNCIONÁRIOS - TROPICALÍ
+   CADASTRO DE FUNCIONÁRIOS - TROPICALÍ
    ========================================================= */
 
    #cadastro {
@@ -12,9 +12,6 @@
     color: #2D0A14;
   }
 
-  /* ---------------------------------------------------------
-     FORMULÁRIO DE CADASTRO
-     --------------------------------------------------------- */
   #cad {
     background: #FFFFFF;
     border: 1.5px solid #FFEEDD;
@@ -30,7 +27,7 @@
     font-size: 2rem;
     font-weight: 700;
     color: #2D0A14;
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 2rem 0;
     padding-bottom: 1rem;
     border-bottom: 2px solid #FFEEDD;
     display: flex;
@@ -39,71 +36,41 @@
     flex-wrap: wrap;
   }
 
-  .form-title span {
-    color: #E85D04;
-  }
+  .form-title span { color: #E85D04; }
+  .form-title small { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; font-weight: 500; color: #D4AF37; margin-left: auto; }
 
-  .form-title small {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #D4AF37;
-    margin-left: auto;
-  }
+  .form-row { display: flex; gap: 1.5rem; width: 100%; }
+  .form-row .form-group { flex: 1; }
+  .flex-2 { flex: 2; }
+  .flex-1 { flex: 1; }
 
-  /* Títulos de Divisão do Formulário */
-  .form-section-title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: #2D0A14;
-    margin: 1.5rem 0 1rem 0;
-    padding-left: 0.6rem;
-    border-left: 3.5px solid #E85D04;
-  }
-
-  /* Estrutura de Grupos e Linhas */
   .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
-    margin-bottom: 1.2rem;
+    gap: 0.5rem;
+    margin-bottom: 1.3rem;
     width: 100%;
   }
-
-  .form-row {
-    display: flex;
-    gap: 1.2rem;
-    width: 100%;
-  }
-
-  .form-row .form-group {
-    flex: 1;
-  }
-
-  .flex-1 { flex: 1; }
-  .flex-2 { flex: 2; }
 
   .form-group label {
-    font-size: 0.82rem;
-    font-weight: 700;
+    font-size: 0.88rem;
+    font-weight: 600;
     color: #5A2A38;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
 
-  /* Inputs de Texto, Email e Data */
   .form-group input[type="text"],
   .form-group input[type="email"],
   .form-group input[type="date"] {
     width: 100%;
-    height: 46px;
+    height: 48px;
     padding: 0 1rem;
     border: 1.5px solid #E5D5C5;
     border-radius: 12px;
     background-color: #FFFDF9;
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.92rem;
+    font-size: 0.95rem;
     color: #2D0A14;
     outline: none;
     box-sizing: border-box;
@@ -116,19 +83,19 @@
     box-shadow: 0 0 0 4px rgba(232, 93, 4, 0.12);
   }
 
-  /* Radio Buttons (Sexo) */
   .radio-group {
     display: flex;
     gap: 1.5rem;
     align-items: center;
-    height: 46px;
+    height: 48px;
+    flex-wrap: wrap;
   }
 
   .radio-label {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 500;
     color: #2D0A14;
     cursor: pointer;
@@ -137,9 +104,7 @@
     transition: background-color 0.2s ease;
   }
 
-  .radio-label:hover {
-    background-color: #FFF9F2;
-  }
+  .radio-label:hover { background-color: #FFF9F2; }
 
   .bntSelecao {
     accent-color: #E85D04;
@@ -148,11 +113,10 @@
     cursor: pointer;
   }
 
-  /* Botões do Formulário */
   #button {
     display: flex;
     gap: 1rem;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     padding-top: 1.5rem;
     border-top: 1px dashed #FFEEDD;
   }
@@ -174,13 +138,7 @@
     transition: all 0.3s ease;
   }
 
-  #button_add:hover {
-    background: #E85D04;
-    color: #FFFFFF;
-    border-color: #E85D04;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(232, 93, 4, 0.3);
-  }
+  #button_add:hover { background: #E85D04; color: #FFFFFF; border-color: #E85D04; transform: translateY(-2px); }
 
   #button button[type="button"] {
     flex: 1;
@@ -196,15 +154,9 @@
     transition: all 0.3s ease;
   }
 
-  #button button[type="button"]:hover {
-    background: #FFF9F2;
-    color: #2D0A14;
-    border-color: #2D0A14;
-  }
+  #button button[type="button"]:hover { background: #FFF9F2; color: #2D0A14; border-color: #2D0A14; }
 
-  /* ---------------------------------------------------------
-     LISTAGEM / TABELA DE FUNCIONÁRIOS
-     --------------------------------------------------------- */
+  /* LISTA & PESQUISA */
   .lista-funcionarios {
     background: #FFFFFF;
     border: 1.5px solid #FFEEDD;
@@ -218,68 +170,40 @@
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.6rem;
     color: #2D0A14;
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 1.2rem 0;
   }
 
-  .lista-funcionarios table {
+  .busca-input {
     width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-    font-size: 0.88rem;
-  }
-
-  .lista-funcionarios thead tr {
+    height: 46px;
+    padding: 0 1rem 0 2.8rem;
+    border: 1.5px solid #E5D5C5;
+    border-radius: 12px;
     background-color: #FFFDF9;
-    border-bottom: 2px solid #FFEEDD;
-  }
-
-  .lista-funcionarios th {
-    padding: 1rem 0.8rem;
-    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
     color: #2D0A14;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
+    margin-bottom: 1.8rem;
+    outline: none;
+    box-sizing: border-box;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%20A08C93' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3ccircle cx='11' cy='11' r='8'%3e%3c/circle%3e%3cline x1='21' y1='21' x2='16.65' y2='16.65'%3e%3c/line%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: left 1rem center;
+    background-size: 1.1rem;
+    transition: all 0.3s ease;
   }
 
-  .lista-funcionarios tbody tr {
-    border-bottom: 1px solid #FFEEDD;
-    transition: background-color 0.2s ease;
-  }
+  .busca-input:focus { border-color: #E85D04; background-color: #FFFFFF; box-shadow: 0 0 0 4px rgba(232, 93, 4, 0.12); }
 
-  .lista-funcionarios tbody tr:hover {
-    background-color: #FFF9F2;
-  }
+  .lista-funcionarios table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; }
+  .lista-funcionarios thead tr { background-color: #FFFDF9; border-bottom: 2px solid #FFEEDD; }
+  .lista-funcionarios th { padding: 1rem 0.8rem; font-weight: 700; color: #2D0A14; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; white-space: nowrap; }
+  .lista-funcionarios tbody tr { border-bottom: 1px solid #FFEEDD; transition: background-color 0.2s ease; }
+  .lista-funcionarios tbody tr:hover { background-color: #FFF9F2; }
+  .lista-funcionarios td { padding: 0.9rem 0.8rem; color: #5A2A38; vertical-align: middle; white-space: nowrap; }
+  .lista-funcionarios td:last-child { display: flex; gap: 0.5rem; }
 
-  .lista-funcionarios td {
-    padding: 0.9rem 0.8rem;
-    color: #5A2A38;
-    vertical-align: middle;
-    white-space: nowrap;
-  }
-
-  .text-center { text-align: center; }
-  .font-bold { font-weight: 700; color: #2D0A14; }
-
-  /* Badge do Cargo */
-  .badge-cargo {
-    background: #FFF9F2;
-    color: #E85D04;
-    border: 1px solid #FFEEDD;
-    padding: 0.25rem 0.6rem;
-    border-radius: 8px;
-    font-size: 0.8rem;
-    font-weight: 700;
-  }
-
-  /* Botões da Tabela */
-  .acoes-cell {
-    display: flex;
-    gap: 0.5rem;
-  }
-
-  .btn-editar {
+  .lista-funcionarios td button:first-child {
     background-color: #FFF9F2;
     color: #E85D04;
     border: 1px solid #E85D04;
@@ -292,12 +216,9 @@
     transition: all 0.2s ease;
   }
 
-  .btn-editar:hover {
-    background-color: #E85D04;
-    color: #FFFFFF;
-  }
+  .lista-funcionarios td button:first-child:hover { background-color: #E85D04; color: #FFFFFF; }
 
-  .btn-excluir {
+  .lista-funcionarios td button:last-child {
     background-color: transparent;
     color: #A08C93;
     border: 1px solid #A08C93;
@@ -310,23 +231,9 @@
     transition: all 0.2s ease;
   }
 
-  .btn-excluir:hover {
-    background-color: #2D0A14;
-    color: #FAEDCD;
-    border-color: #2D0A14;
-  }
+  .lista-funcionarios td button:last-child:hover { background-color: #2D0A14; color: #FAEDCD; border-color: #2D0A14; }
+  .lista-funcionarios td[colspan="8"] { text-align: center !important; padding: 2.5rem 1rem !important; color: #A08C93; font-weight: 600; }
 
-  /* Estado Tabela Vazia */
-  .tabela-vazia {
-    text-align: center !important;
-    padding: 3rem 1rem !important;
-    color: #A08C93;
-    font-weight: 600;
-  }
-
-  /* ---------------------------------------------------------
-     RESPONSIVIDADE
-     --------------------------------------------------------- */
   @media (max-width: 768px) {
     #cad { padding: 1.5rem; }
     .form-row { flex-direction: column; gap: 0; }
