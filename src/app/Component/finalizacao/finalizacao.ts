@@ -40,7 +40,7 @@ export class Finalizacao {
   idatendimento = 0
   idpessoa = 0
   dataatendimento = hoje()
-  status = 'A'
+  status = 'Aberto'
   idItem = 0
   idFuncionario = 0
   quantidade = 0

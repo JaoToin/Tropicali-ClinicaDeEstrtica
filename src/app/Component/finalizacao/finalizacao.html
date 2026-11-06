@@ -76,47 +76,41 @@
 
 
 </div> -->
-
 <div id="cadastro">
 
   <form id="cad" (ngSubmit)="enviarDados()">
 
     <h2 class="form-title">Finalizar <span>Pedido</span></h2>
 
-    <!-- Itens que vieram do carrinho -->
+    <!-- Resumo do Pedido (Novo Layout em Cards) -->
     <div class="resumo-pedido">
       <h3>Itens do pedido</h3>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Quantidade</th>
-            <th>Valor unitário</th>
-            <th>Subtotal</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (i of cartService.cart(); track i.iditem) {
-            <tr>
-              <td>{{ i.iditemNavigation?.item1 }}</td>
-              <td>{{ i.quantidade }}</td>
-              <td>R$ {{ i.precoVenda.toFixed(2) }}</td>
-              <td>R$ {{ (i.precoVenda * i.quantidade).toFixed(2) }}</td>
-            </tr>
-          } @empty {
-            <tr>
-              <td colspan="4">
-                Seu carrinho está vazio. <a routerLink="/itens">Voltar ao catálogo</a>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
+      <div class="lista-itens-resumo">
+        @for (i of cartService.cart(); track i.iditem) {
+          <div class="item-resumo-card">
+            <div class="item-info">
+              <span class="item-nome">{{ i.iditemNavigation?.item1 }}</span>
+              <span class="item-detalhe">{{ i.quantidade }}x R$ {{ i.precoVenda.toFixed(2) }}</span>
+            </div>
+            <div class="item-subtotal">
+              R$ {{ (i.precoVenda * i.quantidade).toFixed(2) }}
+            </div>
+          </div>
+        } @empty {
+          <div class="carrinho-vazio-msg">
+            Seu carrinho está vazio. <a routerLink="/itens">Voltar ao catálogo</a>
+          </div>
+        }
+      </div>
 
-      <p><strong>Total: R$ {{ cartService.valorTotal().toFixed(2) }}</strong></p>
+      <div class="resumo-total">
+        <span>Total do Pedido:</span>
+        <strong>R$ {{ cartService.valorTotal().toFixed(2) }}</strong>
+      </div>
     </div>
 
+    <!-- Dados do Atendimento -->
     <div class="form-group">
       <label for="idpessoa">Pessoa</label>
       <select id="idpessoa" name="idpessoa" [(ngModel)]="idpessoa">
@@ -137,13 +131,22 @@
       </select>
     </div>
 
-    <div class="form-group">
-      <label for="dataatendimento">Data do Atendimento</label>
-      <input type="date" id="dataatendimento" name="dataatendimento" [(ngModel)]="dataatendimento">
+    <!-- Data e Status alinhados em linha -->
+    <div class="form-row" class="not">
+      <div class="form-group" class="not">
+        <label for="dataatendimento" class="not">Data do Atendimento</label>
+        <input type="date" id="dataatendimento" class="not" name="dataatendimento" [(ngModel)]="dataatendimento">
+      </div>
+
+      <div class="form-group" class="not">
+        <label for="status" class="not">Status</label>
+        <select id="status" class="not" name="status" [(ngModel)]="status">
+          <option value="Aberto" disabled>Aberto</option>
+        </select>
+      </div>
     </div>
 
-    <p><small>Status: Aberto</small></p>
-
+    <!-- Ações -->
     <div id="button">
       <button type="submit" id="button_add" [disabled]="enviando() || cartService.cart().length === 0">
         {{ enviando() ? 'Enviando...' : 'Finalizar Pedido' }}

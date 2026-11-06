@@ -143,14 +143,13 @@
 -----------------------------------------------------
 ---------------------------------------------------------
 ----------------------------------------------------------------
-*/
 /* =========================================================
    FINALIZAR PEDIDO - TROPICALÍ
    ========================================================= */
 
 #cadastro {
   width: 100%;
-  max-width: 900px;
+  max-width: 850px;
   margin: 2.5rem auto;
   padding: 0 1.5rem;
   box-sizing: border-box;
@@ -158,9 +157,6 @@
   color: #2D0A14;
 }
 
-/* ---------------------------------------------------------
-   FORMULÁRIO E TÍTULO
-   --------------------------------------------------------- */
 #cad {
   background: #FFFFFF;
   border: 1.5px solid #FFEEDD;
@@ -168,6 +164,8 @@
   padding: 2.5rem;
   box-shadow: 0 12px 35px rgba(45, 10, 20, 0.05);
   box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
 }
 
 .form-title {
@@ -185,89 +183,124 @@
 }
 
 /* ---------------------------------------------------------
-   RESUMO DO PEDIDO (TABELA E TOTAL)
+   RESUMO DE ITENS EM CARDS (SEM VAZAMENTO)
    --------------------------------------------------------- */
 .resumo-pedido {
   background-color: #FFFDF9;
   border: 1.5px solid #FFEEDD;
-  border-radius: 18px;
+  border-radius: 20px;
   padding: 1.5rem;
   margin-bottom: 2rem;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .resumo-pedido h3 {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: #2D0A14;
-  margin: 0 0 1rem 0;
+  margin: 0 0 1.2rem 0;
 }
 
-.resumo-pedido table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-  font-size: 0.9rem;
+.lista-itens-resumo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
   margin-bottom: 1.2rem;
 }
 
-.resumo-pedido thead tr {
-  background-color: #FFF9F2;
-  border-bottom: 1.5px solid #FFEEDD;
+.item-resumo-card {
+  background: #FFFFFF;
+  border: 1px solid #FFEEDD;
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(45, 10, 20, 0.02);
+  transition: border-color 0.2s ease;
 }
 
-.resumo-pedido th {
-  padding: 0.8rem 1rem;
+.item-resumo-card:hover {
+  border-color: #D4AF37;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.item-nome {
   font-weight: 700;
+  font-size: 0.95rem;
   color: #2D0A14;
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  letter-spacing: 0.5px;
 }
 
-.resumo-pedido tbody tr {
-  border-bottom: 1px solid #FFEEDD;
-}
-
-.resumo-pedido tbody tr:last-child {
-  border-bottom: none;
-}
-
-.resumo-pedido td {
-  padding: 0.85rem 1rem;
+.item-detalhe {
+  font-size: 0.82rem;
   color: #5A2A38;
-  vertical-align: middle;
 }
 
-.resumo-pedido td a {
+.item-subtotal {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #2D0A14;
+  white-space: nowrap;
+}
+
+.carrinho-vazio-msg {
+  padding: 1.5rem;
+  text-align: center;
+  background-color: #FFFFFF;
+  border: 1.5px dashed #E5D5C5;
+  border-radius: 12px;
+  color: #A08C93;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.carrinho-vazio-msg a {
   color: #E85D04;
   font-weight: 700;
   text-decoration: none;
 }
 
-.resumo-pedido td a:hover {
+.carrinho-vazio-msg a:hover {
   text-decoration: underline;
 }
 
-/* Preço Total */
-.resumo-pedido > p {
-  text-align: right;
-  font-size: 1.2rem;
-  color: #2D0A14;
-  margin: 0;
-  padding-top: 0.8rem;
+.resumo-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
   border-top: 1.5px dashed #FFEEDD;
+  font-size: 1.05rem;
+  color: #2D0A14;
 }
 
-.resumo-pedido > p strong {
+.resumo-total strong {
   color: #E85D04;
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.35rem;
+  font-size: 1.4rem;
+  font-weight: 700;
 }
 
 /* ---------------------------------------------------------
-   CAMPOS DO FORMULÁRIO (INPUTS & SELECTS)
+   CAMPOS E DISPOSIÇÃO DO FORMULÁRIO
    --------------------------------------------------------- */
+.form-row {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -317,19 +350,16 @@
   box-shadow: 0 0 0 4px rgba(232, 93, 4, 0.12);
 }
 
-/* Texto Informativo de Status */
-#cad > p small {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #D4AF37;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  display: block;
-  margin-bottom: 1.5rem;
+/* Campos somente leitura / desabilitados */
+.form-group select[disabled],
+.form-group input[disabled] {
+  background-color: #F0E6DF;
+  opacity: 0.8;
+  cursor: not-allowed;
 }
 
 /* ---------------------------------------------------------
-   BOTÕES DE AÇÃO (FINALIZAR E VOLTAR)
+   BOTÕES DE AÇÃO
    --------------------------------------------------------- */
 #button {
   display: flex;
@@ -387,19 +417,25 @@
 }
 
 /* ---------------------------------------------------------
-   RESPONSIVIDADE (Celular)
+   RESPONSIVIDADE
    --------------------------------------------------------- */
 @media (max-width: 600px) {
   #cad {
     padding: 1.5rem;
   }
 
-  .resumo-pedido {
-    padding: 1rem;
+  .form-row {
+    flex-direction: column;
+    gap: 0;
   }
 
-  .resumo-pedido table {
-    display: block;
-    overflow-x: auto;
+  .item-resumo-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .item-subtotal {
+    align-self: flex-end;
   }
 }
