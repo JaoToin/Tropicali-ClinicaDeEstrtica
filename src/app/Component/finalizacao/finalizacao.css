@@ -439,3 +439,35 @@
     align-self: flex-end;
   }
 }
+
+/* =========================================================
+   INSERÇÃO AUTOMÁTICA DA FLOR EM TODOS OS CARDS DE ITEM
+   ========================================================= */
+
+/* Aplica o ícone de flor no topo do corpo de qualquer card de item */
+.card-item .card-body::before,
+.card-categoria .card-body::before,
+.item-resumo-card::before {
+  content: '🌺';
+  font-size: 2.6rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 65px;
+  height: 65px;
+  background: #FFF9F2;
+  border: 1.5px solid #E85D04;
+  border-radius: 50%;
+  margin-bottom: 0.8rem;
+  box-shadow: 0 6px 15px rgba(232, 93, 4, 0.12);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* Efeito de destaque ao passar o mouse */
+.card-item:hover .card-body::before,
+.card-categoria:hover .card-body::before,
+.item-resumo-card:hover::before {
+  transform: scale(1.1) rotate(10deg);
+  background-color: #FFEEDD;
+}
