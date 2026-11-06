@@ -1,10 +1,48 @@
 <div>
-  <select name="final" id="final">
-  @for (p of listaPessoa(); track p.idPessoa){
-    <option value="">{{p.nome}}</option>
-  }
-</select>
+
+  <form id="cad" (ngSubmit)="enviarDados()">
+
+    <div class="form-group">
+      <label for="idpessoa">Pessoa</label>
+      <select id="idpessoa" name="idpessoa" [(ngModel)]="idpessoa">
+        <option [ngValue]="0" disabled >SELECIONE A PESSOA</option>
+        @for (p of listaPessoa(); track p.idPessoa){
+          <option [ngValue]="p.idPessoa">{{p.nome}}</option>
+        }
+
+      </select>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="dataatendimento">Data do Atendimento</label>
+        <input type="date" id="dataatendimento" name="dataatendimento" [(ngModel)]="dataatendimento">
+      </div>
+
+      <div class="form-group">
+        <label for="status">Status</label>
+        <select id="status" name="status" [(ngModel)]="status">
+          <option value="A">Aberto</option>
+          <option value="C">Concluído</option>
+          <option value="X">Cancelado</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <label for="iditem">Selecione o Item</label>
+      <select name="iditem" id="iditem">
+        <option value="0" disabled>SELECIONE O PRODUTO</option>
+
+        @for(i of listaItem(); track i.iditem){
+          <option [ngValue]="i.iditem">{{i.ididitemNavigation?.item1}}</option>
+        }
+      </select>
+    </div>
 
 
-  
+  </form>
+
+
+
 </div>
