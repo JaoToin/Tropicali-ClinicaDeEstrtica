@@ -6,6 +6,14 @@ import { EstoqueService } from '../../../Service/Estoque/estoque/estoque-module'
 import { Item } from '../../../Service/item/item';
 import { normalizar, mensagemErro } from '../../../../../Util/util';
 
+function hoje(): string {
+  const d = new Date()
+  const mes = String(d.getMonth() + 1).padStart(2, '0')
+  const dia = String(d.getDate()).padStart(2, '0')
+  return `${d.getFullYear()}-${mes}-${dia}`
+}
+
+
 @Component({
   imports: [FormsModule],
   selector: 'app-estoque',
@@ -18,7 +26,7 @@ export class Estoque implements OnInit {
   idItem = 0
   quantidadeEntrada = 0
   precoUnitario = 0
-  dataEntrada = ''
+  dataEntrada = hoje()
   unidade = ''
   editar = false
 

@@ -6,6 +6,18 @@ import { AtendimentoModelo, ItemAtendimento } from '../../../models/atendimento'
 import { PessoaEndereco } from '../../../models/pessoa-endereco';
 import { ActivatedRoute } from '@angular/router';
 import { normalizar, mensagemErro } from '../../../../../Util/util';
+import { Item } from '../../../Service/item/item';
+import { Itens } from '../../../models/item';
+import { FuncionarioService } from '../../../Service/Funcionario/funcionario/funcionario-module';
+import { Funcionario } from '../../../models/funcionario';
+
+function hoje(): string {
+  const d = new Date()
+  const mes = String(d.getMonth() + 1).padStart(2, '0')
+  const dia = String(d.getDate()).padStart(2, '0')
+  return `${d.getFullYear()}-${mes}-${dia}`
+}
+
 
 @Component({
   imports: [FormsModule],
@@ -17,16 +29,26 @@ export class Atendimento implements OnInit {
 
   idatendimento = 0
   idpessoa = 0
-  dataatendimento = ''
+  dataatendimento = hoje()
   status = 'A'                          // A = aberto, C = concluído, X = cancelado
   editar = false
 
-  // itens do atendimento carregado: são reenviados na edição para não serem apagados
-  itensCarregados: ItemAtendimento[] = []
+  // campos do item que está sendo preenchido
+  idItem = 0
+  idFuncionario = 0
+  quantidade = 1
+  valorUnitario = 0
+
+  // itens do atendimento (os já cadastrados + os adicionados agora).
+  // Tudo isso é enviado junto no POST/PUT.
+  itensAtendimento: ItemAtendimento[] = []
 
   ListaAtendimento = signal<AtendimentoModelo[]>([])
   pessoas = signal<PessoaEndereco[]>([])
   busca = signal('')
+  listaItem = signal<Itens[]>([])
+  funcionarios = signal<Funcionario[]>([])
+
 
   // lista depois da pesquisa (nome da pessoa, id ou status)
   atendimentosFiltrados = computed(() => {
@@ -42,6 +64,8 @@ export class Atendimento implements OnInit {
 
   constructor(
     private servico: AtendimentoServico,
+    private servicoItens: Item,
+    private funcionarioService: FuncionarioService,
     private pessoaService: PessoaEnderecoService,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef
@@ -50,11 +74,38 @@ export class Atendimento implements OnInit {
   ngOnInit() {
     this.listarAtendimentos()
     this.listarPessoas()
+    this.listarItens()
+    this.listarFuncionarios()
 
     const id = Number(this.route.snapshot.paramMap.get('id'))
     if (id > 0) {
       this.carregarCampo(id)
     }
+  }
+
+  nomes = computed(() => {
+    const mapa = new Map<number, string>()
+    for (const p of this.listaItem()) {
+      mapa.set(p.iditem, p.iditemNavigation?.item1 ?? '')
+    }
+    return mapa
+  })
+
+
+  nomeProduto(id: number): string {
+    return this.nomes().get(id) ?? `Produto #${id}`
+  }
+
+  nomesFuncionarios = computed(() => {
+    const mapa = new Map<number, string>()
+    for (const f of this.funcionarios()) {
+      mapa.set(f.idPessoa, f.pessoas?.[0]?.nome ?? '')
+    }
+    return mapa
+  })
+
+  nomeFuncionario(id: number): string {
+    return this.nomesFuncionarios().get(id) ?? `Funcionário #${id}`
   }
 
   // a coluna do banco é curta: o sistema grava só a letra e mostra o texto
@@ -65,6 +116,43 @@ export class Atendimento implements OnInit {
       case 'X': return 'Cancelado'
       default: return s ?? ''
     }
+  }
+
+  moeda(valor: number | undefined): string {
+    return (valor ?? 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+  }
+
+  // soma de quantidade x valor de todos os itens do formulário
+  get totalItens(): number {
+    return this.itensAtendimento.reduce((soma, i) => soma + i.quantidade * i.valorUnitario, 0)
+  }
+
+
+  listarItens() {
+    this.servicoItens.listaritems()
+      .subscribe({
+        next: (dados) => {
+          this.listaItem.set(
+            [...dados].sort((a, b) =>
+              (a.iditemNavigation?.item1 ?? '').localeCompare(b.iditemNavigation?.item1 ?? ''))
+          )
+        },
+        error: (msgErro) => console.log('Erro ao listar produtos', msgErro)
+      })
+  }
+
+
+  listarFuncionarios() {
+    this.funcionarioService.listarfuncionarios()
+    .subscribe({
+      next: (dados) => {
+        this.funcionarios.set(
+          [...dados].sort((a, b) =>
+            (a.pessoas?.[0]?.nome ?? '').localeCompare(b.pessoas?.[0]?.nome ?? ''))
+        )
+      },
+        error: (msgErro) => console.log('Erro ao listar funcionários', msgErro)
+      })
   }
 
   listarPessoas() {
@@ -101,7 +189,8 @@ export class Atendimento implements OnInit {
           this.idpessoa = obj.idPessoa
           this.dataatendimento = String(obj.dataAtendimento ?? '').substring(0, 10)
           this.status = obj.status
-          this.itensCarregados = obj.itens ?? []
+          this.itensAtendimento = obj.itens ?? []
+          this.limparItem()
           this.cdr.detectChanges()
         },
         error: (msgErro) => {
@@ -111,9 +200,46 @@ export class Atendimento implements OnInit {
       })
   }
 
+  // ---------- itens do atendimento ----------
+
+  adicionarItem() {
+    if (this.idItem <= 0 || this.idFuncionario <= 0
+      || this.quantidade <= 0 || this.valorUnitario <= 0) {
+      alert('Informe o produto, o funcionário, a quantidade e o valor (todos maiores que zero).')
+      return
+    }
+
+    const item = new ItemAtendimento()
+    item.idItem = this.idItem
+    item.idFuncionario = this.idFuncionario
+    item.quantidade = this.quantidade
+    item.valorUnitario = this.valorUnitario
+
+    this.itensAtendimento = [...this.itensAtendimento, item]
+    this.limparItem()
+  }
+
+  removerItem(indice: number) {
+    this.itensAtendimento = this.itensAtendimento.filter((_, i) => i !== indice)
+  }
+
+  limparItem() {
+    this.idItem = 0
+    this.idFuncionario = 0
+    this.quantidade = 1
+    this.valorUnitario = 0
+  }
+
+  // ---------- atendimento ----------
+
   enviarDados() {
     if (this.idpessoa <= 0 || !this.dataatendimento) {
       alert('Escolha a pessoa e a data do atendimento.')
+      return
+    }
+
+    if (this.itensAtendimento.length === 0) {
+      alert('Adicione pelo menos um item ao atendimento.')
       return
     }
 
@@ -121,7 +247,7 @@ export class Atendimento implements OnInit {
     atendimento.idPessoa = this.idpessoa
     atendimento.dataAtendimento = this.dataatendimento
     atendimento.statusAtendimento = this.status
-    atendimento.itens = this.editar ? this.itensCarregados : []   // sem isto a API apagaria os itens
+    atendimento.itens = this.itensAtendimento
 
     if (!this.editar) {
       this.servico.adicionarAtendimento(atendimento).subscribe({
@@ -172,7 +298,8 @@ export class Atendimento implements OnInit {
     this.idpessoa = 0
     this.dataatendimento = ''
     this.status = 'A'
-    this.itensCarregados = []
+    this.itensAtendimento = []
+    this.limparItem()
     this.editar = false
   }
 }

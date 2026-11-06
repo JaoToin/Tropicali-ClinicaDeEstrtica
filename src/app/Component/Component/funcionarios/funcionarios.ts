@@ -6,6 +6,14 @@ import { Funcionario } from '../../../models/funcionario';
 import { PessoaEndereco, Endereco } from '../../../models/pessoa-endereco';
 import { normalizar, mensagemErro } from '../../../../../Util/util';
 
+function hoje(): string {
+  const d = new Date()
+  const mes = String(d.getMonth() + 1).padStart(2, '0')
+  const dia = String(d.getDate()).padStart(2, '0')
+  return `${d.getFullYear()}-${mes}-${dia}`
+}
+
+
 @Component({
   imports: [FormsModule],
   selector: 'app-funcionarios',
@@ -17,7 +25,7 @@ export class Funcionarios implements OnInit {
   // funcionário
   idPessoa = 0
   cargo = ''
-  dataAdmissao = ''
+  dataAdmissao = hoje()
 
   // pessoa
   nome = ''

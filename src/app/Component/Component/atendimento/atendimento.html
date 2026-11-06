@@ -36,6 +36,88 @@
       </div>
     </div>
 
+    <!-- ITENS DO ATENDIMENTO -->
+    <h3>Itens do atendimento</h3>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="iditem">Produto</label>
+        <select id="iditem" name="iditem" [(ngModel)]="idItem">
+          <option [ngValue]="0">Selecione o produto</option>
+          @for (p of listaItem(); track p.iditem) {
+            <option [ngValue]="p.iditem">{{ p.iditemNavigation?.item1 }} (#{{ p.iditem }})</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="idfuncionario">Funcionário</label>
+        <select id="idfuncionario" name="idfuncionario" [(ngModel)]="idFuncionario">
+          <option [ngValue]="0">Selecione o funcionário</option>
+          @for (f of funcionarios(); track f.idFuncionario) {
+            <option [ngValue]="f.idPessoa">{{ f.pessoas[0]?.nome }} (#{{ f.idPessoa }})</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="quantidade">Quantidade</label>
+        <input type="number" id="quantidade" name="quantidade" min="1"
+               [(ngModel)]="quantidade">
+      </div>
+
+      <div class="form-group">
+        <label for="valorunitario">Valor unitário</label>
+        <input type="number" id="valorunitario" name="valorunitario" min="0" step="0.01"
+               [(ngModel)]="valorUnitario">
+      </div>
+    </div>
+
+    <div id="button">
+      <button type="button" (click)="adicionarItem()">Adicionar item</button>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Produto</th>
+          <th>Funcionário</th>
+          <th>Qtd.</th>
+          <th>Valor unit.</th>
+          <th>Subtotal</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (it of itensAtendimento; track $index) {
+          <tr>
+            <td>{{ nomeProduto(it.idItem) }}</td>
+            <td>{{ nomeFuncionario(it.idFuncionario) }}</td>
+            <td>{{ it.quantidade }}</td>
+            <td>{{ moeda(it.valorUnitario) }}</td>
+            <td>{{ moeda(it.quantidade * it.valorUnitario) }}</td>
+            <td>
+              <button type="button" (click)="removerItem($index)">Remover</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="6">Nenhum item adicionado.</td>
+          </tr>
+        }
+      </tbody>
+      @if (itensAtendimento.length > 0) {
+        <tfoot>
+          <tr>
+            <td colspan="4">Total</td>
+            <td colspan="2">{{ moeda(totalItens) }}</td>
+          </tr>
+        </tfoot>
+      }
+    </table>
+
     <div id="button">
       <button type="submit" id="button_add">
         {{ editar ? 'Salvar alterações' : 'Registrar atendimento' }}
@@ -74,7 +156,32 @@
             <td>{{ a.nomePessoa }} (#{{ a.idPessoa }})</td>
             <td>{{ a.dataAtendimento }}</td>
             <td>{{ rotuloStatus(a.status) }}</td>
-            <td>{{ a.itens.length }}</td>
+            <td>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Produto</th>
+                    <th>Funcionário</th>
+                    <th>Qtd.</th>
+                    <th>Valor unit.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (it of a.itens; track $index) {
+                    <tr>
+                      <td>{{ nomeProduto(it.idItem) }}</td>
+                      <td>{{ nomeFuncionario(it.idFuncionario) }}</td>
+                      <td>{{ it.quantidade }}</td>
+                      <td>{{ moeda(it.valorUnitario) }}</td>
+                    </tr>
+                  } @empty {
+                    <tr>
+                      <td colspan="4">Sem itens.</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </td>
             <td>
               <button type="button" (click)="carregarCampo(a.idAtendimento)">Editar</button>
               <button type="button" (click)="excluir(a)">Excluir</button>

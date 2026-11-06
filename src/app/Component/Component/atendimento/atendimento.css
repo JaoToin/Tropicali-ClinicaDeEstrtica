@@ -1,5 +1,5 @@
 /* =========================================================
-   GERENCIAMENTO DE ATENDIMENTO - TROPICALÍ
+   GERENCIAMENTO DE ATENDIMENTOS (COM DADOS & ITENS) - TROPICALÍ
    ========================================================= */
 
    #cadastro {
@@ -13,7 +13,7 @@
   }
 
   /* ---------------------------------------------------------
-     FORMULÁRIO DE ATENDIMENTO
+     FORMULÁRIO PRINCIPAL DE CADASTRO
      --------------------------------------------------------- */
   #cad {
     background: #FFFFFF;
@@ -51,6 +51,17 @@
     margin-left: auto;
   }
 
+  #cad h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #2D0A14;
+    margin: 2rem 0 1.2rem 0;
+    padding-top: 1rem;
+    border-top: 1px dashed #FFEEDD;
+  }
+
+  /* Linhas e Agrupamentos */
   .form-row {
     display: flex;
     gap: 1.5rem;
@@ -77,6 +88,9 @@
     letter-spacing: 0.5px;
   }
 
+  /* Entradas de Texto, Números e Selects */
+  .form-group input[type="text"],
+  .form-group input[type="number"],
   .form-group input[type="date"],
   .form-group select {
     width: 100%;
@@ -110,14 +124,113 @@
     box-shadow: 0 0 0 4px rgba(232, 93, 4, 0.12);
   }
 
+  /* ---------------------------------------------------------
+     TABELA INTERNA DO FORMULÁRIO (INCLUSÃO DE ITENS)
+     --------------------------------------------------------- */
+  #cad table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    background-color: #FFFDF9;
+    border: 1px solid #FFEEDD;
+    border-radius: 14px;
+    overflow: hidden;
+    font-size: 0.88rem;
+  }
+
+  #cad table thead tr {
+    background-color: #FFF9F2;
+    border-bottom: 1.5px solid #FFEEDD;
+  }
+
+  #cad table th {
+    padding: 0.8rem 1rem;
+    font-weight: 700;
+    color: #2D0A14;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    text-align: left;
+  }
+
+  #cad table tbody tr {
+    border-bottom: 1px solid #FFEEDD;
+  }
+
+  #cad table td {
+    padding: 0.75rem 1rem;
+    color: #5A2A38;
+  }
+
+  #cad table td button {
+    background: transparent;
+    color: #A08C93;
+    border: 1px solid #A08C93;
+    border-radius: 6px;
+    padding: 0.35rem 0.7rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  #cad table td button:hover {
+    background: #2D0A14;
+    color: #FAEDCD;
+    border-color: #2D0A14;
+  }
+
+  #cad table tfoot tr {
+    background-color: #FFF9F2;
+    font-weight: 700;
+    color: #2D0A14;
+    border-top: 2px solid #FFEEDD;
+  }
+
+  #cad table tfoot td {
+    padding: 0.9rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  #cad table tfoot td:last-child {
+    color: #E85D04;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1rem;
+  }
+
+  /* ---------------------------------------------------------
+     BOTÕES DE AÇÃO E ADIÇÃO NO FORMULÁRIO
+     --------------------------------------------------------- */
   #button {
     display: flex;
     gap: 1rem;
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px dashed #FFEEDD;
+    margin-top: 1rem;
   }
 
+  /* Botão "Adicionar item" */
+  #cad > #button:first-of-type button {
+    background-color: #FFF9F2;
+    color: #E85D04;
+    border: 1.5px solid #E85D04;
+    border-radius: 12px;
+    padding: 0.7rem 1.4rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  #cad > #button:first-of-type button:hover {
+    background-color: #E85D04;
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(232, 93, 4, 0.2);
+  }
+
+  /* Botão de Envio Principal ("Registrar Atendimento") */
   #button_add {
     flex: 2;
     height: 48px;
@@ -143,7 +256,7 @@
     box-shadow: 0 8px 20px rgba(232, 93, 4, 0.3);
   }
 
-  #button button[type="button"] {
+  #button button[type="button"]:not(#button_add) {
     flex: 1;
     height: 48px;
     background: transparent;
@@ -157,14 +270,14 @@
     transition: all 0.3s ease;
   }
 
-  #button button[type="button"]:hover {
+  #button button[type="button"]:not(#button_add):hover {
     background: #FFF9F2;
     color: #2D0A14;
     border-color: #2D0A14;
   }
 
   /* ---------------------------------------------------------
-     LISTA DE ATENDIMENTOS (TABELA & PESQUISA)
+     LISTA DE ATENDIMENTOS (TABELA PRINCIPAL E ANINHADA)
      --------------------------------------------------------- */
   .lista-atendimentos {
     background: #FFFFFF;
@@ -208,19 +321,20 @@
     box-shadow: 0 0 0 4px rgba(232, 93, 4, 0.12);
   }
 
-  .lista-atendimentos table {
+  /* Tabela Externa */
+  .lista-atendimentos > table {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
     font-size: 0.88rem;
   }
 
-  .lista-atendimentos thead tr {
+  .lista-atendimentos > table > thead tr {
     background-color: #FFFDF9;
     border-bottom: 2px solid #FFEEDD;
   }
 
-  .lista-atendimentos th {
+  .lista-atendimentos > table > thead th {
     padding: 1rem 0.8rem;
     font-weight: 700;
     color: #2D0A14;
@@ -230,28 +344,57 @@
     white-space: nowrap;
   }
 
-  .lista-atendimentos tbody tr {
+  .lista-atendimentos > table > tbody > tr {
     border-bottom: 1px solid #FFEEDD;
     transition: background-color 0.2s ease;
   }
 
-  .lista-atendimentos tbody tr:hover {
-    background-color: #FFF9F2;
+  .lista-atendimentos > table > tbody > tr:hover {
+    background-color: #FFFDF9;
   }
 
-  .lista-atendimentos td {
+  .lista-atendimentos > table > tbody > tr > td {
     padding: 0.9rem 0.8rem;
     color: #5A2A38;
     vertical-align: middle;
+  }
+
+  /* Subtabela de Itens (Aninhada dentro da TD da listagem) */
+  .lista-atendimentos td table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #FFFFFF;
+    border: 1px solid #FFEEDD;
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 0.8rem;
+  }
+
+  .lista-atendimentos td table thead tr {
+    background-color: #FFF9F2;
+    border-bottom: 1px solid #FFEEDD;
+  }
+
+  .lista-atendimentos td table th {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.7rem;
+    color: #2D0A14;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .lista-atendimentos td table td {
+    padding: 0.4rem 0.6rem;
+    color: #5A2A38;
+    border-bottom: 1px solid #FFFDF9;
+  }
+
+  /* Ações na Lista */
+  .lista-atendimentos td:last-child {
     white-space: nowrap;
   }
 
-  .lista-atendimentos td:last-child {
-    display: flex;
-    gap: 0.5rem;
-  }
-
-  .lista-atendimentos td button:first-child {
+  .lista-atendimentos td:last-child button:first-child {
     background-color: #FFF9F2;
     color: #E85D04;
     border: 1px solid #E85D04;
@@ -261,15 +404,16 @@
     font-size: 0.78rem;
     font-weight: 700;
     cursor: pointer;
+    margin-right: 0.4rem;
     transition: all 0.2s ease;
   }
 
-  .lista-atendimentos td button:first-child:hover {
+  .lista-atendimentos td:last-child button:first-child:hover {
     background-color: #E85D04;
     color: #FFFFFF;
   }
 
-  .lista-atendimentos td button:last-child {
+  .lista-atendimentos td:last-child button:last-child {
     background-color: transparent;
     color: #A08C93;
     border: 1px solid #A08C93;
@@ -282,7 +426,7 @@
     transition: all 0.2s ease;
   }
 
-  .lista-atendimentos td button:last-child:hover {
+  .lista-atendimentos td:last-child button:last-child:hover {
     background-color: #2D0A14;
     color: #FAEDCD;
     border-color: #2D0A14;
@@ -295,8 +439,20 @@
     font-weight: 600;
   }
 
+  /* ---------------------------------------------------------
+     RESPONSIVIDADE
+     --------------------------------------------------------- */
   @media (max-width: 768px) {
-    #cad { padding: 1.5rem; }
-    .form-row { flex-direction: column; gap: 0; }
-    #button { flex-direction: column; }
+    #cad {
+      padding: 1.5rem;
+    }
+
+    .form-row {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    #button {
+      flex-direction: column;
+    }
   }
