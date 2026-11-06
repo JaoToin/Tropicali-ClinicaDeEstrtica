@@ -1,0 +1,405 @@
+/*   /* =========================================================
+   FORMULÁRIO DE ATENDIMENTO / PEDIDO - TROPICALÍ
+   ========================================================= */
+/* Container do Formulário */
+#cad {
+  background: #FFFFFF;
+  border: 1.5px solid #FFEEDD;
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 0 12px 35px rgba(45, 10, 20, 0.05);
+  max-width: 800px;
+  margin: 2rem auto;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  color: #2D0A14;
+}
+
+/* Estrutura de Linhas e Agrupamentos */
+.form-row {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.not{
+  display: none;
+}
+
+/* Agrupamento padrão para divs que não possuem a classe .form-group no HTML */
+#cad > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.3rem;
+  width: 100%;
+}
+
+#cad label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #5A2A38;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Estilização Geral de Inputs e Selects */
+#cad input[type="text"],
+#cad input[type="number"],
+#cad input[type="date"],
+#cad select {
+  width: 100%;
+  height: 48px;
+  padding: 0 1rem;
+  border: 1.5px solid #E5D5C5;
+  border-radius: 12px;
+  background-color: #FFFDF9;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  color: #2D0A14;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+/* Customização dos Campos Select */
+#cad select {
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%202D0A14' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
+}
+
+/* Efeito de Foco nos Campos */
+#cad input:focus,
+#cad select:focus {
+  border-color: #E85D04;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 0 4px rgba(232, 93, 4, 0.12);
+}
+
+/* Estilização da opção desabilitada/placeholder */
+#cad select option[disabled] {
+  color: #A08C93;
+}
+
+/* ---------------------------------------------------------
+   BOTÃO DE FINALIZAÇÃO (SUBMIT)
+   --------------------------------------------------------- */
+#cad .btn-primary {
+  width: 100%;
+  height: 52px;
+  margin-top: 1rem;
+  background: linear-gradient(135deg, #E85D04 0%, #D04D00 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(232, 93, 4, 0.25);
+  transition: all 0.3s ease;
+}
+
+#cad .btn-primary:hover {
+  background: linear-gradient(135deg, #2D0A14 0%, #3D1220 100%);
+  color: #FAEDCD;
+  box-shadow: 0 8px 22px rgba(45, 10, 20, 0.3);
+  transform: translateY(-2px);
+}
+
+#cad .btn-primary:active {
+  transform: translateY(0);
+}
+
+
+
+/* ---------------------------------------------------------
+   RESPONSIVIDADE (Dispositivos Móveis)
+   --------------------------------------------------------- */
+@media (max-width: 600px) {
+  #cad {
+    padding: 1.5rem;
+    margin: 1rem auto;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+/*--------------------------------------
+-----------------------------------------------------
+---------------------------------------------------------
+----------------------------------------------------------------
+*/
+/* =========================================================
+   FINALIZAR PEDIDO - TROPICALÍ
+   ========================================================= */
+
+#cadastro {
+  width: 100%;
+  max-width: 900px;
+  margin: 2.5rem auto;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  color: #2D0A14;
+}
+
+/* ---------------------------------------------------------
+   FORMULÁRIO E TÍTULO
+   --------------------------------------------------------- */
+#cad {
+  background: #FFFFFF;
+  border: 1.5px solid #FFEEDD;
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 0 12px 35px rgba(45, 10, 20, 0.05);
+  box-sizing: border-box;
+}
+
+.form-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2D0A14;
+  margin: 0 0 2rem 0;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #FFEEDD;
+}
+
+.form-title span {
+  color: #E85D04;
+}
+
+/* ---------------------------------------------------------
+   RESUMO DO PEDIDO (TABELA E TOTAL)
+   --------------------------------------------------------- */
+.resumo-pedido {
+  background-color: #FFFDF9;
+  border: 1.5px solid #FFEEDD;
+  border-radius: 18px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.resumo-pedido h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #2D0A14;
+  margin: 0 0 1rem 0;
+}
+
+.resumo-pedido table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+  margin-bottom: 1.2rem;
+}
+
+.resumo-pedido thead tr {
+  background-color: #FFF9F2;
+  border-bottom: 1.5px solid #FFEEDD;
+}
+
+.resumo-pedido th {
+  padding: 0.8rem 1rem;
+  font-weight: 700;
+  color: #2D0A14;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+.resumo-pedido tbody tr {
+  border-bottom: 1px solid #FFEEDD;
+}
+
+.resumo-pedido tbody tr:last-child {
+  border-bottom: none;
+}
+
+.resumo-pedido td {
+  padding: 0.85rem 1rem;
+  color: #5A2A38;
+  vertical-align: middle;
+}
+
+.resumo-pedido td a {
+  color: #E85D04;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.resumo-pedido td a:hover {
+  text-decoration: underline;
+}
+
+/* Preço Total */
+.resumo-pedido > p {
+  text-align: right;
+  font-size: 1.2rem;
+  color: #2D0A14;
+  margin: 0;
+  padding-top: 0.8rem;
+  border-top: 1.5px dashed #FFEEDD;
+}
+
+.resumo-pedido > p strong {
+  color: #E85D04;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.35rem;
+}
+
+/* ---------------------------------------------------------
+   CAMPOS DO FORMULÁRIO (INPUTS & SELECTS)
+   --------------------------------------------------------- */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.4rem;
+  width: 100%;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #5A2A38;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-group input[type="date"],
+.form-group select {
+  width: 100%;
+  height: 48px;
+  padding: 0 1rem;
+  border: 1.5px solid #E5D5C5;
+  border-radius: 12px;
+  background-color: #FFFDF9;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  color: #2D0A14;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.form-group select {
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%202D0A14' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #E85D04;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 0 4px rgba(232, 93, 4, 0.12);
+}
+
+/* Texto Informativo de Status */
+#cad > p small {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #D4AF37;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+/* ---------------------------------------------------------
+   BOTÕES DE AÇÃO (FINALIZAR E VOLTAR)
+   --------------------------------------------------------- */
+#button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed #FFEEDD;
+}
+
+#button_add {
+  width: 100%;
+  height: 50px;
+  background: linear-gradient(135deg, #2D0A14 0%, #3D1220 100%);
+  color: #FAEDCD;
+  border: 1px solid #D4AF37;
+  border-radius: 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(45, 10, 20, 0.2);
+  transition: all 0.3s ease;
+}
+
+#button_add:hover:not(:disabled) {
+  background: #E85D04;
+  color: #FFFFFF;
+  border-color: #E85D04;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(232, 93, 4, 0.3);
+}
+
+#button_add:disabled {
+  background: #E5D5C5;
+  color: #A08C93;
+  border-color: #E5D5C5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+#button a {
+  color: #5A2A38;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+#button a:hover {
+  color: #E85D04;
+}
+
+/* ---------------------------------------------------------
+   RESPONSIVIDADE (Celular)
+   --------------------------------------------------------- */
+@media (max-width: 600px) {
+  #cad {
+    padding: 1.5rem;
+  }
+
+  .resumo-pedido {
+    padding: 1rem;
+  }
+
+  .resumo-pedido table {
+    display: block;
+    overflow-x: auto;
+  }
+}

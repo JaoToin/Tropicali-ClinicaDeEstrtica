@@ -1,6 +1,9 @@
-<div>
+<!--  <div>
 
   <form id="cad" (ngSubmit)="enviarDados()">
+
+        <h2 class="form-title">Finalizar <span>Pedido</span></h2>
+
 
     <div class="form-group">
       <label for="idpessoa">Pessoa</label>
@@ -13,18 +16,28 @@
       </select>
     </div>
 
+    <div>
+      <label for="idfuncionario">Funcionário</label>
+      <select id="idfuncionario" name="idfuncionario" [(ngModel)]="idFuncionario">
+
+        <option [ngValue]="0" disabled >SELECIONE O FUNCIONÁRIO</option>
+        @for (f of listaFuncionario(); track f.idPessoa){
+          <option [ngValue]="f.idPessoa">{{f.pessoas?.[0]?.nome}}</option>
+        }
+
+      </select>
+    </div>
+
     <div class="form-row">
-      <div class="form-group">
+      <div class="form-group" class="not">
         <label for="dataatendimento">Data do Atendimento</label>
-        <input type="date" id="dataatendimento" name="dataatendimento" [(ngModel)]="dataatendimento">
+        <input type="date" disabled id="dataatendimento" name="dataatendimento" [(ngModel)]="dataatendimento">
       </div>
 
-      <div class="form-group">
+      <div class="form-group" class="not">
         <label for="status">Status</label>
         <select id="status" name="status" [(ngModel)]="status">
-          <option value="A">Aberto</option>
-          <option value="C">Concluído</option>
-          <option value="X">Cancelado</option>
+          <option value="A" disabled >Aberto</option>
         </select>
       </div>
     </div>
@@ -32,17 +45,112 @@
     <div>
       <label for="iditem">Selecione o Item</label>
       <select name="iditem" id="iditem">
-        <option value="0" disabled>SELECIONE O PRODUTO</option>
+        <option value="0" disabled >SELECIONE O PRODUTO</option>
 
-        @for(i of listaItem(); track i.iditem){
-          <option [ngValue]="i.iditem">{{i.ididitemNavigation?.item1}}</option>
+         @for (i of cartService.cart(); track i.iditem){
+          <option [ngValue]="i.iditem">{{i.iditemNavigation?.item1}}</option>
         }
       </select>
+    </div>
+
+    <div class="form-group">
+      <label for="quantidade">Quantidade</label>
+      <input type="number" id="quantidade" name="quantidade" [(ngModel)]="quantidade" (input)="valorUnitarioChange()" >
+    </div>
+
+    <div class="form-group">
+      <label for="valorUnitario">Valor Unitário</label>
+      <input type="number" id="valorUnitario" name="valorUnitario"    [(ngModel)]="valorUnitario" >
+    </div>
+
+    <div id="button">
+      <button type="submit" id="button_add" [disabled]="enviando() || cartService.cart().length === 0">
+        {{ enviando() ? 'Enviando...' : 'Finalizar Pedido' }}
+      </button>
+      <a routerLink="/carrinho">Voltar ao carrinho</a>
     </div>
 
 
   </form>
 
 
+
+</div> -->
+
+<div id="cadastro">
+
+  <form id="cad" (ngSubmit)="enviarDados()">
+
+    <h2 class="form-title">Finalizar <span>Pedido</span></h2>
+
+    <!-- Itens que vieram do carrinho -->
+    <div class="resumo-pedido">
+      <h3>Itens do pedido</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Quantidade</th>
+            <th>Valor unitário</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (i of cartService.cart(); track i.iditem) {
+            <tr>
+              <td>{{ i.iditemNavigation?.item1 }}</td>
+              <td>{{ i.quantidade }}</td>
+              <td>R$ {{ i.precoVenda.toFixed(2) }}</td>
+              <td>R$ {{ (i.precoVenda * i.quantidade).toFixed(2) }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="4">
+                Seu carrinho está vazio. <a routerLink="/itens">Voltar ao catálogo</a>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <p><strong>Total: R$ {{ cartService.valorTotal().toFixed(2) }}</strong></p>
+    </div>
+
+    <div class="form-group">
+      <label for="idpessoa">Pessoa</label>
+      <select id="idpessoa" name="idpessoa" [(ngModel)]="idpessoa">
+        <option [ngValue]="0">Selecione a pessoa</option>
+        @for (p of listaPessoa(); track p.idPessoa) {
+          <option [ngValue]="p.idPessoa">{{ p.nome }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="idfuncionario">Funcionário</label>
+      <select id="idfuncionario" name="idfuncionario" [(ngModel)]="idFuncionario">
+        <option [ngValue]="0">Selecione o funcionário</option>
+        @for (f of listaFuncionario(); track f.idPessoa) {
+          <option [ngValue]="f.idPessoa">{{ f.pessoas[0]?.nome }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="dataatendimento">Data do Atendimento</label>
+      <input type="date" id="dataatendimento" name="dataatendimento" [(ngModel)]="dataatendimento">
+    </div>
+
+    <p><small>Status: Aberto</small></p>
+
+    <div id="button">
+      <button type="submit" id="button_add" [disabled]="enviando() || cartService.cart().length === 0">
+        {{ enviando() ? 'Enviando...' : 'Finalizar Pedido' }}
+      </button>
+      <a routerLink="/carrinho">Voltar ao carrinho</a>
+    </div>
+
+  </form>
 
 </div>

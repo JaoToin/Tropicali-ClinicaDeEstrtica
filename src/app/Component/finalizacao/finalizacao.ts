@@ -1,38 +1,37 @@
 import { PessoaEndereco } from '../../models/pessoa-endereco';
 import { FormsModule } from '@angular/forms';
 import { PessoaEnderecoService } from '../../Service/Clienet/pessoa-endereço';
-import { Component, OnInit, signal, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AtendimentoServico } from './../../Service/Atendimento/atendimento/atendimento-module';
 import { AtendimentoModelo, ItemAtendimento } from '../../models/atendimento';
 import { normalizar, mensagemErro } from '../../../../Util/util';
 import { Item } from '../../Service/item/item';
 import { Itens } from '../../models/item';
+import {FuncionarioService} from '../../Service/Funcionario/funcionario/funcionario-module';
+import { Funcionario } from '../../models/funcionario';
+import { Router, RouterLink } from '@angular/router';
+import { CarrinhoProduto } from '../../Service/Carrinho/carrinho';
 
 
+
+// data de hoje no formato yyyy-MM-dd (o formato do input type="date")
+function hoje(): string {
+  const d = new Date()
+  const mes = String(d.getMonth() + 1).padStart(2, '0')
+  const dia = String(d.getDate()).padStart(2, '0')
+  return `${d.getFullYear()}-${mes}-${dia}`
+}
 
 
 @Component({
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   selector: 'app-finalizacao',
   styleUrl: './finalizacao.css',
   templateUrl: './finalizacao.html',
 })
 export class Finalizacao {
 
-  // pessoa e seu endereço
-
-  pessoaId = 0
-  nome = ''
-  cpf = ''
-  sexo = ''              // M, F ou N (não declarar)
-  data = ''              // data de nascimento "yyyy-MM-dd"
-  email = ''
-  telefone = ''
-  enderecoId = 0
-  cep = ''
-  numero = ''
-  complemento = ''
 
   editar = false
 
@@ -40,12 +39,13 @@ export class Finalizacao {
 
   idatendimento = 0
   idpessoa = 0
-  dataatendimento = ''
+  dataatendimento = hoje()
   status = 'A'
   idItem = 0
   idFuncionario = 0
   quantidade = 0
   valorUnitario = 0
+
 
 
   listaPessoa = signal<PessoaEndereco[]>([])
@@ -56,18 +56,46 @@ export class Finalizacao {
 
   listaItem = signal<Itens[]>([])
 
+  listaFuncionario = signal<Funcionario[]>([])
+
+  enviando = signal(false)
+
+
   constructor(
     private servicoPessoa: PessoaEnderecoService,
     private servicoAtendimento: AtendimentoServico,
     private servicoItens: Item,
     private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef
+    private servicoFuncionario: FuncionarioService,
+    private router: Router
   ) { }
 
+   // o mesmo carrinho do catálogo (service único)
+  cartService = inject(CarrinhoProduto)
+
+  valorUnitarioChange() {
+    const valor = this.quantidade * this.valorUnitario
+    this.valorUnitario = valor
+  }
 
   ngOnInit() {
     this.listarPessoas()
     this.listarAtendimentos()
+    this.listarFuncionarios()
+    this.listarItens()
+  }
+
+   listarFuncionarios() {
+    this.servicoFuncionario.listarfuncionarios()
+      .subscribe({
+        next: (dados) => {
+          this.listaFuncionario.set(
+            [...dados].sort((a, b) =>
+              (a.pessoas?.[0]?.nome ?? '').localeCompare(b.pessoas?.[0]?.nome ?? ''))
+          )
+        },
+        error: (msgErro) => console.log('Erro ao listar funcionários', msgErro)
+      })
   }
 
   listarItens() {
@@ -82,7 +110,6 @@ export class Finalizacao {
         error: (msgErro) => console.log('Erro ao listar produtos', msgErro)
       })
   }
-
 
 
   listarPessoas() {
@@ -112,8 +139,10 @@ export class Finalizacao {
   }
 
   enviarDados() {
-    if (this.idpessoa <= 0 || !this.dataatendimento) {
-      alert('Escolha a pessoa e a data do atendimento.')
+    const itensCarrinho = this.cartService.cart()
+
+   if (this.idpessoa <= 0 || this.idFuncionario <= 0 || !this.dataatendimento) {
+      alert('Escolha a pessoa e o funcionário')
       return
     }
 
@@ -122,50 +151,49 @@ export class Finalizacao {
     atendimento.dataAtendimento = this.dataatendimento
     atendimento.statusAtendimento = this.status
 
-    const itens = new ItemAtendimento()
+        // um item do atendimento para cada item do carrinho
+    atendimento.itens = itensCarrinho.map(i => {
+      const item = new ItemAtendimento()
+      item.idItem = i.iditem
+      item.idFuncionario = this.idFuncionario
+      item.quantidade = i.quantidade
+      item.valorUnitario = i.precoVenda
+      return item
+    })
+
+    this.enviando.set(true)
+
+
+   /* const itens = new ItemAtendimento()
     itens.idItem = this.idItem
     itens.quantidade = this.quantidade
     itens.valorUnitario = this.valorUnitario
     itens.idFuncionario = this.idFuncionario
-
-    if (!this.editar) {
-      this.servicoAtendimento.adicionarAtendimento(atendimento).subscribe({
-        next: () => {
-          this.limpar()
-          this.listarAtendimentos()
-        },
-        error: (msgErro) => {
-          console.log('Erro ao cadastrar', msgErro)
-          alert(mensagemErro(msgErro))
-        }
-      })
-    } else {
-      atendimento.idAtendimento = this.idatendimento
-
-      this.servicoAtendimento.alterarAtendimento(atendimento).subscribe({
-        next: () => {
-          this.limpar()
-          this.listarAtendimentos()
-        },
-        error: (msgErro) => {
-          console.log('Erro ao alterar', msgErro)
-          alert(mensagemErro(msgErro))
-        }
-      })
-    }
+*/
+  this.servicoAtendimento.adicionarAtendimento(atendimento).subscribe({
+      next: () => {
+        this.enviando.set(false)
+        this.cartService.limpar()
+        this.limpar(); //  Reseta idpessoa, idFuncionario, etc.
+        alert('Pedido finalizado com sucesso!')
+        this.router.navigate(['/itens'])
+      },
+      error: (msgErro) => {
+        this.enviando.set(false)
+        console.log('Erro ao cadastrar', msgErro)
+        alert(mensagemErro(msgErro))
+      }
+    })
   }
-
-
-
-
-
-
   limpar() {
     this.idatendimento = 0
     this.idpessoa = 0
     this.dataatendimento = ''
     this.status = 'A'
     this.itensCarregados = []
+    this.idItem = 0
+    this.quantidade = 0
+    this.valorUnitario = 0
   }
 
 }
