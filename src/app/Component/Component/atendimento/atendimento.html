@@ -54,7 +54,7 @@
         <label for="idfuncionario">Funcionário</label>
         <select id="idfuncionario" name="idfuncionario" [(ngModel)]="idFuncionario">
           <option [ngValue]="0">Selecione o funcionário</option>
-          @for (f of funcionarios(); track f.idFuncionario) {
+          @for (f of funcionarios(); track f.idPessoa) {
             <option [ngValue]="f.idPessoa">{{ f.pessoas[0]?.nome }} (#{{ f.idPessoa }})</option>
           }
         </select>
