@@ -1,0 +1,282 @@
+/* =========================================================
+   MEUS PEDIDOS (BUSCA POR CPF) - TROPICALÍ
+   ========================================================= */
+
+   #pedidos {
+    width: 100%;
+    max-width: 1100px;
+    margin: 2.5rem auto;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    color: #2D0A14;
+  }
+
+  /* ---------------------------------------------------------
+     TÍTULO & CAMPO DE BUSCA DE CPF
+     --------------------------------------------------------- */
+  .form-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2D0A14;
+    margin: 0 0 2rem 0;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #FFEEDD;
+  }
+
+  .form-title span {
+    color: #E85D04;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto 2rem auto;
+    background: #FFFFFF;
+    border: 1.5px solid #FFEEDD;
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 25px rgba(45, 10, 20, 0.04);
+    box-sizing: border-box;
+  }
+
+  .form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #5A2A38;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .form-group input[type="text"] {
+    width: 100%;
+    height: 48px;
+    padding: 0 1rem 0 2.8rem;
+    border: 1.5px solid #E5D5C5;
+    border-radius: 12px;
+    background-color: #FFFDF9;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: #2D0A14;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%20A08C93' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'%3e%3c/path%3e%3ccircle cx='12' cy='7' r='4'%3e%3c/circle%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: left 1rem center;
+    background-size: 1.1rem;
+  }
+
+  .form-group input:focus {
+    border-color: #E85D04;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(232, 93, 4, 0.12);
+  }
+
+  /* Saudação ao Cliente */
+  .cliente {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #2D0A14;
+    margin: 0 0 1.8rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1.5px dashed #FFEEDD;
+  }
+
+  /* ---------------------------------------------------------
+     GRID DE CARDS DE PEDIDO (COM FLOR TROPICAL)
+     --------------------------------------------------------- */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .card-pedido {
+    background: #FFFFFF;
+    border: 1.5px solid #FFEEDD;
+    border-radius: 24px;
+    padding: 2.2rem 1.8rem 1.8rem 1.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 10px 25px rgba(45, 10, 20, 0.04);
+    transition: all 0.3s ease;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  /* Flor Tropical Centralizada no Topo do Card */
+  .card-pedido::before {
+    content: '🌺';
+    font-size: 2.2rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    background: #FFF9F2;
+    border: 1.5px solid #E85D04;
+    border-radius: 50%;
+    margin: 0 auto 1.2rem auto;
+    box-shadow: 0 6px 15px rgba(232, 93, 4, 0.12);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+
+  .card-pedido:hover {
+    transform: translateY(-5px);
+    border-color: #E85D04;
+    box-shadow: 0 15px 35px rgba(232, 93, 4, 0.12);
+  }
+
+  .card-pedido:hover::before {
+    transform: scale(1.1) rotate(10deg);
+    background-color: #FFEEDD;
+  }
+
+  /* Cabeçalho do Card */
+  .card-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 0.8rem;
+    border-bottom: 1.5px solid #FFFDF9;
+    margin-bottom: 0.8rem;
+  }
+
+  .card-topo div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .card-topo strong {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.2rem;
+    color: #2D0A14;
+  }
+
+  .card-topo .data {
+    font-size: 0.82rem;
+    color: #A08C93;
+    font-weight: 500;
+  }
+
+  /* Tag de Status */
+  .card-topo .status {
+    background-color: #FFF9F2;
+    color: #E85D04;
+    border: 1px solid #FFEEDD;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Informação do Profissional */
+  .profissional {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #D4AF37;
+    margin: 0 0 1rem 0;
+  }
+
+  /* Lista de Itens do Pedido */
+  .card-itens {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .card-itens li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.88rem;
+    color: #5A2A38;
+    padding: 0.5rem 0.7rem;
+    background-color: #FFFDF9;
+    border-radius: 10px;
+    border: 1px solid #FFEEDD;
+  }
+
+  .card-itens li span:first-child {
+    font-weight: 500;
+  }
+
+  .card-itens li span:last-child {
+    font-weight: 700;
+    color: #2D0A14;
+    white-space: nowrap;
+  }
+
+  /* Rodapé do Card (Total) */
+  .card-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1.2rem;
+    border-top: 1.5px dashed #FFEEDD;
+    margin-top: auto;
+  }
+
+  .card-total span {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #5A2A38;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .card-total strong {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.35rem;
+    color: #E85D04;
+  }
+
+  /* ---------------------------------------------------------
+     MENSAGEM DE AVISO / ESTADO VAZIO
+     --------------------------------------------------------- */
+  .aviso {
+    background: #FFFFFF;
+    border: 1.5px dashed #E5D5C5;
+    border-radius: 20px;
+    padding: 3.5rem 2rem;
+    text-align: center;
+    color: #A08C93;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-top: 1rem;
+  }
+
+  /* ---------------------------------------------------------
+     RESPONSIVIDADE (DISPOSITIVOS MÓVEIS)
+     --------------------------------------------------------- */
+  @media (max-width: 600px) {
+    #pedidos {
+      padding: 0 1rem;
+      margin: 1.5rem auto;
+    }
+
+    .form-group {
+      max-width: 100%;
+      padding: 1.2rem;
+    }
+
+    .cards {
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+    }
+  }

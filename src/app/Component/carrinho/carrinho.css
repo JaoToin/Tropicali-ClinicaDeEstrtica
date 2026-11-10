@@ -1,28 +1,31 @@
 /* =========================================================
-   PÁGINA E CARD DO CARRINHO - TROPICALÍ
+   CARRINHO DE COMPRAS / AGENDAMENTO - TROPICALÍ
    ========================================================= */
 
    .carrinho-container {
     width: 100%;
-    max-width: 650px;
-    margin: 3rem auto;
-    padding: 2.5rem 2rem;
+    max-width: 900px;
+    margin: 2.5rem auto;
+    padding: 2.5rem;
     background: #FFFFFF;
     border: 1.5px solid #FFEEDD;
-    border-radius: 24px;
-    box-shadow: 0 15px 35px rgba(45, 10, 20, 0.06);
+    border-radius: 28px;
+    box-shadow: 0 12px 35px rgba(45, 10, 20, 0.05);
     font-family: 'Montserrat', sans-serif;
+    color: #2D0A14;
     box-sizing: border-box;
   }
 
-  /* Cabeçalho */
+  /* ---------------------------------------------------------
+     CABEÇALHO DO CARRINHO
+     --------------------------------------------------------- */
   .carrinho-header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     padding-bottom: 1.2rem;
     border-bottom: 2px solid #FFEEDD;
-    margin-bottom: 1.8rem;
+    margin-bottom: 2rem;
   }
 
   .carrinho-header h2 {
@@ -34,147 +37,248 @@
   }
 
   .badge-qtd {
-    background: #FFF9F2;
+    background-color: #FFF9F2;
     color: #E85D04;
-    border: 1px solid #E85D04;
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
+    border: 1px solid #FFEEDD;
+    font-size: 0.8rem;
     font-weight: 700;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
-  /* Lista de Itens */
+  /* ---------------------------------------------------------
+     LISTA E CARDS DE ITENS DO CARRINHO (COM FLOR)
+     --------------------------------------------------------- */
   .lista-carrinho {
     list-style: none;
     padding: 0;
     margin: 0 0 2rem 0;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.2rem;
   }
 
-  /* Card de Item Individual */
+  /* Card Individual do Item no Carrinho */
   .card-item-carrinho {
     background: #FFFDF9;
-    border: 1px solid #FFEEDD;
-    border-radius: 16px;
-    padding: 1.2rem 1.5rem;
+    border: 1.5px solid #FFEEDD;
+    border-radius: 20px;
+    padding: 1.5rem 1.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(45, 10, 20, 0.02);
+    transition: all 0.3s ease;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  /* Ícone de Flor no canto do card de item */
+  .card-item-carrinho::before {
+    content: '🌺';
+    font-size: 1.8rem;
+    line-height: 1;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: #FFF9F2;
+    border: 1.5px solid #E85D04;
+    border-radius: 50%;
+    margin-right: 1.2rem;
+    box-shadow: 0 4px 10px rgba(232, 93, 4, 0.1);
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
   }
 
   .card-item-carrinho:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(232, 93, 4, 0.08);
     border-color: #E85D04;
+    box-shadow: 0 8px 25px rgba(232, 93, 4, 0.1);
   }
 
-  .item-info .item-nome {
+  .card-item-carrinho:hover::before {
+    transform: scale(1.1) rotate(10deg);
+    background-color: #FFEEDD;
+  }
+
+  /* Informações do Item */
+  .item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+  }
+
+  .item-nome {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: #2D0A14;
-    margin: 0 0 0.3rem 0;
+    margin: 0;
   }
 
-  .item-info .item-qtd {
-    font-size: 0.88rem;
+  /* Controles de Quantidade (+ / -) */
+  .item-qtd {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.85rem;
     color: #5A2A38;
   }
 
+  .item-qtd span {
+    font-weight: 600;
+  }
+
+  .btn-qtd {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid #E85D04;
+    background-color: #FFF9F2;
+    color: #E85D04;
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    line-height: 1;
+  }
+
+  .btn-qtd:hover {
+    background-color: #E85D04;
+    color: #FFFFFF;
+    transform: scale(1.08);
+  }
+
+  .item-qtd strong {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #2D0A14;
+    min-width: 20px;
+    text-align: center;
+  }
+
+  /* Preço e Botão de Remover */
   .item-preco-acao {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 0.5rem;
+    gap: 0.8rem;
+    margin-left: 1rem;
   }
 
   .item-preco {
-    font-size: 1.1rem;
-    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
     color: #2D0A14;
+    white-space: nowrap;
   }
 
   .btn-remover {
     background: transparent;
     border: none;
     color: #A08C93;
-    font-size: 0.82rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
     cursor: pointer;
-    padding: 0;
-    transition: color 0.2s ease;
     display: flex;
     align-items: center;
-    gap: 0.2rem;
+    gap: 0.3rem;
+    transition: color 0.2s ease;
   }
 
   .btn-remover:hover {
     color: #E85D04;
   }
 
-  /* Estado Vazio */
+  .icon-lixeira {
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  /* ---------------------------------------------------------
+     ESTADO DE CARRINHO VAZIO
+     --------------------------------------------------------- */
   .carrinho-vazio {
     text-align: center;
-    padding: 3rem 1rem;
+    padding: 3.5rem 1.5rem;
+    background: #FFFDF9;
+    border: 2px dashed #E5D5C5;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
   }
 
   .vazio-icon {
     font-size: 3rem;
-    margin-bottom: 0.8rem;
   }
 
   .carrinho-vazio p {
-    color: #5A2A38;
+    margin: 0;
     font-size: 1rem;
-    margin: 0 0 1.5rem 0;
+    font-weight: 600;
+    color: #A08C93;
   }
 
   .btn-explorar {
     display: inline-block;
-    background: #E85D04;
-    color: #FFFFFF;
-    padding: 0.8rem 1.5rem;
+    margin-top: 0.5rem;
+    background-color: #FFF9F2;
+    color: #E85D04;
+    border: 1.5px solid #E85D04;
     border-radius: 12px;
-    text-decoration: none;
+    padding: 0.7rem 1.5rem;
+    font-size: 0.88rem;
     font-weight: 700;
-    font-size: 0.9rem;
     text-transform: uppercase;
-    transition: background 0.3s ease;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
   }
 
   .btn-explorar:hover {
-    background: #D04D00;
+    background-color: #E85D04;
+    color: #FFFFFF;
+    box-shadow: 0 6px 18px rgba(232, 93, 4, 0.2);
   }
 
-  /* Resumo da Compra */
+  /* ---------------------------------------------------------
+     RODAPÉ DO CARRINHO (RESUMO E AÇÕES)
+     --------------------------------------------------------- */
   .resumo-carrinho {
-    border-top: 2px dashed #FFEEDD;
-    padding-top: 1.5rem;
+    padding-top: 1.8rem;
+    border-top: 2px solid #FFEEDD;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
-  .resumo-linha {
+  .resumo-linha.total {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
-  }
-
-  .resumo-linha span {
-    font-size: 1.1rem;
-    color: #5A2A38;
+    font-size: 1.2rem;
     font-weight: 600;
+    color: #5A2A38;
   }
 
   .valor-total {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.8rem;
-    color: #2D0A14;
+    font-weight: 700;
+    color: #E85D04;
   }
 
-  /* Botões do Rodapé */
   .acoes-carrinho {
     display: flex;
     gap: 1rem;
@@ -182,49 +286,86 @@
 
   .btn-limpar {
     flex: 1;
+    height: 50px;
     background: transparent;
-    border: 1.5px solid #A08C93;
     color: #5A2A38;
-    padding: 0.8rem;
-    border-radius: 12px;
+    border: 1.5px solid #A08C93;
+    border-radius: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
   }
 
   .btn-limpar:hover {
-    border-color: #2D0A14;
+    background-color: #FFF9F2;
     color: #2D0A14;
-    background: #FFF9F2;
+    border-color: #2D0A14;
   }
 
   .btn-finalizar {
     flex: 2;
-    background: linear-gradient(135deg, #E85D04 0%, #D04D00 100%);
-    color: #FFFFFF;
-    border: none;
-    padding: 0.8rem;
-    border-radius: 12px;
+    height: 50px;
+    background: linear-gradient(135deg, #2D0A14 0%, #3D1220 100%);
+    color: #FAEDCD;
+    border: 1px solid #D4AF37;
+    border-radius: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     cursor: pointer;
-    box-shadow: 0 6px 18px rgba(232, 93, 4, 0.25);
+    box-shadow: 0 4px 15px rgba(45, 10, 20, 0.2);
     transition: all 0.3s ease;
   }
 
   .btn-finalizar:hover {
+    background: #E85D04;
+    color: #FFFFFF;
+    border-color: #E85D04;
     transform: translateY(-2px);
-    box-shadow: 0 10px 22px rgba(232, 93, 4, 0.35);
+    box-shadow: 0 8px 20px rgba(232, 93, 4, 0.3);
   }
 
-  /* Responsivo para Celular */
-  @media (max-width: 576px) {
+  /* ---------------------------------------------------------
+     RESPONSIVIDADE (CELULAR)
+     --------------------------------------------------------- */
+  @media (max-width: 600px) {
     .carrinho-container {
-      padding: 1.8rem 1.2rem;
+      padding: 1.5rem;
+      margin: 1.5rem auto;
+      border-radius: 20px;
+    }
+
+    .card-item-carrinho {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.2rem;
+    }
+
+    .card-item-carrinho::before {
+      margin-right: 0;
+    }
+
+    .item-preco-acao {
+      width: 100%;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-left: 0;
+      padding-top: 0.8rem;
+      border-top: 1px dashed #FFEEDD;
     }
 
     .acoes-carrinho {
-      flex-direction: column-reverse;
+      flex-direction: column;
+    }
+
+    .btn-limpar,
+    .btn-finalizar {
+      width: 100%;
     }
   }

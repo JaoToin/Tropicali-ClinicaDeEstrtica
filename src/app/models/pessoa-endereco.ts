@@ -3,7 +3,7 @@ export class Endereco {
   idPessoa: number = 0
   cep: string = ''
   numero: string = ''
-  complemento: string = ''
+  complemento: string = '' 
 }
 
 export class PessoaEndereco {

@@ -13,7 +13,27 @@
 
         <div class="item-info">
           <h3 class="item-nome">{{ item.iditemNavigation.item1 }}</h3>
-           <span class="item-qtd">Quantidade: <strong>{{ item.quantidade }}</strong></span>
+
+          <!-- Controle de quantidade -->
+          <div class="item-qtd">
+            <span>Quantidade:</span>
+
+            <!-- Diminui 1 (quando está em 1, o item é removido) -->
+            <button type="button"
+                    class="btn-qtd"
+                    (click)="cartService.decrementar(item.iditem)"
+                    aria-label="Diminuir quantidade"
+                    title="Diminuir">−</button>
+
+            <strong>{{ item.quantidade }}</strong>
+
+            <!-- Aumenta 1 -->
+            <button type="button"
+                    class="btn-qtd"
+                    (click)="cartService.incrementar(item.iditem)"
+                    aria-label="Aumentar quantidade"
+                    title="Aumentar">+</button>
+          </div>
         </div>
 
         <div class="item-preco-acao">

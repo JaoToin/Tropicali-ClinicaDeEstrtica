@@ -13,6 +13,7 @@ import { Pessoa } from './Component/Component/pessoa/pessoa';
 import { Produto } from './Component/Component/produto/produto';
 import { HomeAdm } from './Component/Component/home-adm/home-adm';
 import { Finalizacao } from './Component/finalizacao/finalizacao';
+import { Pedido } from './Component/pedido/pedido';
 
 export const routes: Routes = [
 
@@ -46,6 +47,10 @@ export const routes: Routes = [
     path: 'final',
     component: Finalizacao
   },
+  {  path: 'pedido',
+  component: Pedido
+},
+
 
   {
     path: 'adm',
